@@ -1,0 +1,35 @@
+Предыдущий ответ решал другую задачу: ты сам придумал `tfidf_word`, исключил BGE-M3 и вернул многофайловый проект. Исправь это. Нужен один полный `solution.py` и один `requirements.txt`, не псевдокод и не фрагменты.
+
+Задача: рекурсивно прочитать 50 русскоязычных документов из 7 тематических каталогов (`.txt`, `.html`, `.docx`, `.odt`); имя родительского каталога — эталонная тема. Сортировка — по относительному POSIX-пути. Ошибка чтения должна завершать запуск с путём файла. TXT: строгие UTF-8/UTF-8-SIG, затем CP1251. HTML: исключить script/style/noscript. DOCX: абзацы и таблицы. ODT: абзацы, заголовки и таблицы.
+
+Ровно три представления:
+1. `count_bow`: абсолютные частоты lower-case словоформ, без лемматизации, общий словарь.
+2. `tfidf_lemma`: TF-IDF по леммам `pymorphy3`, общий словарь, `smooth_idf=True`, L2, без стоп-слов.
+3. `bge_m3`: только `BAAI/bge-m3`; длинные документы разбивать детерминированно по `--chunk-words`, кодировать чанки, усреднять и L2-нормализовать документ. CPU/CUDA.
+
+Для КАЖДОГО представления создай 11 квадратных матриц:
+- сходства: cosine, weighted Jaccard, weighted Dice, Pearson, Spearman;
+- расстояния: Euclidean, Manhattan, Chebyshev;
+- три близости `1/(1+distance)`.
+
+Weighted Jaccard = `sum(min(x,y))/sum(max(x,y))`, Dice = `2*sum(min(x,y))/(sum(x)+sum(y))`. BoW/TF-IDF используй напрямую. Для знаковых BGE-векторов ТОЛЬКО перед Jaccard/Dice применяй `X_overlap = concat(max(X,0), max(-X,0))` по оси признаков. Остальные BGE-меры считай по исходным векторам. Jaccard/Dice должны быть конечными и лежать в `[0,1]`. Все матрицы конечны и симметричны; диагональ сходств/близостей 1, расстояний 0.
+
+CLI:
+`python solution.py --input CORPUS_DIR --output OUTPUT_DIR --device auto --batch-size 4 --chunk-words 200 --top-k 5 --model-cache CACHE_DIR`
+Модель всегда `BAAI/bge-m3`; `--model-cache` — только каталог кэша. Явный `cuda` без CUDA должен давать понятную ошибку.
+
+Обязательные результаты:
+- `documents.json`, `extracted_texts.jsonl`;
+- CSR `vectors/count_bow.npz`, `vectors/tfidf_lemma.npz` и два feature JSON;
+- `vectors/bge_m3.npy`;
+- 33 файла `matrices/{representation}__{metric}.csv`;
+- `all_pairs.csv` для всех неупорядоченных пар и всех 33 матриц;
+- `nearest_neighbors.csv` только для 8 мер сходства, без самого документа, `k=min(top_k,N-1)`;
+- `quality_summary.csv`: intra/inter mean, difference, ROC AUC, average precision для 24 мер сходства;
+- `run_metadata.json`: параметры, версии, размерности, времена этапов, signed-split и fallback-правила;
+- три PNG-теплокарты cosine.
+CSV — UTF-8-SIG с десятичной точкой.
+
+Краевые случаи: несуществующий input, пустой каталог без загрузки BGE, один документ, пустые документы, полностью пустой словарь `(N,0)`, повторы и постоянные векторы. Для `N=0` создай все пустые артефакты и 33 пустые матрицы с заголовками. Ни одного NaN/Inf; при одном классе до вызова AUC/AP используй конечный fallback `0.5`.
+
+Верни строго: (1) полный `solution.py` одним Python-блоком; (2) полный `requirements.txt`; (3) краткие формулы и fallback-правила. Не добавляй другие файлы, не заменяй представления и не утверждай, что запускал код на нашем корпусе.

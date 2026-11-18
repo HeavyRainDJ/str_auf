@@ -1,0 +1,15 @@
+[
+  "IN|appos|кот",
+  "IN|cc|кот",
+  "IN|conj|есть",
+  "IN|flat:name|спать",
+  "IN|nsubj|есть",
+  "IN|obj|есть",
+  "OUT|appos|спать",
+  "OUT|cc|и",
+  "OUT|conj|кот",
+  "OUT|flat:name|ёж",
+  "OUT|nsubj|кот",
+  "OUT|obj|кот",
+  "OUT|obj|рыба"
+]

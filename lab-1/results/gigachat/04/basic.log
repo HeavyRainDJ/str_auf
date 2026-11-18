@@ -1,0 +1,9 @@
+Done.
+Shapes -> WC:(6, 38) DT:(3, 13) WS:(6, 5) DS:(3, 2)
+
+STDERR:
+C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\sklearn\feature_extraction\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'
+  warnings.warn(
+
+Syntax parsing:   0%|          | 0/3 [00:00<?, ?it/s]
+Syntax parsing: 100%|██████████| 3/3 [00:00<00:00, 905.38it/s]

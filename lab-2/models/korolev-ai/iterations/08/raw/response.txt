@@ -1,0 +1,544 @@
+FILE: python_gost.drawio
+```xml
+<mxfile host="app.diagrams.net" modified="2026-10-06T21:40:00.000Z" agent="Korolev K5" version="21.0.0" type="device">
+  <diagram id="python_gost" name="Python ГОСТ">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="950" pageHeight="2100">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n1" value="Начало" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="380" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" value="Ввод: V, матрица,&#10;start, finish" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" value="start/finish&#10;в диапазоне?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="240" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" value="Вывод: &quot;Invalid vertices&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="550" y="260" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="Инициализация:&#10;distance, previous, visited" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="380" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" value="Выбрать непосещённую&#10;вершину current с&#10;минимальным distance" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="480" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" value="current == -1 или&#10;dist[current] == inf или&#10;current == finish?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="350" y="580" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" value="visited[current] = true;&#10;neighbor = 0" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="740" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" value="neighbor &lt; vertex_count?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="840" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" value="weight = matrix[current][neighbor]" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="980" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" value="weight &gt; 0 и&#10;neighbor не посещён?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1080" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" value="candidate =&#10;distance[current] + weight" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1220" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" value="candidate &lt;&#10;distance[neighbor]?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="370" y="1320" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" value="Обновить distance&#10;и previous" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1460" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n_inc" value="neighbor = neighbor + 1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1120" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" value="distance[finish] == inf?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="370" y="1540" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" value="Восстановить и&#10;развернуть маршрут" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1680" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="n17" value="Вывод: &quot;Route not found&quot; либо&#10;расстояние и маршрут согласно ветви" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="305" y="1810" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" value="Конец" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="380" y="1950" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n3" target="n4">
+          <mxGeometry x="-0.8" y="-16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e4" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n3" target="n5">
+          <mxGeometry x="-0.8" y="16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n5" target="n6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n6" target="n7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n7" target="n15">
+          <mxGeometry x="-0.8" y="-16" relative="1" as="geometry">
+            <Array as="points"><mxPoint x="760" y="610" /><mxPoint x="760" y="1590" /></Array>
+            <mxPoint x="0" y="0" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n7" target="n8">
+          <mxGeometry x="-0.8" y="16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n8" target="n9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n9" target="n10">
+          <mxGeometry x="-0.8" y="16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e11" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n9" target="n6">
+          <mxGeometry x="-0.8" y="-16" relative="1" as="geometry">
+            <Array as="points"><mxPoint x="240" y="870" /><mxPoint x="240" y="470" /></Array>
+            <mxPoint x="0" y="0" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n10" target="n11"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n11" target="n12">
+          <mxGeometry x="-0.8" y="16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e14" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n11" target="n_inc">
+          <mxGeometry x="-0.8" y="-16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n12" target="n13"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e16" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n13" target="n14">
+          <mxGeometry x="-0.8" y="16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e17" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n13" target="n_inc">
+          <mxGeometry x="-0.8" y="-16" relative="1" as="geometry">
+            <Array as="points"><mxPoint x="520" y="1270" /><mxPoint x="520" y="1080" /></Array>
+            <mxPoint x="0" y="0" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="n14" target="n_inc">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="520" y="1490" /><mxPoint x="520" y="1080" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_loop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n_inc" target="n9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="700" y="1080" /><mxPoint x="700" y="870" /><mxPoint x="470" y="870" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e19" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n15" target="n16">
+          <mxGeometry x="-0.8" y="16" relative="1" as="geometry"><mxPoint x="0" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="e20" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontColor=#000000;fontSize=12;labelBackgroundColor=#ffffff;align=center;verticalAlign=middle;" edge="1" parent="1" source="n15" target="n17">
+          <mxGeometry x="-0.8" y="-16" relative="1" as="geometry">
+            <Array as="points"><mxPoint x="550" y="1590" /><mxPoint x="550" y="1860" /><mxPoint x="530" y="1860" /></Array>
+            <mxPoint x="0" y="0" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n16" target="n17"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n17" target="n18"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n4" target="n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="790" y="270" /><mxPoint x="790" y="1980" /><mxPoint x="520" y="1980" /></Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+```
+
+FILE: cpp_gost.graphml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:java="http://www.yworks.com/xml/graphml" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd http://www.yworks.com/xml/graphml http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
+  <key for="node" id="d0" yfiles.type="nodegraphics"/>
+  <key for="edge" id="d1" yfiles.type="edgegraphics"/>
+  <graph id="G" edgedefault="directed">
+    <node id="n1">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="70.0" width="160.0" x="340.0" y="40.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="140.0" height="50.0" xml:space="preserve">Начало</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n2">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="90.0" width="260.0" x="300.0" y="150.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="240.0" height="70.0" xml:space="preserve">Ввод данных</y:NodeLabel>
+          <y:Shape type="parallelogram"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n3">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="130.0" width="220.0" x="310.0" y="280.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="110.0" xml:space="preserve">start/finish
+в диапазоне?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n4">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="90.0" width="260.0" x="580.0" y="300.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="240.0" height="70.0" xml:space="preserve">Вывод ошибки
+Invalid vertices</y:NodeLabel>
+          <y:Shape type="parallelogram"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n5">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="320.0" y="450.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">Инициализация
+dist, prev, visited</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n6">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="320.0" y="570.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">Выбрать непосещённую
+вершину current с min dist</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n7">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="130.0" width="220.0" x="320.0" y="680.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="110.0" xml:space="preserve">cur == -1 или
+dist[cur] == INF или
+cur == finish?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n8">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="320.0" y="850.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">visited[cur] = true;
+neighbor = 0</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n9">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="130.0" width="220.0" x="320.0" y="960.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="110.0" xml:space="preserve">neighbor &lt;
+vertex_count?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n10">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="320.0" y="1130.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">weight = matrix[current][neighbor]</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n11">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="130.0" width="220.0" x="320.0" y="1250.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="110.0" xml:space="preserve">weight &gt; 0 и
+neighbor не посещён?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n12">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="130.0" width="220.0" x="320.0" y="1420.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="110.0" xml:space="preserve">dist[cur] &lt;=
+INF - weight?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n13">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="320.0" y="1590.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">candidate =
+dist[cur] + weight</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n14">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="130.0" width="220.0" x="320.0" y="1710.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="110.0" xml:space="preserve">candidate &lt;
+dist[neighbor]?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n15">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="320.0" y="1880.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">Обновить distance
+и previous</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_inc">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="600.0" y="1130.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">neighbor = neighbor + 1</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n16">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="130.0" width="220.0" x="320.0" y="2000.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="110.0" xml:space="preserve">dist[finish] == INF?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n17">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="80.0" width="220.0" x="320.0" y="2170.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="200.0" height="60.0" xml:space="preserve">Восстановить и
+развернуть маршрут</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n18">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="90.0" width="260.0" x="300.0" y="2280.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="240.0" height="70.0" xml:space="preserve">Вывод: Route not found либо
+расстояние и маршрут согласно ветви</y:NodeLabel>
+          <y:Shape type="parallelogram"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n19">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="70.0" width="160.0" x="340.0" y="2400.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="none" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="center" visible="true" x="10.0" y="10.0" width="140.0" height="50.0" xml:space="preserve">Конец</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <edge id="e1" source="n1" target="n2">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e2" source="n2" target="n3">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e3" source="n3" target="n4">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="shead" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Нет</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e4" source="n3" target="n5">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="stail" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Да</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e5" source="n5" target="n6">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e6" source="n6" target="n7">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e7" source="n7" target="n16">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="560.0" y="640.0"/>
+            <y:Point x="560.0" y="2060.0"/>
+          </y:Path>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="shead" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Да</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e8" source="n7" target="n8">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="stail" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Нет</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e9" source="n8" target="n9">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e10" source="n9" target="n10">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="stail" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Да</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e11" source="n9" target="n6">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="240.0" y="890.0"/>
+            <y:Point x="240.0" y="510.0"/>
+          </y:Path>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="shead" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Нет</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e12" source="n10" target="n11">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e13" source="n11" target="n12">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="stail" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Да</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e14" source="n11" target="n_inc">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="500.0" y="1120.0"/>
+            <y:Point x="500.0" y="1150.0"/>
+          </y:Path>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="shead" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Нет</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e15" source="n12" target="n13">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel modelName="six_pos" modelPosition="stail" fontSize="12" backgroundColor="#FFFFFF" hasBackgroundColor="true" visible="true">Да</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e16" source="n12" target="n_inc">
+      <data key="d1">
+        <

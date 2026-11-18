@@ -1,0 +1,24 @@
+
+STDERR:
+Сбор документов...
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Анамнез\анамнез_02.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Анамнез\анамнез_06.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Биохимия крови\биохимия_02.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Биохимия крови\биохимия_06.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Комментаторы\комментаторы_02.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Комментаторы\комментаторы_06.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Неорганическая химия\неорганическая_химия_02.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Неорганическая химия\неорганическая_химия_06.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Органическая химия\органическая_химия_02.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Органическая химия\органическая_химия_06.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Спортивная медицина\спортивная_медицина_02.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Спортивная медицина\спортивная_медицина_06.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Ставки на спорт\ставки_02.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+ОШИБКА чтения C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Ставки на спорт\ставки_06.odt: cannot import name 'Table' from 'odf.text' (C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\odf\text.py)
+Найдено документов: 50
+Построение символьных n-грамм слов...
+Построение TF-IDF документов...
+Построение синтаксических векторов слов...
+Построение синтаксических векторов документов...
+Сохранение...
+Готово.

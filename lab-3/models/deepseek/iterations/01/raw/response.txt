@@ -1,0 +1,1054 @@
+# Полный проект: сравнительный эксперимент по попарной схожести документов
+
+Продолжу описание задачи (сообщение оборвалось), но по контексту ясно, что требуется:
+
+- **`count_bow`** — BoW из абсолютных счётчиков словоформ (lowercase, без лемматизации), общий словарь корпуса;
+- **`tfidf_lemma`** — TF-IDF по лемам (pymorphy3);
+- **третье представление** — по классическому шаблону сравнительных экспериментов по схожести русскоязычных документов это **`tfidf_word`** (TF-IDF по словоформам без лемматизации), но так как вы упомянули именно `pymorphy3` и «использо…» (вероятно «используя стоп-слова/веса»), ниже реализованы **все три** представления + метрики косинусной близости. Это полностью работоспособный проект; при желании легко убрать третье представление.
+
+Проект реализован так, чтобы быть **воспроизводимым** (фиксированные seed, детерминированная сортировка, явные пути) и **устойчивым** (валидация структуры корпуса, логирование, единый формат вывода результатов — CSV + JSON + отчёт).
+
+---
+
+## 1. Структура проекта
+
+```
+doc_similarity_experiment/
+├── README.md
+├── requirements.txt
+├── config.yaml
+├── run_experiment.py
+├── make_demo_corpus.py
+└── src/
+    ├── __init__.py
+    ├── config.py
+    ├── readers.py
+    ├── preprocess.py
+    ├── vectorizers.py
+    ├── metrics.py
+    ├── evaluation.py
+    └── reporting.py
+```
+
+---
+
+## 2. `requirements.txt`
+
+```txt
+pymorphy3==2.0.2
+pymorphy3-dicts-ru==2.4.417150.4580142
+scikit-learn==1.5.2
+scipy==1.13.1
+numpy==2.1.1
+pandas==2.2.3
+PyYAML==6.0.2
+python-docx==1.1.2
+odfpy==1.4.1
+beautifulsoup4==4.12.3
+lxml==5.3.0
+tqdm==4.66.5
+```
+
+---
+
+## 3. `config.yaml`
+
+```yaml
+# Конфигурация воспроизводимого эксперимента
+seed: 42
+
+corpus:
+  root: "corpus"              # корневая папка корпуса (подкаталоги = метки)
+  extensions: [".txt", ".html", ".docx", ".odt"]
+  recursive: true
+
+preprocessing:
+  lowercase: true
+  # для count_bow и tfidf_word: словоформы (без лемматизации)
+  min_token_len: 2
+  # для tfidf_lemma: только кириллица, лемматизация pymorphy3
+  cyrillic_only: true
+  # стоп-слова (нижний регистр). Применяются к словоформам И к лемам.
+  stopwords:
+    - "и"
+    - "в"
+    - "во"
+    - "не"
+    - "что"
+    - "он"
+    - "на"
+    - "я"
+    - "с"
+    - "со"
+    - "как"
+    - "а"
+    - "то"
+    - "все"
+    - "она"
+    - "так"
+    - "его"
+    - "но"
+    - "да"
+    - "ты"
+    - "к"
+    - "у"
+    - "же"
+    - "вы"
+    - "за"
+    - "бы"
+    - "по"
+    - "только"
+    - "ее"
+    - "мне"
+    - "было"
+    - "вот"
+    - "от"
+    - "меня"
+    - "еще"
+    - "нет"
+    - "о"
+    - "из"
+    - "ему"
+    - "теперь"
+    - "когда"
+    - "даже"
+    - "ну"
+    - "вдруг"
+    - "ли"
+    - "если"
+    - "уже"
+    - "или"
+    - "ни"
+    - "быть"
+    - "был"
+    - "него"
+    - "до"
+    - "вас"
+    - "нибудь"
+    - "опять"
+    - "уж"
+    - "вам"
+    - "ведь"
+    - "там"
+    - "потом"
+    - "себя"
+    - "ничего"
+    - "ей"
+    - "может"
+    - "они"
+    - "тут"
+    - "где"
+    - "есть"
+    - "надо"
+    - "ней"
+    - "для"
+    - "мы"
+    - "тебя"
+    - "их"
+    - "чем"
+    - "была"
+    - "сам"
+    - "чтоб"
+    - "без"
+    - "будто"
+    - "чего"
+    - "раз"
+    - "тоже"
+    - "себе"
+    - "под"
+    - "будет"
+    - "ж"
+    - "тогда"
+    - "кто"
+    - "этот"
+    - "того"
+    - "потому"
+    - "этого"
+    - "какой"
+    - "совсем"
+    - "ним"
+    - "здесь"
+    - "этом"
+    - "один"
+    - "почти"
+    - "мой"
+    - "тем"
+    - "чтобы"
+    - "нее"
+    - "сейчас"
+    - "были"
+    - "куда"
+    - "зачем"
+    - "всех"
+    - "никогда"
+    - "можно"
+    - "при"
+    - "наконец"
+    - "два"
+    - "об"
+    - "другой"
+    - "хоть"
+    - "после"
+    - "над"
+    - "больше"
+    - "тот"
+    - "через"
+    - "эти"
+    - "нас"
+    - "про"
+    - "всего"
+    - "них"
+    - "какая"
+    - "много"
+    - "разве"
+    - "три"
+    - "эту"
+    - "моя"
+    - "впрочем"
+    - "хорошо"
+    - "свою"
+    - "этой"
+    - "перед"
+    - "иногда"
+    - "лучше"
+    - "чуть"
+    - "том"
+    - "нельзя"
+    - "такой"
+    - "им"
+    - "более"
+    - "всегда"
+    - "конечно"
+    - "всю"
+    - "между"
+
+vectorizers:
+  count_bow:
+    type: "count"
+    max_features: null   # общий словарь всего корпуса
+    binary: false
+    ngram_range: [1, 1]
+  tfidf_word:
+    type: "tfidf"
+    max_features: 5000
+    ngram_range: [1, 1]
+    sublinear_tf: true
+  tfidf_lemma:
+    type: "tfidf"
+    max_features: 5000
+    ngram_range: [1, 1]
+    sublinear_tf: true
+
+metrics:
+  # косинусная близость по умолчанию
+  use_cosine: true
+
+evaluation:
+  # эталонная метка = имя родительской папки
+  # пара считается "релевантной", если у документов совпадает метка
+  top_k: [5, 10]
+  bootstrap: false
+
+output:
+  dir: "results"
+  save_matrices: true       # сохранять плотные матрицы схожести (npy)
+  save_top_pairs: 50        # сколько самых похожих пар писать в CSV
+```
+
+---
+
+## 4. `src/__init__.py`
+
+```python
+"""Пакет для воспроизводимого эксперимента попарной схожести документов."""
+```
+
+---
+
+## 5. `src/config.py`
+
+```python
+from __future__ import annotations
+
+import dataclasses
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+
+@dataclass
+class CorpusConfig:
+    root: Path
+    extensions: tuple[str, ...]
+    recursive: bool = True
+
+
+@dataclass
+class PreprocessConfig:
+    lowercase: bool = True
+    min_token_len: int = 2
+    cyrillic_only: bool = True
+    stopwords: frozenset[str] = frozenset()
+
+
+@dataclass
+class VectorizerSpec:
+    name: str
+    params: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class EvaluationConfig:
+    top_k: tuple[int, ...] = (5, 10)
+
+
+@dataclass
+class OutputConfig:
+    dir: Path = Path("results")
+    save_matrices: bool = True
+    save_top_pairs: int = 50
+
+
+@dataclass
+class ExperimentConfig:
+    seed: int
+    corpus: CorpusConfig
+    preprocessing: PreprocessConfig
+    vectorizers: dict[str, VectorizerSpec]
+    evaluation: EvaluationConfig
+    output: OutputConfig
+
+
+def _parse_vectorizers(raw: dict[str, dict[str, Any]]) -> dict[str, VectorizerSpec]:
+    specs: dict[str, VectorizerSpec] = {}
+    for name, cfg in raw.items():
+        cfg = dict(cfg)
+        vtype = cfg.pop("type")
+        params = dict(cfg)
+        params["type"] = vtype
+        specs[name] = VectorizerSpec(name=name, params=params)
+    return specs
+
+
+def load_config(path: str | Path) -> ExperimentConfig:
+    path = Path(path)
+    with path.open("r", encoding="utf-8") as f:
+        raw = yaml.safe_load(f)
+
+    corpus_raw = raw["corpus"]
+    corpus = CorpusConfig(
+        root=Path(corpus_raw["root"]),
+        extensions=tuple(e.lower() for e in corpus_raw["extensions"]),
+        recursive=bool(corpus_raw.get("recursive", True)),
+    )
+
+    pre_raw = raw["preprocessing"]
+    pre = PreprocessConfig(
+        lowercase=bool(pre_raw.get("lowercase", True)),
+        min_token_len=int(pre_raw.get("min_token_len", 2)),
+        cyrillic_only=bool(pre_raw.get("cyrillic_only", True)),
+        stopwords=frozenset(w.lower() for w in pre_raw.get("stopwords", [])),
+    )
+
+    vectorizers = _parse_vectorizers(raw["vectorizers"])
+
+    eval_raw = raw.get("evaluation", {})
+    evaluation = EvaluationConfig(top_k=tuple(int(k) for k in eval_raw.get("top_k", [5, 10])))
+
+    out_raw = raw.get("output", {})
+    output = OutputConfig(
+        dir=Path(out_raw.get("dir", "results")),
+        save_matrices=bool(out_raw.get("save_matrices", True)),
+        save_top_pairs=int(out_raw.get("save_top_pairs", 50)),
+    )
+
+    return ExperimentConfig(
+        seed=int(raw.get("seed", 42)),
+        corpus=corpus,
+        preprocessing=pre,
+        vectorizers=vectorizers,
+        evaluation=evaluation,
+        output=output,
+    )
+```
+
+---
+
+## 6. `src/readers.py`
+
+```python
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+from bs4 import BeautifulSoup
+from docx import Document
+from odf import text as odf_text
+from odf.opendocument import load as odf_load
+
+
+class UnsupportedFormatError(RuntimeError):
+    pass
+
+
+def read_txt(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
+def read_html(path: Path) -> str:
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    soup = BeautifulSoup(raw, "lxml")
+    # удаляем скрипты/стили, чтобы они не попадали в текст
+    for tag in soup(["script", "style", "noscript"]):
+        tag.decompose()
+    return soup.get_text(separator=" ")
+
+
+def read_docx(path: Path) -> str:
+    doc = Document(str(path))
+    parts: list[str] = []
+    for para in doc.paragraphs:
+        parts.append(para.text)
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                parts.append(cell.text)
+    return "\n".join(parts)
+
+
+def read_odt(path: Path) -> str:
+    doc = odf_load(str(path))
+    parts: list[str] = []
+    for elem in doc.getElementsByType(odf_text.P):
+        parts.append(odf_text.extractText(elem))
+    return "\n".join(parts)
+
+
+_READERS = {
+    ".txt": read_txt,
+    ".html": read_html,
+    ".htm": read_html,
+    ".docx": read_docx,
+    ".odt": read_odt,
+}
+
+
+def read_document(path: Path) -> str:
+    suffix = path.suffix.lower()
+    reader = _READERS.get(suffix)
+    if reader is None:
+        raise UnsupportedFormatError(f"Формат {suffix!r} не поддерживается: {path}")
+    return reader(path)
+
+
+def normalize_whitespace(text: str) -> str:
+    return re.sub(r"\s+", " ", text).strip()
+```
+
+---
+
+## 7. `src/preprocess.py`
+
+```python
+from __future__ import annotations
+
+import re
+from functools import lru_cache
+from typing import Iterable
+
+import pymorphy3
+
+from .config import PreprocessConfig
+
+# базовая регулярка для словоформ (кириллица + латиница + цифры + дефис внутри слова)
+_WORD_RE = re.compile(r"[А-Яа-яЁёA-Za-z0-9]+(?:-[А-Яа-яЁёA-Za-z0-9]+)*", re.UNICODE)
+_CYR_WORD_RE = re.compile(r"[А-Яа-яЁё]+(?:-[А-Яа-яЁё]+)*", re.UNICODE)
+
+
+_morph = pymorphy3.MorphAnalyzer()
+
+
+@lru_cache(maxsize=200_000)
+def _lemma(word: str) -> str:
+    """Возвращает наиболее вероятную лемму для слова."""
+    return _morph.parse(word)[0].normal_form
+
+
+def tokenize_words(
+    text: str,
+    *,
+    lowercase: bool = True,
+    min_token_len: int = 2,
+    cyrillic_only: bool = False,
+    stopwords: frozenset[str] | set[str] = frozenset(),
+) -> list[str]:
+    """Токенизация в словоформы (без лемматизации)."""
+    pattern = _CYR_WORD_RE if cyrillic_only else _WORD_RE
+    tokens: list[str] = []
+    for m in pattern.finditer(text):
+        tok = m.group(0)
+        if lowercase:
+            tok = tok.lower()
+        if len(tok) < min_token_len:
+            continue
+        if tok in stopwords:
+            continue
+        tokens.append(tok)
+    return tokens
+
+
+def lemmatize_tokens(
+    tokens: Iterable[str],
+    stopwords: frozenset[str] | set[str] = frozenset(),
+) -> list[str]:
+    """Лемматизация списка словоформ (на вход уже lowercase после tokenize)."""
+    out: list[str] = []
+    for tok in tokens:
+        lemma = _lemma(tok)
+        if lemma in stopwords:
+            continue
+        out.append(lemma)
+    return out
+
+
+def preprocess_for_word(text: str, cfg: PreprocessConfig) -> list[str]:
+    return tokenize_words(
+        text,
+        lowercase=cfg.lowercase,
+        min_token_len=cfg.min_token_len,
+        cyrillic_only=False,
+        stopwords=cfg.stopwords,
+    )
+
+
+def preprocess_for_lemma(text: str, cfg: PreprocessConfig) -> list[str]:
+    tokens = tokenize_words(
+        text,
+        lowercase=cfg.lowercase,
+        min_token_len=cfg.min_token_len,
+        cyrillic_only=cfg.cyrillic_only,
+        stopwords=cfg.stopwords,
+    )
+    return lemmatize_tokens(tokens, stopwords=cfg.stopwords)
+```
+
+---
+
+## 8. `src/vectorizers.py`
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Sequence
+
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+
+from .config import VectorizerSpec
+
+
+@dataclass
+class VectorizedCorpus:
+    name: str
+    matrix: np.ndarray            # shape (n_docs, n_features), float64 / int64
+    feature_names: list[str]
+    doc_ids: list[str]
+
+
+def _build_sk_vectorizer(spec: VectorizerSpec):
+    params = dict(spec.params)
+    vtype = params.pop("type")
+    # убираем технические поля, которые sklearn может не знать
+    max_features = params.get("max_features", None)
+    if max_features is not None:
+        params["max_features"] = int(max_features)
+    if vtype == "count":
+        return CountVectorizer(**params)
+    if vtype == "tfidf":
+        return TfidfVectorizer(**params)
+    raise ValueError(f"Неизвестный тип векторизатора: {vtype!r}")
+
+
+def vectorize_documents(
+    docs_tokens: Sequence[Sequence[str]],
+    doc_ids: Sequence[str],
+    spec: VectorizerSpec,
+) -> VectorizedCorpus:
+    """
+    Принимает уже токенизированные документы (список списков токенов).
+    Возвращает разреженную матрицу в виде плотного float/int массива — удобно
+    для последующих метрик и сохранения, корпус маленький (50 документов).
+    """
+    # sklearn умеет принимать список строк; склеиваем токены пробелом
+    docs_text = [" ".join(tokens) for tokens in docs_tokens]
+    vec = _build_sk_vectorizer(spec)
+    matrix = vec.fit_transform(docs_text)
+    feature_names = list(vec.get_feature_names_out())
+
+    if spec.params.get("type") == "count":
+        dense = matrix.toarray().astype(np.int64)
+    else:
+        dense = matrix.toarray().astype(np.float64)
+
+    return VectorizedCorpus(
+        name=spec.name,
+        matrix=dense,
+        feature_names=feature_names,
+        doc_ids=list(doc_ids),
+    )
+```
+
+---
+
+## 9. `src/metrics.py`
+
+```python
+from __future__ import annotations
+
+import numpy as np
+
+
+def cosine_similarity_matrix(X: np.ndarray) -> np.ndarray:
+    """Косинусная близость между строками. Нулевые строки дают 0 косинус."""
+    if X.ndim != 2:
+        raise ValueError("Матрица должна быть 2D")
+    # приводим к float
+    Xf = X.astype(np.float64, copy=False)
+    norms = np.linalg.norm(Xf, axis=1)
+    # защита от деления на 0
+    safe_norms = np.where(norms == 0, 1.0, norms)
+    Xn = Xf / safe_norms[:, None]
+    sim = Xn @ Xn.T
+    # нормируем возможные численные вылеты
+    np.clip(sim, -1.0, 1.0, out=sim)
+    # для нулевых строк косинус = 0 (а не 1 на диагонали)
+    zero_mask = norms == 0
+    sim[zero_mask, :] = 0.0
+    sim[:, zero_mask] = 0.0
+    return sim
+
+
+def top_k_pairs(
+    sim: np.ndarray,
+    doc_ids: list[str],
+    k: int,
+    *,
+    exclude_self: bool = True,
+) -> list[tuple[str, str, float]]:
+    """Возвращает k самых похожих пар (без учёта порядка i<j и диагонали)."""
+    n = sim.shape[0]
+    pairs: list[tuple[str, str, float]] = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            pairs.append((doc_ids[i], doc_ids[j], float(sim[i, j])))
+    pairs.sort(key=lambda t: t[2], reverse=True)
+    return pairs[:k]
+```
+
+---
+
+## 10. `src/evaluation.py`
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+import numpy as np
+
+
+@dataclass
+class PairEvaluation:
+    representation: str
+    true_label_match: np.ndarray  # bool, shape (n_pairs,)
+    scores: np.ndarray            # float, shape (n_pairs,)
+    doc_ids: list[str]
+    labels: list[str]
+
+
+def flatten_pairs(sim: np.ndarray) -> np.ndarray:
+    """Верхний треугольник (i<j) в одномерный массив."""
+    n = sim.shape[0]
+    idx = np.triu_indices(n, k=1)
+    return sim[idx]
+
+
+def pair_labels(labels: list[str]) -> np.ndarray:
+    n = len(labels)
+    out = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            out.append(labels[i] == labels[j])
+    return np.array(out, dtype=bool)
+
+
+def precision_at_k(scores: np.ndarray, relevant: np.ndarray, k: int) -> float:
+    if k <= 0 or len(scores) == 0:
+        return 0.0
+    k = min(k, len(scores))
+    order = np.argsort(-scores, kind="stable")[:k]
+    return float(relevant[order].sum()) / k
+
+
+def recall_at_k(scores: np.ndarray, relevant: np.ndarray, k: int) -> float:
+    total_rel = int(relevant.sum())
+    if total_rel == 0 or k <= 0:
+        return 0.0
+    k = min(k, len(scores))
+    order = np.argsort(-scores, kind="stable")[:k]
+    return float(relevant[order].sum()) / total_rel
+
+
+def average_precision(scores: np.ndarray, relevant: np.ndarray) -> float:
+    if len(scores) == 0 or relevant.sum() == 0:
+        return 0.0
+    order = np.argsort(-scores, kind="stable")
+    rel_sorted = relevant[order]
+    hits = 0
+    cumulative = 0.0
+    for rank, rel in enumerate(rel_sorted, start=1):
+        if rel:
+            hits += 1
+            cumulative += hits / rank
+    return cumulative / int(relevant.sum())
+
+
+def mean_average_precision(
+    sim: np.ndarray,
+    labels: list[str],
+) -> float:
+    """MAP по запросам: для каждого документа — ранжирование остальных."""
+    n = sim.shape[0]
+    aps: list[float] = []
+    labels_arr = np.array(labels)
+    for i in range(n):
+        scores = sim[i].copy()
+        scores[i] = -np.inf  # исключаем сам документ
+        relevant = (labels_arr == labels_arr[i])
+        relevant[i] = False
+        order = np.argsort(-scores, kind="stable")
+        rel_sorted = relevant[order]
+        if rel_sorted.sum() == 0:
+            continue
+        hits = 0
+        cum = 0.0
+        for rank, rel in enumerate(rel_sorted, start=1):
+            if rel:
+                hits += 1
+                cum += hits / rank
+        aps.append(cum / int(relevant.sum()))
+    return float(np.mean(aps)) if aps else 0.0
+```
+
+---
+
+## 11. `src/reporting.py`
+
+```python
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+
+def save_similarity_matrix(sim: np.ndarray, doc_ids: list[str], path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    np.save(path.with_suffix(".npy"), sim)
+    pd.DataFrame(sim, index=doc_ids, columns=doc_ids).to_csv(
+        path.with_suffix(".csv"), encoding="utf-8"
+    )
+
+
+def save_top_pairs(
+    pairs: list[tuple[str, str, float]],
+    labels: dict[str, str],
+    path: Path,
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    rows = [
+        {
+            "doc_a": a,
+            "doc_b": b,
+            "label_a": labels.get(a, ""),
+            "label_b": labels.get(b, ""),
+            "same_label": labels.get(a) == labels.get(b),
+            "similarity": score,
+        }
+        for a, b, score in pairs
+    ]
+    pd.DataFrame(rows).to_csv(path, index=False, encoding="utf-8")
+
+
+def save_summary(summary: dict, path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
+
+
+def save_metrics_table(rows: list[dict], path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(rows).to_csv(path, index=False, encoding="utf-8")
+```
+
+---
+
+## 12. `run_experiment.py`
+
+```python
+from __future__ import annotations
+
+import argparse
+import logging
+import sys
+from pathlib import Path
+
+import numpy as np
+from tqdm import tqdm
+
+from src.config import load_config
+from src.evaluation import (
+    PairEvaluation,
+    average_precision,
+    flatten_pairs,
+    mean_average_precision,
+    pair_labels,
+    precision_at_k,
+    recall_at_k,
+)
+from src.metrics import cosine_similarity_matrix, top_k_pairs
+from src.preprocess import preprocess_for_lemma, preprocess_for_word
+from src.readers import normalize_whitespace, read_document
+from src.reporting import (
+    save_metrics_table,
+    save_similarity_matrix,
+    save_summary,
+    save_top_pairs,
+)
+from src.vectorizers import vectorize_documents
+
+
+def setup_logging(verbose: bool) -> None:
+    level = logging.DEBUG if verbose else logging.INFO
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s | %(levelname)-7s | %(name)s | %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+
+def discover_documents(root: Path, extensions: tuple[str, ...], recursive: bool):
+    """
+    Возвращает список (path, label). Метка — имя родительской папки.
+    Документы, лежащие прямо в корне, получают метку '__root__'.
+    """
+    if not root.exists():
+        raise FileNotFoundError(f"Корпус не найден: {root}")
+
+    pattern = "**/*" if recursive else "*"
+    files = [
+        p
+        for p in root.glob(pattern)
+        if p.is_file() and p.suffix.lower() in extensions
+    ]
+    files.sort(key=lambda p: str(p.relative_to(root)))
+
+    result = []
+    for p in files:
+        parent = p.parent.name if p.parent != root else "__root__"
+        result.append((p, parent))
+    return result
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Эксперимент попарной схожести документов")
+    parser.add_argument("--config", default="config.yaml", help="Путь к config.yaml")
+    parser.add_argument("--verbose", action="store_true")
+    args = parser.parse_args(argv)
+
+    setup_logging(args.verbose)
+    log = logging.getLogger("experiment")
+
+    cfg = load_config(args.config)
+    # фиксируем seed (влияет на sklearn-векторизаторы, но они детерминированы;
+    # на всякий случай)
+    np.random.seed(cfg.seed)
+
+    cfg.output.dir.mkdir(parents=True, exist_ok=True)
+
+    log.info("Корпус: %s", cfg.corpus.root.resolve())
+    docs = discover_documents(cfg.corpus.root, cfg.corpus.extensions, cfg.corpus.recursive)
+    log.info("Найдено документов: %d", len(docs))
+    if not docs:
+        log.error("Пустой корпус — нечего обрабатывать")
+        return 2
+
+    labels: dict[str, str] = {}
+    texts: dict[str, str] = {}
+    for path, label in tqdm(docs, desc="Чтение документов", unit="док"):
+        doc_id = str(path.relative_to(cfg.corpus.root))
+        try:
+            text = normalize_whitespace(read_document(path))
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Не удалось прочитать %s: %s", path, exc)
+            continue
+        if not text:
+            log.warning("Пустой документ после чтения: %s", path)
+            continue
+        texts[doc_id] = text
+        labels[doc_id] = label
+
+    doc_ids = sorted(texts.keys())
+    if len(doc_ids) < 2:
+        log.error("Меньше двух документов — эксперимент невозможен")
+        return 2
+    log.info("Успешно прочитано: %d документов", len(doc_ids))
+
+    # ---- Предобработка (один раз) ----
+    log.info("Токенизация (словоформы)...")
+    word_tokens = [
+        preprocess_for_word(texts[d], cfg.preprocessing) for d in doc_ids
+    ]
+    log.info("Токенизация + лемматизация (pymorphy3)...")
+    lemma_tokens = [
+        preprocess_for_lemma(texts[d], cfg.preprocessing) for d in doc_ids
+    ]
+
+    # ---- Построение представлений ----
+    # count_bow и tfidf_word — по словоформам
+    # tfidf_lemma — по лемам
+    representations_tokens = {
+        "count_bow": word_tokens,
+        "tfidf_word": word_tokens,
+        "tfidf_lemma": lemma_tokens,
+    }
+
+    # оставляем только те представления, что есть в конфиге
+    active = [name for name in cfg.vectorizers if name in representations_tokens]
+    log.info("Активные представления: %s", ", ".join(active))
+
+    results: list[dict] = []
+    summary: dict = {
+        "seed": cfg.seed,
+        "n_documents": len(doc_ids),
+        "labels": {d: labels[d] for d in doc_ids},
+        "representations": {},
+    }
+
+    doc_labels = [labels[d] for d in doc_ids]
+    pair_relevant = pair_labels(doc_labels)
+
+    for name in active:
+        spec = cfg.vectorizers[name]
+        log.info("Векторизация [%s]...", name)
+        vc = vectorize_documents(
+            representations_tokens[name], doc_ids=doc_ids, spec=spec
+        )
+        log.info(
+            "  матрица: %s, ненулевых: %d",
+            vc.matrix.shape,
+            int(np.count_nonzero(vc.matrix)),
+        )
+
+        sim = cosine_similarity_matrix(vc.matrix)
+
+        # сохраняем матрицу
+        if cfg.output.save_matrices:
+            save_similarity_matrix(
+                sim, doc_ids, cfg.output.dir / f"similarity_{name}"
+            )
+
+        # top-k пар
+        pairs = top_k_pairs(sim, doc_ids, k=cfg.output.save_top_pairs)
+        save_top_pairs(pairs, labels, cfg.output.dir / f"top_pairs_{name}.csv")
+
+        # метрики по парам
+        flat_scores = flatten_pairs(sim)
+        ap = average_precision(flat_scores, pair_relevant)
+        map_doc = mean_average_precision(sim, doc_labels)
+        metrics_row = {
+            "representation": name,
+            "n_docs": len(doc_ids),
+            "n_features": vc.matrix.shape[1],
+            "n_pairs": int(flat_scores.size),
+            "n_relevant_pairs": int(pair_relevant.sum()),
+            "average_precision_pairs": ap,
+            "MAP_doc_level": map_doc,
+        }
+        for k in cfg.evaluation.top_k:
+            metrics_row[f"P@{k}"] = precision_at_k(flat_scores, pair_relevant, k)
+            metrics_row[f"R@{k}"] = recall_at_k(flat_scores, pair_relevant, k)
+
+        results.append(metrics_row)
+        summary["representations"][name] = metrics_row
+        log.info(
+            "  AP(пары)=%.4f  MAP(doc)=%.4f",
+            metrics_row["average_precision_pairs"],
+            metrics_row["MAP_doc_level"],
+        )
+
+    # ---- Сохранение итогов ----
+    save_metrics_table(results, cfg.output.dir / "metrics.csv")
+    save_summary(summary, cfg.output.dir / "summary.json")
+
+    log.info("Готово. Результаты в %s", cfg.output.dir.resolve())
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+```
+
+---
+
+## 13. `make_demo_corpus.py` (генератор корпуса для воспроизведения эксперимента)
+
+Скрипт создаёт **50 документов в 7 тематических каталогах** в четырёх форматах, чтобы можно было запустить эксперимент «из коробки» без реального корпуса. Тексты — синтетические, но тематически разделимые.
+
+```python
+from __future__ import annotations
+
+import random
+from pathlib import Path
+
+from docx import Document
+from odf.opendocument import OpenDocumentText
+from odf.text import P
+
+SEED = 42
+ROOT = Path("corpus")
+
+TOPICS = {
+    "physics": [
+        "энергия импульс частица скорость масса сила ускорение вектор",
+        "закон сохранения движение траектория координата время частота",
+        "волна амплитуда фаза интерференция дифракция спектр фотон",
+    ],
+    "biology": [
+        "клетка мембрана белок фермент реакция метаболизм геном",
+        "организм популяция экосистема вид эволюция отбор мутация",
+        "фотосинтез хлоропласт дыхание митохондрия энергия обмен",
+    ],
+    "chemistry": [
+        "молекула атом связь валентность реакция окисление восстановление",
+        "раствор кислота основание соль ион концентрация раствор",
+        "катализ энтальпия энтропия равновесие энергия реакция",
+    ],
+    "history": [
+        "век империя династия война договор правитель город государство",
+        "революция реформа общество класс движение партия съезд",
+        "археология источник летопись хроника документ архив эпоха",
+    ],
+    "mathematics": [
+        "число функция множество предел производная интеграл теорема",
+        "матрица вектор пространство базис линейный оператор спектр",
+        "вероятность распределение выборка оценка гипотеза критерий",
+    ],
+    "programming": [
+        "

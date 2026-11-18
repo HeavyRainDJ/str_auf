@@ -1,0 +1,20 @@
+Collecting corpus...
+
+STDERR:
+C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\sklearn\feature_extraction\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'
+  warnings.warn(
+
+Syntax parsing:   0%|          | 0/1 [00:00<?, ?it/s]
+Syntax parsing:   0%|          | 0/1 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\01\solution.py", line 530, in <module>
+    main()
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\01\solution.py", line 382, in main
+    docs_spacy.append(parser.process(text))
+                      ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\01\solution.py", line 190, in process
+    self.ensure_model()
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\01\solution.py", line 184, in ensure_model
+    self.nlp = spacy.load("ru_core_news_sm", disable=["ner"])
+               ^^^^^
+NameError: name 'spacy' is not defined

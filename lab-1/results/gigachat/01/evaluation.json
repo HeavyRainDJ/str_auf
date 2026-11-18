@@ -1,0 +1,153 @@
+{
+  "model": "gigachat",
+  "version": "01",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "cf28e7cd24da61faf7a53d46a8f3f7481fbc674ba55dc254faa276885880d95a",
+  "tests": [
+    {
+      "case": "basic",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\basic",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\01\\basic"
+      ],
+      "seconds": 1.339,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'\n  warnings.warn(\n\nSyntax parsing:   0%|          | 0/3 [00:00<?, ?it/s]\nSyntax parsing:   0%|          | 0/3 [00:00<?, ?it/s]\nTraceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 530, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 382, in main\n    docs_spacy.append(parser.process(text))\n                      ^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 190, in process\n    self.ensure_model()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 184, in ensure_model\n    self.nlp = spacy.load(\"ru_core_news_sm\", disable=[\"ner\"])\n               ^^^^^\nNameError: name 'spacy' is not defined\n"
+    },
+    {
+      "case": "all_empty",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\all_empty",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\01\\all_empty"
+      ],
+      "seconds": 1.342,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'\n  warnings.warn(\nTraceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 530, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 376, in main\n    mat_docs_tfidf = tfidf.fit_transform(raw_texts)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py\", line 2110, in fit_transform\n    X = super().fit_transform(raw_documents)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\base.py\", line 1403, in wrapper\n    return fit_method(estimator, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py\", line 1387, in fit_transform\n    vocabulary, X = self._count_vocab(raw_documents, self.fixed_vocabulary_)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py\", line 1293, in _count_vocab\n    raise ValueError(\nValueError: empty vocabulary; perhaps the documents only contain stop words\n"
+    },
+    {
+      "case": "empty_dir",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\empty_dir",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\01\\empty_dir"
+      ],
+      "seconds": 1.309,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\gigachat\\\\01\\\\empty_dir\\\\word_char.npz'"
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\gigachat\\\\01\\\\empty_dir\\\\doc_tfidf.npz'"
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\gigachat\\\\01\\\\empty_dir\\\\word_syntax.npz'"
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\gigachat\\\\01\\\\empty_dir\\\\doc_syntax.npz'"
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "repeated",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\repeated",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\01\\repeated"
+      ],
+      "seconds": 1.372,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'\n  warnings.warn(\n\nSyntax parsing:   0%|          | 0/1 [00:00<?, ?it/s]\nSyntax parsing:   0%|          | 0/1 [00:00<?, ?it/s]\nTraceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 530, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 382, in main\n    docs_spacy.append(parser.process(text))\n                      ^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 190, in process\n    self.ensure_model()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 184, in ensure_model\n    self.nlp = spacy.load(\"ru_core_news_sm\", disable=[\"ner\"])\n               ^^^^^\nNameError: name 'spacy' is not defined\n"
+    },
+    {
+      "case": "formats",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\formats",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\01\\formats"
+      ],
+      "seconds": 1.392,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'\n  warnings.warn(\n\nSyntax parsing:   0%|          | 0/3 [00:00<?, ?it/s]\nSyntax parsing:   0%|          | 0/3 [00:00<?, ?it/s]\nTraceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 530, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 382, in main\n    docs_spacy.append(parser.process(text))\n                      ^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 190, in process\n    self.ensure_model()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 184, in ensure_model\n    self.nlp = spacy.load(\"ru_core_news_sm\", disable=[\"ner\"])\n               ^^^^^\nNameError: name 'spacy' is not defined\n"
+    },
+    {
+      "case": "corrupt",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\corrupt",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\01\\corrupt"
+      ],
+      "seconds": 1.303,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "corrupt_file_reported",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "full_corpus",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\тексты для тестов",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\01\\full_corpus"
+      ],
+      "seconds": 1.809,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'\n  warnings.warn(\n\nSyntax parsing:   0%|          | 0/50 [00:00<?, ?it/s]\nSyntax parsing:   0%|          | 0/50 [00:00<?, ?it/s]\nTraceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 530, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 382, in main\n    docs_spacy.append(parser.process(text))\n                      ^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 190, in process\n    self.ensure_model()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\01\\solution.py\", line 184, in ensure_model\n    self.nlp = spacy.load(\"ru_core_news_sm\", disable=[\"ner\"])\n               ^^^^^\nNameError: name 'spacy' is not defined\n"
+    }
+  ],
+  "compilation": {
+    "passed": true,
+    "stderr": ""
+  },
+  "passed": false
+}

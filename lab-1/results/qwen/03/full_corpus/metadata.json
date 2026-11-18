@@ -1,0 +1,38 @@
+{
+  "word_char": {
+    "shape": [
+      7447,
+      5693
+    ],
+    "desc": "Частоты символьных n-грамм (2,3) с ^ и $"
+  },
+  "doc_tfidf": {
+    "shape": [
+      50,
+      24215
+    ],
+    "desc": "TF-IDF униграмм и биграмм, smooth_idf=True, norm=l2"
+  },
+  "word_syntax": {
+    "shape": [
+      7447,
+      14839
+    ],
+    "desc": "Контексты OUT|dep|lemma и IN|dep|lemma"
+  },
+  "doc_syntax": {
+    "shape": [
+      50,
+      492
+    ],
+    "desc": "Частоты троек POS_head|dep|POS_child"
+  },
+  "parameters": {
+    "ngram_lengths": [
+      2,
+      3
+    ],
+    "tfidf_smooth_idf": true,
+    "tfidf_norm": "l2"
+  }
+}

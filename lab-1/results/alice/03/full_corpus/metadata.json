@@ -1,0 +1,95 @@
+{
+  "word_char": {
+    "matrix": "word_char.npz",
+    "rows_label": "word_char_rows.json",
+    "features_label": "word_char_features.json",
+    "shape": [
+      7456,
+      5720
+    ],
+    "nnz": 132149,
+    "params": {
+      "ngram_lengths": [
+        2,
+        3
+      ],
+      "boundary_start": "^",
+      "boundary_end": "$",
+      "description": "Частоты символьных n-грамм (длины 2 и 3) с граничными символами ^ и $ для каждого уникального слова корпуса"
+    }
+  },
+  "doc_tfidf": {
+    "matrix": "doc_tfidf.npz",
+    "rows_label": "doc_tfidf_rows.json",
+    "features_label": "doc_tfidf_features.json",
+    "shape": [
+      50,
+      24217
+    ],
+    "nnz": 31875,
+    "params": {
+      "ngram_range": [
+        1,
+        2
+      ],
+      "smooth_idf": true,
+      "norm": "l2",
+      "description": "TF-IDF по словным униграммам и биграммам, общий словарь для всего корпуса"
+    }
+  },
+  "word_syntax": {
+    "matrix": "word_syntax.npz",
+    "rows_label": "word_syntax_rows.json",
+    "features_label": "word_syntax_features.json",
+    "shape": [
+      7456,
+      14812
+    ],
+    "nnz": 30441,
+    "params": {
+      "spacy_model": "ru_core_news_sm",
+      "context_in": "IN|dep|lemma_головы",
+      "context_out": "OUT|dep|lemma_зависимого",
+      "word_key": "lowercase surface form",
+      "lemma_lower": true,
+      "token_filter": "WORD_RE.fullmatch (ru/lat letters only)",
+      "exclude_dep": [
+        "",
+        "ROOT",
+        "punct"
+      ],
+      "alphabetic_only": true,
+      "rows": "all unique words from corpus (zero rows for isolated words)",
+      "description": "Частоты синтаксических контекстов по dependency parsing: для каждого употребления слова учитываются отношения с головой (IN) и с зависимыми (OUT). Леммы нормализуются .lower(). Оба токена проверяются WORD_RE.fullmatch."
+    }
+  },
+  "doc_syntax": {
+    "matrix": "doc_syntax.npz",
+    "rows_label": "doc_syntax_rows.json",
+    "features_label": "doc_syntax_features.json",
+    "shape": [
+      50,
+      479
+    ],
+    "nnz": 3437,
+    "params": {
+      "spacy_model": "ru_core_news_sm",
+      "triple_format": "POS_головы|dep|POS_зависимого",
+      "exclude_dep": [
+        "",
+        "ROOT",
+        "punct"
+      ],
+      "alphabetic_only": true,
+      "token_filter": "WORD_RE.fullmatch (ru/lat letters only)",
+      "description": "Частоты структурных троек POS_головы|dep|POS_зависимого по результатам dependency parsing"
+    }
+  },
+  "corpus": {
+    "documents": 50,
+    "files_found": 50,
+    "files_read_ok": 50,
+    "files_errors": 0,
+    "unique_words_total": 7456
+  }
+}

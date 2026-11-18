@@ -1,0 +1,222 @@
+User:
+Привет, напиши, пожалуйста, код в соответствии со следующим заданием:
+```
+Цель -- разработать и реализовать программное обеспечение на языке python для извлечения данных из текстовых файлов, полученных из pdf-файлов с применением библиотеки PyPDF2, с использованием регулярных выражений.
+
+Для достижения цели выполнить следующие задачи.
+1. Разработать регулярные выражения для решения задачи по варианту.
+2. Реализовать функцию для поиска подстроки по варианту в pdf-файле с использованием разработанных регулярных выражений, возвращающую кортеж вида:
+- значение, определяющее наличие строки согласно заданному регулярному выражению ("истина/ложь");
+- список кортежей (если "ложь", то список пустой) с двумя составляющими каждого кортежа --- строкой, найденной с помощью регулярного выражения, и координатами для определения найденной строки в документе (минимально необходимо указать номер страницы и номер строки документа, в которой найдено вхождение искомой строки. Непосредственно таблицы и изображения строками не считать, но их названия считаются строками).
+3. Реализовать программное обеспечение, принимающее на вход путь к pdf-файлу, использующее функцию из предыдущего пункта.
+```
+
+Вариант к заданию:
+```
+Проверка отсутствия неразрывного пробела в специальных сочетаниях слов и чисел: обычно для комбинаций «рисунок 1», «таблица 2», «от 1 до 5», «менее 5», «свыше 25»… Для предотвращения разрыва во время переноса.
+```
+
+Model:
+**Defining the Scope**
+
+I've initiated the analysis by defining the core objective: crafting Python software to extract data from text extracted from PDFs. This encompasses using PyPDF2 for the initial PDF-to-text conversion. The immediate next step is formulating the regex patterns for the data extraction process. The software's structure will evolve from this point.
+
+
+**Addressing the Non-Breaking Space**
+
+I've shifted my focus to the specific variant, devising a regex pattern to pinpoint instances where a non-breaking space should be present but isn't. I'm now implementing a function that will search the PDF, returning a boolean indicating the pattern's presence and a list of tuples detailing the location of matches. A main script will then be built to integrate this function with the PDF path input.
+
+
+**Refining Regex Patterns**
+
+I'm now zeroing in on the specific patterns to detect incorrect spaces. The key is to catch instances where a regular space is used instead of a non-breaking space, particularly when a word is followed by a number. I'm focusing on "word + number" and "preposition/adverb + number" combinations. My current regex strategy centers on identifying these incorrect sequences: specific word followed by a regular space and then a digit.
+
+
+**Analyzing Spacing Errors**
+
+I'm now diving into the specifics of spacing errors within the text data. The core challenge is identifying where regular spaces are incorrectly used instead of non-breaking spaces, especially around keywords and numbers. I've formulated a regex to spot instances where specific words like "рисунок" or "от" are followed by a regular space and then a digit. This refined approach focuses on pinpointing the absence of the correct spacing type.
+
+
+**Expanding Regex Detection**
+
+I've just broadened the regex. The focus is now on identifying instances where specific words or abbreviations like "менее," "более," "свыше," "с.", "стр.", or "г." are followed by a regular space and then a digit. I'm aiming to catch these spacing errors across lines in the PDF, utilizing PyPDF2 for page-by-page text extraction and implementing an iterative search function. The output will flag and detail errors.
+
+
+**Enhancing Keyword Identification**
+
+I'm expanding the regex patterns to include a wider range of keywords for space error detection, adding "таблица," "рис.," and other common abbreviations. The Python function now iterates through PDF pages, extracting text and identifying matches using the refined pattern. This aims to improve the accuracy and breadth of error detection.
+
+
+**Evaluating Output Structure**
+
+I'm now focusing on how the output of the error detection function is structured. The plan is to clearly present the findings, including the full matching string and the precise page and line number where each error occurs. I'm taking into account potential edge cases where `PyPDF2` might return empty text or `None`. I'm also preparing the main execution block to take a file path as input, call the function, and print the results in an easy-to-understand format.
+
+
+**Integrating Russian Context**
+
+I've just ensured that all comments and output are in Russian, aligning with the prompt's language, while maintaining English variable names for coding clarity. I've also refined the regex to explicitly target standard spaces instead of relying on `\s`, to accurately detect the *absence* of non-breaking spaces. The code is designed to be compatible with `PyPDF2` 3.0.0+ (using `PdfReader`), ready for seamless execution.
+
+
+**Documenting the Process**
+
+I'm now in the process of thoroughly documenting the code's functionality, explaining the underlying regex patterns and how PyPDF2 handles text extraction. I'll highlight the handling of line breaks and the challenges in accurately representing PDF content. I'll provide clear explanations of the code's structure and intended usage for the user.
+
+
+**Developing the Python Code**
+
+I'm now deep in the implementation phase, translating my refined regex patterns into Python code. The goal is to accurately detect incorrect spacing around critical keywords and numbers within the PDF text. I'm focusing on creating a robust function that efficiently iterates through pages and highlights each spacing error. My next action is to integrate the error-detection functionality with the input file path for full automation.
+
+
+Вот готовое решение на языке Python.
+
+### Описание решения
+
+В коде реализованы следующие этапы:
+1.  **Регулярное выражение**: Создан шаблон, который ищет ключевые слова (рисунок, таблица, от, до и т.д.), за которыми следует **обычный** пробел (вместо неразрывного `\u00A0`), а затем цифра.
+2.  **Библиотека**: Используется `PyPDF2` (современный класс `PdfReader`).
+3.  **Логика поиска**: Текст извлекается постранично, разбивается на строки по символу переноса `\n`. Если в строке находится "запрещенное" сочетание (с обычным пробелом), оно записывается в список результатов.
+
+### Программный код
+
+```python
+import re
+import os
+import PyPDF2
+
+def get_regex_pattern():
+    """
+    Задача 1: Разработать регулярные выражения для решения задачи по варианту.
+    
+    Цель: Найти сочетания, где используется обычный пробел вместо неразрывного.
+    Ключевые слова: рисунок, рис., таблица, табл., от, до, менее, более, свыше.
+    """
+    # Список ключевых слов, после которых ожидается число
+    keywords = [
+        r"рисунок", r"рис\.", 
+        r"таблица", r"табл\.", 
+        r"от", r"до", 
+        r"менее", r"более", r"свыше"
+    ]
+    
+    # Собираем слова в группу (или | или). (?i) - игнорировать регистр.
+    keywords_group = "|".join(keywords)
+    
+    # Регулярное выражение:
+    # (?i) - флаг регистронезависимости
+    # \b - граница слова (чтобы не искать внутри других слов)
+    # (...) - первая группа: одно из ключевых слов
+    # [ ]+ - один или несколько ОБЫЧНЫХ пробелов (именно ошибку мы и ищем)
+    # (\d+) - вторая группа: одно или несколько чисел
+    pattern = re.compile(rf"(?i)\b({keywords_group})[ ]+(\d+)")
+    
+    return pattern
+
+def analyze_pdf_structure(file_path):
+    """
+    Задача 2: Реализовать функцию для поиска подстроки по варианту.
+    
+    Возвращает кортеж:
+    - (bool) истина, если найдены ошибки (обычные пробелы там, где нужны неразрывные);
+    - (list) список кортежей: [("найденная строка", (номер_страницы, номер_строки)), ...].
+    """
+    
+    regex = get_regex_pattern()
+    results = []
+    found_any = False
+    
+    try:
+        # Открываем PDF файл
+        reader = PyPDF2.PdfReader(file_path)
+        
+        # Перебор страниц (PyPDF2 нумерует с 0, для пользователя сделаем с 1)
+        for page_idx, page in enumerate(reader.pages):
+            text = page.extract_text()
+            
+            if not text:
+                continue
+            
+            # Разбиваем текст страницы на строки
+            lines = text.split('\n')
+            
+            for line_idx, line in enumerate(lines):
+                # Поиск всех совпадений в текущей строке
+                matches = regex.findall(line)
+                
+                if matches:
+                    found_any = True
+                    # matches вернет список кортежей групп, например [('Рисунок', '1'), ('табл.', '5')]
+                    # Нам нужно сохранить полную строку и координаты
+                    for match in matches:
+                        # Восстанавливаем найденную подстроку (слово + пробел + число)
+                        found_str = f"{match[0]} {match[1]}"
+                        
+                        # Координаты: (Номер страницы, Номер строки)
+                        # Добавляем +1, так как пользователю привычнее нумерация с 1
+                        coordinates = (page_idx + 1, line_idx + 1)
+                        
+                        results.append((found_str, coordinates))
+                        
+    except FileNotFoundError:
+        print("Ошибка: Файл не найден.")
+        return False, []
+    except Exception as e:
+        print(f"Произошла ошибка при чтении PDF: {e}")
+        return False, []
+
+    return found_any, results
+
+def main():
+    """
+    Задача 3: Реализовать ПО, принимающее на вход путь к pdf-файлу.
+    """
+    print("=== Анализатор PDF на наличие типографских ошибок (неразрывные пробелы) ===")
+    print("Вариант: Поиск отсутствия неразрывного пробела в сочетаниях 'рисунок 1', 'от 5' и т.д.")
+    
+    file_path = input("Введите путь к PDF-файлу (например, document.pdf): ").strip()
+    
+    # Убираем кавычки, если пользователь скопировал путь как "C:\Path\..."
+    file_path = file_path.replace('"', '')
+
+    if not os.path.exists(file_path):
+        print("Файл по указанному пути не существует.")
+        return
+
+    # Вызов функции поиска
+    is_found, details = analyze_pdf_structure(file_path)
+
+    print("\n--- Результаты анализа ---")
+    if is_found:
+        print("СТАТУС: Найдены потенциальные ошибки (использован обычный пробел вместо неразрывного).")
+        print(f"Всего найдено вхождений: {len(details)}")
+        print("\nДетализация:")
+        print(f"{'Страница':<10} | {'Строка':<10} | {'Найденный фрагмент'}")
+        print("-" * 50)
+        
+        for item in details:
+            text_fragment = item[0]
+            coords = item[1]
+            page_num = coords[0]
+            line_num = coords[1]
+            print(f"{page_num:<10} | {line_num:<10} | '{text_fragment}'")
+    else:
+        print("СТАТУС: Ошибок не обнаружено (либо используется неразрывный пробел, либо сочетания отсутствуют).")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Как запустить и протестировать
+
+1.  Установите библиотеку PyPDF2, если она еще не установлена:
+    ```bash
+    pip install PyPDF2
+    ```
+2.  Сохраните код в файл, например `pdf_checker.py`.
+3.  Запустите файл: `python pdf_checker.py`.
+4.  Введите путь к PDF-файлу.
+
+### Пояснения к реализации
+
+*   **Регулярное выражение**: Используется паттерн `[ ]+` (пробел в квадратных скобках), чтобы явно указать поиск стандартного пробела (ASCII 32). Если в документе стоит настоящий неразрывный пробел (NBSP, `\u00A0`), регулярное выражение его пропустит, что и требуется (так как это правильное оформление).
+*   **Определение "Строки"**: PDF — это формат фиксированной верстки, в нем нет понятия "строка" как в Word. `PyPDF2` пытается восстановить структуру текста и добавляет символы переноса `\n`. Программа считает строки именно по этим символам переноса в извлеченном тексте.
+*   **Координаты**: Возвращаются в формате `(Номер страницы, Порядковый номер строки текста на странице)`.

@@ -1,0 +1,20 @@
+Построение векторов слов на основе n-грамм...
+Построение векторов документов на основе TF-IDF...
+
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\qwen\02\solution.py", line 402, in <module>
+    main()
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\qwen\02\solution.py", line 346, in main
+    save_matrix_and_labels(doc_tfidf_matrix, document_paths, doc_tfidf_cols, output_path, "doc_tfidf")
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\qwen\02\solution.py", line 291, in save_matrix_and_labels
+    json.dump(col_labels, f, ensure_ascii=False, indent=2)
+  File "C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\json\__init__.py", line 179, in dump
+    for chunk in iterable:
+                 ^^^^^^^^
+  File "C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\json\encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type csr_matrix is not JSON serializable

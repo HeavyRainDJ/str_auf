@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:java="http://www.yworks.com/xml/graphml" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0 http://www.yworks.com/xml/graphml http://www.yworks.com/xml/graphml">
+  <key for="node" id="d0" yfiles.type="nodegraphics"/>
+  <key for="edge" id="d1" yfiles.type="edgegraphics"/>
+  <graph edgedefault="directed">
+    <node id="n_start">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="120.0" x="340.0" y="40.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Начало</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_input">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="310.0" y="130.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Ввод: V, матрица,&#10;start, finish</y:NodeLabel>
+          <y:Shape type="parallelogram"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_check_v">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="100.0" width="140.0" x="330.0" y="220.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Вершины&#10;корректны?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_err_v">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="520.0" y="240.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Вывод: &quot;Invalid vertices&quot;</y:NodeLabel>
+          <y:Shape type="parallelogram"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_init">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="310.0" y="350.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Инициализация:&#10;distance, previous, visited</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_loop_main">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="100.0" width="140.0" x="330.0" y="440.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Все вершины&#10;обработаны?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_pick_min">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="310.0" y="570.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Выбрать непосещённую&#10;вершину current с&#10;минимальным distance</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_check_reach">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="110.0" width="200.0" x="300.0" y="660.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">current == -1 или&#10;distance[current] == INF?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_check_fin">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="100.0" width="140.0" x="330.0" y="800.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">current == finish?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_check_edge">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="110.0" width="180.0" x="310.0" y="930.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Ребро существует&#10;и neighbor не посещён?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_check_overflow">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="100.0" width="180.0" x="310.0" y="1070.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">distance[current] &lt;=&#10;INF - weight?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_check_cand">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="100.0" width="180.0" x="310.0" y="1200.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">candidate &lt; distance[neighbor]?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_update">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="310.0" y="1330.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">distance[neighbor] = candidate&#10;previous[neighbor] = current</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_route_exists">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="110.0" width="180.0" x="310.0" y="1420.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">distance[finish] != INF?</y:NodeLabel>
+          <y:Shape type="diamond"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_restore">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="310.0" y="1560.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Восстановить и&#10;развернуть маршрут&#10;по previous</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_out_success">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="310.0" y="1650.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Вывод: расстояние&#10;и маршрут</y:NodeLabel>
+          <y:Shape type="parallelogram"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_out_fail">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="180.0" x="520.0" y="1440.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Вывод: &quot;Route not found&quot;</y:NodeLabel>
+          <y:Shape type="parallelogram"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n_end">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="60.0" width="120.0" x="340.0" y="1740.0"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" width="1.5"/>
+          <y:NodeLabel alignment="center" verticalAlignment="center" fontSize="12pt">Конец</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <edge id="e1" source="n_start" target="n_input">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e2" source="n_input" target="n_check_v">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e3" source="n_check_v" target="n_err_v">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e4" source="n_check_v" target="n_init">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e5" source="n_init" target="n_loop_main">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e6" source="n_loop_main" target="n_pick_min">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e7" source="n_pick_min" target="n_check_reach">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e8" source="n_check_reach" target="n_route_exists">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+          <y:Path>
+            <y:Point x="560.0" y="715.0"/>
+            <y:Point x="560.0" y="1465.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e9" source="n_check_reach" target="n_check_fin">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e10" source="n_check_fin" target="n_route_exists">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+          <y:Path>
+            <y:Point x="560.0" y="850.0"/>
+            <y:Point x="560.0" y="1465.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e11" source="n_check_fin" target="n_check_edge">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e12" source="n_check_edge" target="n_check_overflow">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e13" source="n_check_edge" target="n_loop_main">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+          <y:Path>
+            <y:Point x="260.0" y="985.0"/>
+            <y:Point x="260.0" y="490.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e14" source="n_check_overflow" target="n_check_cand">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e15" source="n_check_overflow" target="n_loop_main">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+          <y:Path>
+            <y:Point x="260.0" y="1120.0"/>
+            <y:Point x="260.0" y="490.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e16" source="n_check_cand" target="n_update">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e17" source="n_check_cand" target="n_loop_main">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+          <y:Path>
+            <y:Point x="260.0" y="1250.0"/>
+            <y:Point x="260.0" y="490.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e18" source="n_update" target="n_loop_main">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:Path>
+            <y:Point x="260.0" y="1360.0"/>
+            <y:Point x="260.0" y="490.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e19" source="n_loop_main" target="n_route_exists">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+          <y:Path>
+            <y:Point x="200.0" y="490.0"/>
+            <y:Point x="200.0" y="1465.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e20" source="n_route_exists" target="n_restore">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="stail" text="Да" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e21" source="n_route_exists" target="n_out_fail">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:EdgeLabel modelName="six_pos" placement="shead" text="Нет" backgroundColor="#FFFFFF" fontSize="12pt"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e22" source="n_restore" target="n_out_success">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e23" source="n_out_success" target="n_end">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e24" source="n_out_fail" target="n_end">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:Path>
+            <y:Point x="610.0" y="1770.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e25" source="n_err_v" target="n_end">
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#000000" width="1.5"/>
+          <y:Arrows source="none" target="block"/>
+          <y:Path>
+            <y:Point x="720.0" y="270.0"/>
+            <y:Point x="720.0" y="1770.0"/>
+          </y:Path>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+  </graph>
+</graphml>

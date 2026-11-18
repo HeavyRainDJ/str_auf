@@ -1,0 +1,405 @@
+{
+  "model": "qwen",
+  "version": "02",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "9f7b0f314ea64b020654a9f17c14002b20f47b7a491bfa5311118011e99570b3",
+  "tests": [
+    {
+      "case": "basic",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\basic",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\qwen\\02\\basic"
+      ],
+      "seconds": 1.895,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            6,
+            38
+          ],
+          "nnz": 40,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            3,
+            13
+          ],
+          "nnz": 18,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "shape": [
+            6,
+            13
+          ],
+          "nnz": 14,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": false,
+            "values_exact": false,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "shape": [
+            3,
+            6
+          ],
+          "nnz": 8,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": false,
+            "values_exact": false,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "all_empty",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\all_empty",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\qwen\\02\\all_empty"
+      ],
+      "seconds": 1.264,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py\", line 402, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py\", line 346, in main\n    save_matrix_and_labels(doc_tfidf_matrix, document_paths, doc_tfidf_cols, output_path, \"doc_tfidf\")\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py\", line 291, in save_matrix_and_labels\n    json.dump(col_labels, f, ensure_ascii=False, indent=2)\n  File \"C:\\Users\\user\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\__init__.py\", line 179, in dump\n    for chunk in iterable:\n                 ^^^^^^^^\n  File \"C:\\Users\\user\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\encoder.py\", line 439, in _iterencode\n    o = _default(o)\n        ^^^^^^^^^^^\n  File \"C:\\Users\\user\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\encoder.py\", line 180, in default\n    raise TypeError(f'Object of type {o.__class__.__name__} '\nTypeError: Object of type csr_matrix is not JSON serializable\n"
+    },
+    {
+      "case": "empty_dir",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\empty_dir",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\qwen\\02\\empty_dir"
+      ],
+      "seconds": 1.283,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\qwen\\\\02\\\\empty_dir\\\\word_char.npz'"
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\qwen\\\\02\\\\empty_dir\\\\doc_tfidf.npz'"
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\qwen\\\\02\\\\empty_dir\\\\word_syntax.npz'"
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\qwen\\\\02\\\\empty_dir\\\\doc_syntax.npz'"
+        },
+        {
+          "name": "metadata",
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "repeated",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\repeated",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\qwen\\02\\repeated"
+      ],
+      "seconds": 1.828,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            5,
+            22
+          ],
+          "nnz": 24,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            1,
+            11
+          ],
+          "nnz": 11,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "shape": [
+            5,
+            7
+          ],
+          "nnz": 8,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": false,
+            "values_exact": false,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "shape": [
+            1,
+            5
+          ],
+          "nnz": 5,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": false,
+            "values_exact": false,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "formats",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\formats",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\qwen\\02\\formats"
+      ],
+      "seconds": 1.89,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            5,
+            35
+          ],
+          "nnz": 37,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            4,
+            9
+          ],
+          "nnz": 36,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "shape": [
+            5,
+            8
+          ],
+          "nnz": 8,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": false,
+            "values_exact": false,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "shape": [
+            4,
+            4
+          ],
+          "nnz": 16,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": false,
+            "values_exact": false,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "corrupt",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\corrupt",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\qwen\\02\\corrupt"
+      ],
+      "seconds": 1.244,
+      "exit_code": 1,
+      "checks": [
+        {
+          "name": "corrupt_file_reported",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "full_corpus",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\qwen\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\тексты для тестов",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\qwen\\02\\full_corpus"
+      ],
+      "seconds": 1.446,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Ошибка: Ошибка при чтении файла C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\тексты для тестов\\Комментаторы\\комментаторы_03.txt: 'utf-8' codec can't decode byte 0xd1 in position 0: invalid continuation byte\n"
+    }
+  ],
+  "compilation": {
+    "passed": true,
+    "stderr": ""
+  },
+  "passed": false
+}

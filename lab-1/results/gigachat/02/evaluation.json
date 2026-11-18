@@ -1,0 +1,18 @@
+{
+  "model": "gigachat",
+  "version": "02",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "022a2ae0122d5a0ca6e02cd530ff759317cf4d1bf8b41c19615dddb7242a433c",
+  "tests": [
+    {
+      "case": "compilation",
+      "passed": false,
+      "error": "  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\02\\solution.py\", line 300\n    docs_spacy = list(tqdm(parser.process(t) for t in raw_texts, desc=\"Syntax parsing\"))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nSyntaxError: Generator expression must be parenthesized\n"
+    }
+  ],
+  "compilation": {
+    "passed": false,
+    "stderr": "  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\02\\solution.py\", line 300\n    docs_spacy = list(tqdm(parser.process(t) for t in raw_texts, desc=\"Syntax parsing\"))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nSyntaxError: Generator expression must be parenthesized\n"
+  },
+  "passed": false
+}

@@ -1,0 +1,56 @@
+{
+  "summary": {
+    "model": "litert-community/M-LSD-tiny-LiteRT",
+    "images": 6,
+    "images_with_parallel_pair": 6,
+    "recall_on_positive_images": 1.0,
+    "mean_inference_s": 0.0991054833320959,
+    "load_s": 0.027941100001044106,
+    "rss_increment_mb": 51.3984375,
+    "angle_tolerance_deg": 3.0
+  },
+  "rows": [
+    {
+      "image": "10.jpg",
+      "segments": 124,
+      "parallel_pairs": 522,
+      "parallel_found": true,
+      "inference_s": 0.10056769999937387
+    },
+    {
+      "image": "11.jpg",
+      "segments": 101,
+      "parallel_pairs": 570,
+      "parallel_found": true,
+      "inference_s": 0.0995487999971374
+    },
+    {
+      "image": "6.png",
+      "segments": 97,
+      "parallel_pairs": 1495,
+      "parallel_found": true,
+      "inference_s": 0.09801280000101542
+    },
+    {
+      "image": "7.png",
+      "segments": 112,
+      "parallel_pairs": 1828,
+      "parallel_found": true,
+      "inference_s": 0.0985752999986289
+    },
+    {
+      "image": "8.png",
+      "segments": 194,
+      "parallel_pairs": 6617,
+      "parallel_found": true,
+      "inference_s": 0.099548500002129
+    },
+    {
+      "image": "9.jpg",
+      "segments": 65,
+      "parallel_pairs": 118,
+      "parallel_found": true,
+      "inference_s": 0.0983797999942908
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+    "word_ngram": {
+        "shape": [
+            6,
+            38
+        ]
+    },
+    "doc_tfidf": {
+        "shape": [
+            3,
+            13
+        ],
+        "params": "TF-IDF, unigrams+bigrams, smooth_idf=True, norm=l2"
+    },
+    "word_syntax": {
+        "shape": [
+            6,
+            5
+        ]
+    },
+    "doc_syntax": {
+        "shape": [
+            3,
+            2
+        ]
+    },
+    "total_docs": 3,
+    "total_unique_words": 6
+}

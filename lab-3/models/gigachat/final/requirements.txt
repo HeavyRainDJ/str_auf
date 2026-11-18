@@ -1,0 +1,12 @@
+# Python 3.12
+numpy
+scipy
+pandas
+scikit-learn
+matplotlib
+beautifulsoup4
+python-docx
+odfpy
+pymorphy3[fast]
+torch>=2.0
+transformers

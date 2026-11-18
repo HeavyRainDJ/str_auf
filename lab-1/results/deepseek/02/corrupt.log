@@ -1,0 +1,6 @@
+
+STDERR:
+Сбор документов...
+Найдено документов: 0, ошибок чтения: 1
+ОШИБКА чтения broken.docx: PackageNotFoundError: Package not found at 'C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\tests\fixtures\corrupt\broken.docx'
+Обнаружены ошибки чтения. Выход.

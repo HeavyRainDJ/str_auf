@@ -1,0 +1,6 @@
+
+STDERR:
+Сбор документов...
+Найдено документов: 3, ошибок чтения: 1
+ОШИБКА чтения d.odt: AttributeError: module 'odf.text' has no attribute 'TableRow'
+Обнаружены ошибки чтения. Выход.

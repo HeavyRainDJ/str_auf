@@ -1,0 +1,8 @@
+[
+  "IN|appos|аааа",
+  "IN|cc|я",
+  "OUT|appos|ЁЖ",
+  "OUT|appos|я",
+  "OUT|appos|ёж",
+  "OUT|cc|а"
+]

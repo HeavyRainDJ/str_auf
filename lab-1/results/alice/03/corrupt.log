@@ -1,0 +1,33 @@
+
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\alice\03\solution.py", line 362, in main
+    text = read_file(fpath)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\alice\03\solution.py", line 123, in read_file
+    return reader(path)
+           ^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\alice\03\solution.py", line 74, in read_docx
+    document = docx.Document(str(path))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\api.py", line 27, in Document
+    document_part = cast("DocumentPart", Package.open(docx).main_document_part)
+                                         ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\package.py", line 126, in open
+    pkg_reader = PackageReader.from_file(pkg_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\pkgreader.py", line 22, in from_file
+    phys_reader = PhysPkgReader(pkg_file)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\phys_pkg.py", line 21, in __new__
+    raise PackageNotFoundError("Package not found at '%s'" % pkg_file)
+docx.opc.exceptions.PackageNotFoundError: Package not found at 'C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\tests\fixtures\corrupt\broken.docx'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\alice\03\solution.py", line 516, in <module>
+    main()
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\alice\03\solution.py", line 364, in main
+    raise RuntimeError(f"Ошибка чтения файла '{rel}': {e}")
+RuntimeError: Ошибка чтения файла 'broken.docx': Package not found at 'C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\tests\fixtures\corrupt\broken.docx'

@@ -1,0 +1,255 @@
+РОЛЬ
+
+Ты выступаешь как программист и специалист по созданию алгоритмических блок-схем по ГОСТ 19.701-90 для draw.io и yEd Graph Editor.
+
+ЗАДАЧА
+
+По приведённым реализациям алгоритма Дейкстры создай ровно две редактируемые блок-схемы:
+
+1. реализация Python — в формате draw.io XML;
+2. реализация C++ — в формате yEd GraphML.
+
+Не создавай дополнительные диаграммы, страницы, изображения или файлы. В ответе должны присутствовать ровно два файла.
+
+ОБЯЗАТЕЛЬНЫЕ ФАЙЛЫ
+
+1. `python_gost.drawio` — несжатый XML draw.io с одной страницей `Python ГОСТ`.
+2. `cpp_gost.graphml` — редактируемый yEd GraphML с одной блок-схемой `C++ ГОСТ`.
+
+Перед каждым кодовым блоком напиши строку `FILE: имя_файла`. Верни полное содержимое файлов без многоточий, сокращений и ссылок на внешние генераторы.
+
+СОДЕРЖАНИЕ СХЕМ
+
+Каждая схема должна отражать основной управляющий поток соответствующей программы:
+
+- начало;
+- ввод числа вершин, матрицы, начальной и конечной вершин;
+- проверку корректности номеров вершин;
+- инициализацию `distance`, `previous`, `visited`;
+- внешний цикл алгоритма Дейкстры;
+- выбор непосещённой вершины с минимальной меткой;
+- проверку недостижимости и достижения `finish`;
+- обход соседей и проверку наличия ребра;
+- вычисление новой длины и обновление `distance` и `previous`;
+- проверку существования маршрута;
+- восстановление и разворот маршрута;
+- вывод ошибки, сообщения об отсутствии маршрута либо найденного расстояния и маршрута;
+- один общий блок `Конец`.
+
+Допускается объединить внутренний перебор вершин в один процесс `Выбрать непосещённую вершину current с минимальным distance`, а восстановление маршрута — в один процесс `Восстановить и развернуть маршрут по previous`. Схема должна оставаться компактной: от 14 до 20 видимых блоков. Нельзя объединять развилки, от которых зависит результат программы.
+
+Для C++ обязательно покажи отдельным ромбом проверку `distance[current] <= INF - weight?`. В Python такого блока быть не должно.
+
+ГОСТ 19.701-90 И КОМПОНОВКА
+
+- `Начало` и `Конец` — терминаторы с закруглёнными краями;
+- ввод и вывод — параллелограммы;
+- вычисления и присваивания — прямоугольники;
+- условия и проверки циклов — ромбы;
+- у каждого ромба ровно две исходящие ветви с подписями `Да` и `Нет`;
+- переходы направленные, ортогональные, с видимыми заполненными наконечниками;
+- основное направление схемы — сверху вниз;
+- обратные дуги циклов проходят по боковым коридорам;
+- линии не пересекают блоки, текст и другие подписи;
+- текст расположен по центру и имеет внутренний отступ от границ;
+- шрифт не менее 12 pt;
+- чёрный текст и линии, белая заливка и белый фон;
+- одна схема должна помещаться на одной вертикальной странице и оставаться читаемой при экспорте в отчёт.
+
+ТРЕБОВАНИЯ К `python_gost.drawio`
+
+- корневой элемент `mxfile`;
+- ровно один `diagram` с именем `Python ГОСТ`;
+- внутри `mxGraphModel`, `root`, базовые ячейки `id="0"` и `id="1"`;
+- каждый узел и ребро имеет уникальный `id`;
+- у каждого ребра существуют `source` и `target`;
+- каждое ребро содержит `<mxGeometry relative="1" as="geometry"/>`;
+- у каждого ребра явно заданы `endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;`;
+- для длинных и обратных переходов задай явные `mxPoint` вне блоков;
+- подписи `Да` и `Нет` имеют белый фон и не лежат на наконечниках;
+- XML несжатый и синтаксически корректный.
+
+ТРЕБОВАНИЯ К `cpp_gost.graphml`
+
+- корень `graphml` с пространствами имён GraphML и `http://www.yworks.com/xml/graphml`;
+- ключи `yfiles.type="nodegraphics"` и `yfiles.type="edgegraphics"` в нижнем регистре;
+- ориентированный граф `edgedefault="directed"`;
+- каждый узел содержит `data -> y:ShapeNode` с геометрией, заливкой, рамкой, `y:NodeLabel` и `y:Shape`;
+- каждое ребро содержит `data -> y:PolyLineEdge` с линией, наконечником, изгибами и при необходимости `y:EdgeLabel`;
+- каждый узел и каждое ребро имеют уникальный `id`;
+- все `source` и `target` существуют;
+- подписи `Да` и `Нет` использует `modelName="six_pos"` и подходящие разные позиции около исходного ромба, например `shead` и `stail`;
+- подписи имеют белый фон, не лежат на линии, наконечнике или блоке;
+- текст узлов выровнен по центру, шрифт не менее 12 pt, фигуры достаточно велики для текста;
+- файл открывается в yEd как редактируемая схема, а не как набор стандартных наложенных узлов.
+
+САМОПРОВЕРКА
+
+Перед ответом проверь:
+
+- выданы ровно два файла;
+- draw.io содержит ровно одну страницу `Python ГОСТ`;
+- GraphML содержит только схему C++;
+- XML обоих файлов синтаксически корректен;
+- все ссылки рёбер существуют;
+- у каждого ромба две подписанные ветви;
+- в C++ имеется отдельный ромб защиты от переполнения;
+- в Python такой проверки нет;
+- на каждой схеме по одному `Начало` и `Конец`;
+- текст и подписи не перекрывают линии и границы;
+- не утверждай, что фактический импорт выполнен, если файлы не открывались в редакторах.
+
+ИСХОДНЫЙ КОД PYTHON
+
+```python
+from math import inf
+
+
+def shortest_route(matrix: list[list[int]], start: int, finish: int) -> tuple[int, list[int]]:
+    vertex_count = len(matrix)
+    distance = [inf] * vertex_count
+    previous = [-1] * vertex_count
+    visited = [False] * vertex_count
+    distance[start] = 0
+
+    for _ in range(vertex_count):
+        current = -1
+        for vertex in range(vertex_count):
+            if not visited[vertex] and (current == -1 or distance[vertex] < distance[current]):
+                current = vertex
+
+        if current == -1 or distance[current] == inf:
+            break
+        if current == finish:
+            break
+
+        visited[current] = True
+        for neighbor, weight in enumerate(matrix[current]):
+            if weight > 0 and not visited[neighbor]:
+                candidate = distance[current] + weight
+                if candidate < distance[neighbor]:
+                    distance[neighbor] = candidate
+                    previous[neighbor] = current
+
+    if distance[finish] == inf:
+        return -1, []
+
+    route = []
+    current = finish
+    while current != -1:
+        route.append(current)
+        current = previous[current]
+    route.reverse()
+    return int(distance[finish]), route
+
+
+def main() -> None:
+    vertex_count = int(input("Number of vertices: "))
+    matrix = [list(map(int, input().split())) for _ in range(vertex_count)]
+    start, finish = map(int, input("Start and finish: ").split())
+
+    if not (0 <= start < vertex_count and 0 <= finish < vertex_count):
+        print("Invalid vertices")
+        return
+
+    distance, route = shortest_route(matrix, start, finish)
+    if distance == -1:
+        print("Route not found")
+    else:
+        print("Distance:", distance)
+        print("Route:", " -> ".join(map(str, route)))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+ИСХОДНЫЙ КОД C++
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <limits>
+#include <utility>
+#include <vector>
+
+using namespace std;
+
+pair<int, vector<int>> shortestRoute(const vector<vector<int>>& matrix, int start, int finish) {
+    const int vertexCount = static_cast<int>(matrix.size());
+    const int INF = numeric_limits<int>::max();
+    vector<int> distance(vertexCount, INF);
+    vector<int> previous(vertexCount, -1);
+    vector<bool> visited(vertexCount, false);
+    distance[start] = 0;
+
+    for (int step = 0; step < vertexCount; ++step) {
+        int current = -1;
+        for (int vertex = 0; vertex < vertexCount; ++vertex) {
+            if (!visited[vertex] &&
+                (current == -1 || distance[vertex] < distance[current])) {
+                current = vertex;
+            }
+        }
+
+        if (current == -1 || distance[current] == INF) break;
+        if (current == finish) break;
+
+        visited[current] = true;
+        for (int neighbor = 0; neighbor < vertexCount; ++neighbor) {
+            const int weight = matrix[current][neighbor];
+            if (weight > 0 && !visited[neighbor] &&
+                distance[current] <= INF - weight) {
+                const int candidate = distance[current] + weight;
+                if (candidate < distance[neighbor]) {
+                    distance[neighbor] = candidate;
+                    previous[neighbor] = current;
+                }
+            }
+        }
+    }
+
+    if (distance[finish] == INF) return {-1, {}};
+
+    vector<int> route;
+    for (int current = finish; current != -1; current = previous[current]) {
+        route.push_back(current);
+    }
+    reverse(route.begin(), route.end());
+    return {distance[finish], route};
+}
+
+int main() {
+    int vertexCount;
+    cout << "Number of vertices: ";
+    cin >> vertexCount;
+
+    vector<vector<int>> matrix(vertexCount, vector<int>(vertexCount));
+    for (auto& row : matrix) {
+        for (int& weight : row) cin >> weight;
+    }
+
+    int start, finish;
+    cout << "Start and finish: ";
+    cin >> start >> finish;
+
+    if (start < 0 || start >= vertexCount || finish < 0 || finish >= vertexCount) {
+        cout << "Invalid vertices\n";
+        return 0;
+    }
+
+    const auto [distance, route] = shortestRoute(matrix, start, finish);
+    if (distance == -1) {
+        cout << "Route not found\n";
+    } else {
+        cout << "Distance: " << distance << '\n';
+        cout << "Route: ";
+        for (size_t index = 0; index < route.size(); ++index) {
+            if (index > 0) cout << " -> ";
+            cout << route[index];
+        }
+        cout << '\n';
+    }
+    return 0;
+}
+```

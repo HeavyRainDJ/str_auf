@@ -1,0 +1,1120 @@
+{
+ "target": "лаб-3\\report\\main.tex",
+ "pdf": "лаб-3\\report\\main.pdf",
+ "findings": [
+  {
+   "rule": "6.1.1-parindent",
+   "clause": "6.1.1",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 164,
+   "message": "В тексте 9 команд \\noindent — проверьте, что абзацы основного текста не лишены отступа (без отступа допустимы только ключевые слова, термины, сокращения, подписи таблиц).",
+   "fix": "\\setlength{\\parindent}{1.25cm} и \\usepackage{indentfirst}.",
+   "source": "tex"
+  },
+  {
+   "rule": "6.5.4-fig-numbering",
+   "clause": "6.5.4–6.5.6",
+   "severity": "info",
+   "file": null,
+   "line": null,
+   "message": "Рисунки нумеруются в пределах раздела (1.1) — допустимо (6.5.6); убедитесь, что так же нумеруются таблицы и формулы.",
+   "fix": "Сквозная: \\counterwithout{figure}{section}; по разделам: \\counterwithin{figure}{section}.",
+   "source": "tex"
+  },
+  {
+   "rule": "5.6.1-abbr-intro",
+   "clause": "5.6.1",
+   "severity": "error",
+   "file": "main.tex",
+   "line": 226,
+   "message": "Элемент должен начинаться словами: «В настоящем отчете о НИР применяют следующие сокращения и обозначения».",
+   "fix": "Вставить вводную фразу первой строкой элемента.",
+   "source": "tex"
+  },
+  {
+   "rule": "6.15-abbr-format",
+   "clause": "6.15",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 226,
+   "message": "Не удалось разобрать перечень автоматически — проверьте вручную: столбцом, по алфавиту, «обозначение – расшифровка», без знаков в конце.",
+   "fix": "Список вида «\\noindent НИР~--- научно-исследовательская работа\\par», отсортированный по алфавиту.",
+   "source": "tex"
+  },
+  {
+   "rule": "5.1.2-title-requisites",
+   "clause": "5.1.2",
+   "severity": "error",
+   "file": "main.tex",
+   "line": 161,
+   "message": "На титульном листе не найдено: индекс УДК.",
+   "fix": "Собрать титульный лист по шаблону assets/titlepage.tex; отсутствующие сведения пометить TODO и запросить у автора.",
+   "source": "tex"
+  },
+  {
+   "rule": "5.1.2-title-requisites",
+   "clause": "5.1.2",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 161,
+   "message": "На титульном листе не найдено: вид документа «ОТЧЕТ / О НАУЧНО-ИССЛЕДОВАТЕЛЬСКОЙ РАБОТЕ».",
+   "fix": "Собрать титульный лист по шаблону assets/titlepage.tex; отсутствующие сведения пометить TODO и запросить у автора.",
+   "source": "tex"
+  },
+  {
+   "rule": "5.1.2-title-requisites",
+   "clause": "5.1.2",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 161,
+   "message": "На титульном листе не найдено: строка «О НАУЧНО-ИССЛЕДОВАТЕЛЬСКОЙ РАБОТЕ».",
+   "fix": "Собрать титульный лист по шаблону assets/titlepage.tex; отсутствующие сведения пометить TODO и запросить у автора.",
+   "source": "tex"
+  },
+  {
+   "rule": "5.1.2-title-requisites",
+   "clause": "5.1.2",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 161,
+   "message": "На титульном листе не найдено: вид отчёта в скобках: (заключительный) или (промежуточный, этап N).",
+   "fix": "Собрать титульный лист по шаблону assets/titlepage.tex; отсутствующие сведения пометить TODO и запросить у автора.",
+   "source": "tex"
+  },
+  {
+   "rule": "5.1.2-title-requisites",
+   "clause": "5.1.2",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 161,
+   "message": "На титульном листе не найдено: гриф «УТВЕРЖДАЮ».",
+   "fix": "Собрать титульный лист по шаблону assets/titlepage.tex; отсутствующие сведения пометить TODO и запросить у автора.",
+   "source": "tex"
+  },
+  {
+   "rule": "5.1.2-title-requisites",
+   "clause": "5.1.2",
+   "severity": "error",
+   "file": "main.tex",
+   "line": 161,
+   "message": "На титульном листе не найдено: сведения о руководителе НИР (должность, степень, подпись, инициалы и фамилия).",
+   "fix": "Собрать титульный лист по шаблону assets/titlepage.tex; отсутствующие сведения пометить TODO и запросить у автора.",
+   "source": "tex"
+  },
+  {
+   "rule": "6.10.1-title-layout",
+   "clause": "6.10.1, прил. А, Г",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 161,
+   "message": "На титульном листе есть полужирный шрифт — образцы стандарта (приложение А) набраны без выделения.",
+   "fix": "Свести титульный лист к assets/titlepage.tex.",
+   "source": "tex"
+  },
+  {
+   "rule": "6.17.4-app-letters",
+   "clause": "6.17.4",
+   "severity": "info",
+   "file": "main.tex",
+   "line": 1029,
+   "message": "Приложения обозначаются латинскими буквами (умолчание \\appendix) — допускается, но основной вариант — кириллические буквы с А.",
+   "fix": "Не использовать \\Asbuk/\\Alph напрямую при ≥ 8 приложениях — счётчик \\gostAsbuk из gost732.sty.",
+   "source": "tex"
+  },
+  {
+   "rule": "6.1.1-margins",
+   "clause": "6.1.1",
+   "severity": "error",
+   "file": null,
+   "line": null,
+   "page": null,
+   "message": "По PDF левое поле ≈ 33.2 мм — должно быть 30 мм.",
+   "fix": "\\usepackage[a4paper,left=30mm,right=15mm,top=20mm,bottom=20mm]{geometry}.",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.1.1-fontsize",
+   "clause": "6.1.1",
+   "severity": "error",
+   "file": null,
+   "line": null,
+   "page": null,
+   "message": "По PDF основной кегль ≈ 10 пт — требуется не менее 12 пт.",
+   "fix": "\\documentclass[14pt]{extarticle} / [12pt]{article}.",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.1.1-fontfamily",
+   "clause": "6.1.1",
+   "severity": "info",
+   "file": null,
+   "line": null,
+   "page": null,
+   "message": "Основной шрифт в PDF — «KMLBZJ+SFTT1000»; стандарт рекомендует Times New Roman.",
+   "fix": "XeLaTeX/LuaLaTeX: \\setmainfont{Times New Roman}; pdfLaTeX: tempora или newtx с T2A.",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 61,
+   "message": "С. 61: «1. Полный ‘solution.py‘ одним кодовым блоком, без » — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 61,
+   "message": "С. 61: «2. Полный ‘requirements.txt‘ отдельным кодовым бло» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 61,
+   "message": "С. 61: «3. Краткое описание принятых формул, правил для вы» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 61,
+   "message": "С. 61: «1. Полный solution.py» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 74,
+   "message": "С. 74: «2. Полный requirements.txt» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 74,
+   "message": "С. 74: «3. Краткое описание принятых формул, правил для вы» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 76,
+   "message": "С. 76: «2. Ключи расстояний называются ‘euclidean‘, ‘manha» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 76,
+   "message": "С. 76: «3. Пустой входной каталог должен дать полный согла» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 76,
+   "message": "С. 76: «4. Обработай N>0 полностью пустых документов: ‘Tfi» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 76,
+   "message": "С. 76: «5. Для одного документа ‘nearest_neighbors.csv‘ до» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 76,
+   "message": "С. 76: «6. Удали ‘python>=3.12‘ из ‘requirements.txt‘: это» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 76,
+   "message": "С. 76: «7. Исправь тайминги: время начала фиксируется в са» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 76,
+   "message": "С. 76: «8. Сохрани все исходные требования: четыре формата» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 92,
+   "message": "С. 92: «1. Восстанови разрешение ‘--device auto‘: до загру» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 92,
+   "message": "С. 92: «2. Все пустые CSV обязаны иметь те же заголовки, ч» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 92,
+   "message": "С. 92: «3. Тайминг BGE должен включать загрузку токенизато» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 92,
+   "message": "С. 92: «4. Не меняй уже исправленные части: явные типы 11 » — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 161,
+   "message": "С. 161: «1. Полный ‘solution.py‘ одним кодовым блоком, без » — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 161,
+   "message": "С. 161: «2. Полный ‘requirements.txt‘ отдельным кодовым бло» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 161,
+   "message": "С. 161: «3. Краткое описание принятых формул, правил для вы» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 161,
+   "message": "С. 161: «1. Полный solution.py» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 179,
+   "message": "С. 179: «2. Полный requirements.txt» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 179,
+   "message": "С. 179: «1. При пустом входном каталоге создай полный согла» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 179,
+   "message": "С. 179: «2. При N>0 полностью пустых документах не вызывай » — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "severity": "warning",
+   "file": null,
+   "line": null,
+   "page": 179,
+   "message": "С. 179: «3. Добавь явную ветку для представления размерност» — похоже на заголовок с точкой после номера; после номера раздела точка не ставится.",
+   "fix": "Убрать точку из \\thesection / формата titlesec; не использовать римские цифры и слово «Глава».",
+   "source": "pdf"
+  },
+  {
+   "rule": "6.1.1-bold",
+   "clause": "6.1.1",
+   "severity": "info",
+   "file": null,
+   "line": null,
+   "page": 1,
+   "message": "По PDF полужирный встречается в середине предложений (например, с. 1: «высшего образования») — полужирный допустим только в заголовках.",
+   "fix": "Заменить \\textbf{...} в тексте на курсив (\\emph) или убрать выделение.",
+   "source": "pdf"
+  }
+ ],
+ "coverage": [
+  {
+   "rule": "4-mandatory",
+   "clause": "4",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "4-order",
+   "clause": "4",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "5.1.1-title-first",
+   "clause": "5.1.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "5.1.2-title-requisites",
+   "clause": "5.1.2",
+   "kind": "TM",
+   "status": "НАРУШЕНИЕ"
+  },
+  {
+   "rule": "5.1.3-books-title",
+   "clause": "5.1.3",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.2.1-executors-data",
+   "clause": "5.2.1",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.2.2-single-executor",
+   "clause": "5.2.2",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.3.2-abstract-parts",
+   "clause": "5.3.2",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "5.3.2-abstract-counts",
+   "clause": "5.3.2",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "5.3.2.1-keywords-count",
+   "clause": "5.3.2.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "5.3.2.2-abstract-content",
+   "clause": "5.3.2.2",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.3.2.2-abstract-length",
+   "clause": "5.3.2.2",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "5.4.1-toc-content",
+   "clause": "5.4.1",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "5.4.1-toc-leaders",
+   "clause": "5.4.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "5.4.1-toc-indents",
+   "clause": "5.4.1",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.4.2-toc-books",
+   "clause": "5.4.2",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.4.3-toc-required",
+   "clause": "5.4.3",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "5.5.2-terms-intro",
+   "clause": "5.5.2",
+   "kind": "T",
+   "status": "неприменимо: элемента нет"
+  },
+  {
+   "rule": "5.6.1-abbr-intro",
+   "clause": "5.6.1",
+   "kind": "T",
+   "status": "НАРУШЕНИЕ"
+  },
+  {
+   "rule": "5.6.2-abbr-needed",
+   "clause": "5.6.2–5.6.3",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.7.1-intro-content",
+   "clause": "5.7.1",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.7.2-intro-stage",
+   "clause": "5.7.2–5.7.3",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.8.2-main-content",
+   "clause": "5.8.2",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.8.3-units",
+   "clause": "5.8.3",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "5.9-conclusion-content",
+   "clause": "5.9",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "5.10.1-bib-format",
+   "clause": "5.10.1",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "5.10.2-cite-brackets",
+   "clause": "5.10.2",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "5.11-appendix-content",
+   "clause": "5.11",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.1.1-paper",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.1.1-oneside",
+   "clause": "6.1.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.1.1-spacing",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.1.1-color",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.1.1-fontsize",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "НАРУШЕНИЕ"
+  },
+  {
+   "rule": "6.1.1-fontfamily",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "ок (есть рекомендации)"
+  },
+  {
+   "rule": "6.1.1-bold",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "ок (есть рекомендации)"
+  },
+  {
+   "rule": "6.1.1-italic",
+   "clause": "6.1.1",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.1.1-margins",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "НАРУШЕНИЕ"
+  },
+  {
+   "rule": "6.1.1-parindent",
+   "clause": "6.1.1",
+   "kind": "TP",
+   "status": "ок (есть рекомендации)"
+  },
+  {
+   "rule": "6.1.2-quality",
+   "clause": "6.1.2–6.1.3",
+   "kind": "PM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.1.4-proper-names",
+   "clause": "6.1.4",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.1.5-abbreviations",
+   "clause": "6.1.5",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.2.1-struct-names",
+   "clause": "6.2.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.2.1-struct-format",
+   "clause": "6.2.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.2.1-newpage",
+   "clause": "6.2.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.2.2-division",
+   "clause": "6.2.2",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.2.3-heading-format",
+   "clause": "6.2.3",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.2.4-heading-hyphenation",
+   "clause": "6.2.4",
+   "kind": "TPM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.3.1-page-numbers",
+   "clause": "6.3.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.3.2-title-number",
+   "clause": "6.3.2",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.3.3-inserts-numbering",
+   "clause": "6.3.3",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.4.1-numbering",
+   "clause": "6.4.1–6.4.2",
+   "kind": "T",
+   "status": "ПРЕДУПРЕЖДЕНИЕ"
+  },
+  {
+   "rule": "6.4.3-single-item",
+   "clause": "6.4.3",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.4.5-depth",
+   "clause": "6.4.4–6.4.5",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.4.6-list-markers",
+   "clause": "6.4.6",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.4.6-list-punct",
+   "clause": "6.4.6",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.4.6-list-indent",
+   "clause": "6.4.6",
+   "kind": "PM",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.4.7-heading-clarity",
+   "clause": "6.4.7",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.4.8-books",
+   "clause": "6.4.8",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.5.1-fig-refs",
+   "clause": "6.5.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.5.1-fig-ref-word",
+   "clause": "6.5.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.5.1-fig-placement",
+   "clause": "6.5.1",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.5.2-eskd",
+   "clause": "6.5.2",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.5.4-fig-numbering",
+   "clause": "6.5.4–6.5.6",
+   "kind": "T",
+   "status": "ок (есть рекомендации)"
+  },
+  {
+   "rule": "6.5.7-fig-caption",
+   "clause": "6.5.7",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.5.8-fig-caption-text",
+   "clause": "6.5.8",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.1-tab-use",
+   "clause": "6.6.1",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.6.2-tab-refs",
+   "clause": "6.6.2",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.2-tab-ref-word",
+   "clause": "6.6.2",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.2-tab-placement",
+   "clause": "6.6.2",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.3-tab-caption",
+   "clause": "6.6.3",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.3-tab-continuation",
+   "clause": "6.6.3",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.4-tab-numbering",
+   "clause": "6.6.4",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.5-tab-headers",
+   "clause": "6.6.5",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.6.6-tab-borders",
+   "clause": "6.6.6",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.6-tab-diagonal",
+   "clause": "6.6.6",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.6.7-tab-repeats",
+   "clause": "6.6.7",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.7.2-note-format",
+   "clause": "6.7.2–6.7.3",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.7.4-footnotes",
+   "clause": "6.7.4",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.8.1-display",
+   "clause": "6.8.1",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.8.1-linebreak",
+   "clause": "6.8.1",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.8.2-where",
+   "clause": "6.8.2",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.8.3-eq-numbering",
+   "clause": "6.8.3",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.8.4-eq-refs",
+   "clause": "6.8.4",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.8.5-eq-appendix",
+   "clause": "6.8.5",
+   "kind": "TM",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.9.1-cite-format",
+   "clause": "6.9.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.9.1-cite-defined",
+   "clause": "6.9.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.9.3-standards",
+   "clause": "6.9.2–6.9.3",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.10.1-title-layout",
+   "clause": "6.10.1, прил. А, Г",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.10.1-title-date",
+   "clause": "6.10.1",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.11-executors-layout",
+   "clause": "6.11, прил. Б",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.12.1-abstract-volume-line",
+   "clause": "6.12.1",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.12.2-keywords-format",
+   "clause": "6.12.2",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.12.3-abstract-text",
+   "clause": "6.12.3",
+   "kind": "M",
+   "status": "вручную"
+  },
+  {
+   "rule": "6.13-toc-format",
+   "clause": "6.13",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.14-terms-format",
+   "clause": "6.14",
+   "kind": "T",
+   "status": "неприменимо: элемента нет"
+  },
+  {
+   "rule": "6.15-abbr-format",
+   "clause": "6.15",
+   "kind": "T",
+   "status": "ок (есть рекомендации)"
+  },
+  {
+   "rule": "6.16-bib-order",
+   "clause": "6.16",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.16-bib-label",
+   "clause": "6.16",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.16-bib-uncited",
+   "clause": "5.10.1, 6.16",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.17.2-app-refs",
+   "clause": "6.17.2",
+   "kind": "T",
+   "status": "ок"
+  },
+  {
+   "rule": "6.17.3-app-heading",
+   "clause": "6.17.3",
+   "kind": "TP",
+   "status": "ок"
+  },
+  {
+   "rule": "6.17.4-app-letters",
+   "clause": "6.17.4",
+   "kind": "T",
+   "status": "ок (есть рекомендации)"
+  },
+  {
+   "rule": "6.17.6-app-numbering",
+   "clause": "6.17.6",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "6.17.7-app-toc",
+   "clause": "6.17.7",
+   "kind": "TM",
+   "status": "вручную (авточасть пройдена)"
+  },
+  {
+   "rule": "X-dash",
+   "clause": "6.4.6, 6.5.7, 6.6.3, 6.7.3",
+   "kind": "T",
+   "status": "ок"
+  }
+ ],
+ "facts": {
+  "font_size_declared": 12,
+  "line_stretch_declared": 1.25,
+  "n_figures": 33,
+  "n_tables": 4,
+  "n_cited": 11,
+  "n_sources": 11,
+  "abstract_numbers": {
+   "рис": 33,
+   "табл": 4,
+   "источн": 11,
+   "прил": 6
+  },
+  "abstract_text_chars": 1050,
+  "n_appendices": 6,
+  "pdf_pages": 429,
+  "pdf_margins_mm": {
+   "left": 33.2,
+   "right": 18.1,
+   "top": 22.1,
+   "bottom_min": 19.1
+  },
+  "pdf_main_font_size": 10,
+  "pdf_main_font": "KMLBZJ+SFTT1000",
+  "pdf_baseline_step_pt": 15.0,
+  "pdf_evidence": {
+   "headings": [
+    "ВВЕДЕНИЕ",
+    "ЗАКЛЮЧЕНИЕ",
+    "ПЕРЕЧЕНЬ СОКРАЩЕНИЙ И ОБОЗНАЧЕНИЙ",
+    "РЕФЕРАТ",
+    "СОДЕРЖАНИЕ",
+    "СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ"
+   ],
+   "fig_caption_ok": true,
+   "bib_label": "dot",
+   "toc_has_bib": false
+  },
+  "dropped_by_pdf": 0
+ },
+ "suppressed": {
+  "6.4.1-numbering": 28
+ }
+}

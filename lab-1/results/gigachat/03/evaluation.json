@@ -1,0 +1,129 @@
+{
+  "model": "gigachat",
+  "version": "03",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "9fc81ad131b86ba87bdc57f44a4ce1485a047ae770c9cba474447d4b869e6b74",
+  "tests": [
+    {
+      "case": "basic",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\basic",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\03\\basic"
+      ],
+      "seconds": 1.32,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py\", line 20, in <module>\n    WORD_RE = re.compile(r\"[A-Za-zА-Яа-яЁё]+\")\n              ^^\nNameError: name 're' is not defined. Did you forget to import 're'?\n"
+    },
+    {
+      "case": "all_empty",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\all_empty",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\03\\all_empty"
+      ],
+      "seconds": 1.237,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py\", line 20, in <module>\n    WORD_RE = re.compile(r\"[A-Za-zА-Яа-яЁё]+\")\n              ^^\nNameError: name 're' is not defined. Did you forget to import 're'?\n"
+    },
+    {
+      "case": "empty_dir",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\empty_dir",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\03\\empty_dir"
+      ],
+      "seconds": 1.251,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py\", line 20, in <module>\n    WORD_RE = re.compile(r\"[A-Za-zА-Яа-яЁё]+\")\n              ^^\nNameError: name 're' is not defined. Did you forget to import 're'?\n"
+    },
+    {
+      "case": "repeated",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\repeated",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\03\\repeated"
+      ],
+      "seconds": 1.233,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py\", line 20, in <module>\n    WORD_RE = re.compile(r\"[A-Za-zА-Яа-яЁё]+\")\n              ^^\nNameError: name 're' is not defined. Did you forget to import 're'?\n"
+    },
+    {
+      "case": "formats",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\formats",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\03\\formats"
+      ],
+      "seconds": 1.265,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py\", line 20, in <module>\n    WORD_RE = re.compile(r\"[A-Za-zА-Яа-яЁё]+\")\n              ^^\nNameError: name 're' is not defined. Did you forget to import 're'?\n"
+    },
+    {
+      "case": "corrupt",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\corrupt",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\03\\corrupt"
+      ],
+      "seconds": 1.264,
+      "exit_code": 1,
+      "checks": [
+        {
+          "name": "corrupt_file_reported",
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "full_corpus",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\тексты для тестов",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\gigachat\\03\\full_corpus"
+      ],
+      "seconds": 1.204,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\gigachat\\03\\solution.py\", line 20, in <module>\n    WORD_RE = re.compile(r\"[A-Za-zА-Яа-яЁё]+\")\n              ^^\nNameError: name 're' is not defined. Did you forget to import 're'?\n"
+    }
+  ],
+  "compilation": {
+    "passed": true,
+    "stderr": ""
+  },
+  "passed": false
+}

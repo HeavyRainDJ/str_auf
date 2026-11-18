@@ -1,0 +1,8 @@
+[
+  "IN|nsubj|есть",
+  "IN|nsubj|спать",
+  "IN|obj|есть",
+  "OUT|nsubj|Ёж",
+  "OUT|nsubj|кот",
+  "OUT|obj|рыба"
+]

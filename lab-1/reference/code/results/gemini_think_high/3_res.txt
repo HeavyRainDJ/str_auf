@@ -1,0 +1,227 @@
+User:
+Привет, напиши, пожалуйста, код в соответствии со следующим заданием:
+```
+Цель -- разработать и реализовать программное обеспечение на языке python для извлечения данных из текстовых файлов, полученных из pdf-файлов с применением библиотеки PyPDF2, с использованием регулярных выражений.
+
+Для достижения цели выполнить следующие задачи.
+1. Разработать регулярные выражения для решения задачи по варианту.
+2. Реализовать функцию для поиска подстроки по варианту в pdf-файле с использованием разработанных регулярных выражений, возвращающую кортеж вида:
+- значение, определяющее наличие строки согласно заданному регулярному выражению ("истина/ложь");
+- список кортежей (если "ложь", то список пустой) с двумя составляющими каждого кортежа --- строкой, найденной с помощью регулярного выражения, и координатами для определения найденной строки в документе (минимально необходимо указать номер страницы и номер строки документа, в которой найдено вхождение искомой строки. Непосредственно таблицы и изображения строками не считать, но их названия считаются строками).
+3. Реализовать программное обеспечение, принимающее на вход путь к pdf-файлу, использующее функцию из предыдущего пункта.
+```
+
+Вариант к заданию:
+```
+Проверка отсутствия неразрывного пробела в специальных сочетаниях слов и чисел: обычно для комбинаций «рисунок 1», «таблица 2», «от 1 до 5», «менее 5», «свыше 25»… Для предотвращения разрыва во время переноса.
+```
+
+Model:
+**Initiating Data Extraction**
+
+I'm currently working to implement the Python software for data extraction. The initial focus is crafting Regex patterns to pull information from text derived from PDFs. I've begun to break down the problem into smaller, manageable chunks centered around the required information. The next stage is the actual implementation of the RegEx patterns.
+
+
+**Defining Missing NBSP Logic**
+
+I've been wrestling with the interpretation of the "NBSP absence" requirement. It seems I need to focus on finding *errors*, where a regular space has been used instead of an NBSP. This is different from just searching for the phrases themselves. I need to design regex for the specific pattern search. I'm focusing on the logic to find errors in combinations such as "рисунок 1" and others.
+
+
+**Finalizing Pattern Logic**
+
+I've decided to refine the Regex patterns to focus on finding regular spaces where non-breaking spaces *should* be. My focus is now on identifying and then flagging the errors of using a regular space (`\x20`) instead of the non-breaking space (`\xa0`) in specific phrases. I'm building out the regex for "рисунок <number>", "таблица <number>", "от <number> до <number>", "менее <number>", and "свыше <number>" to target this specific error.
+
+
+**Pinpointing Regular Space Errors**
+
+I'm now zeroing in on the correct patterns. I've realized `\s` is too broad, so I'm switching to using a literal space character ` `. My draft now includes `r'(?i)\b(рисунок|таблица|рис\.|табл\.|от|до|менее|более|свыше) +(\d+)'`. Further, I've narrowed down examples, now including `\b` for word boundaries and `(\d+)` to capture the number, focusing on capturing the regular spaces used as an error.
+
+
+**Improving Regex Patterns**
+
+I'm now zeroing in on the correct patterns. I've realized `\s` is too broad, so I'm switching to using a literal space character ` `. My draft now includes `r'(?i)\b(рисунок|таблица|рис\.|табл\.|от|до|менее|более|свыше) (?=\d)'` to isolate the specific error, and now is refined as  `r'(?i)\b(?:рисунок|таблица|рис\.|табл\.|от|до|менее|более|свыше) \d+'`. I have an understanding of the pattern logic now. I'm focusing now on implementing the second check which will use PyPDF2 to work on page by page.
+
+
+**Implementing Line Extraction Logic**
+
+I'm now integrating the line-by-line extraction process.  It's become clear that PDFs, being canvas-based, require a workaround to approximate line structure.  I'm using `page.extract_text()` to get a string, then splitting by newline characters to simulate lines. Page and line numbers are easily derived from this approach.  My focus is now on the implementation of this logic. The structure of the main function is the next focus.
+
+
+**Refining the Error Patterns**
+
+I've revised the pattern to specifically identify regular space errors. I've focused on `\b(рисунок|таблица|рис\.|табл\.|от|до|менее|более|свыше) [ \t]\d+` and then I'll use PyPDF2 to evaluate line-by-line and page-by-page. The new regex will find instances where standard spaces or tabs appear before digits in the target phrases, which I've determined is the root cause for finding errors. The approach is now refined to pinpoint these precise problematic space combinations.
+
+
+**Assessing Regex Implementation**
+
+I'm now integrating the regex pattern to detect standard spaces between keywords and numbers. I'm building a system to use the PyPDF2 to evaluate lines within each page. Specifically, I'm focusing on the matching and verification of the patterns against the lines. I'll need to assess the results, and will use the `\xa0` as a sanity check.
+
+
+**Finalizing Tuple Output**
+
+I'm wrapping up the final touches for the output format. I've designed the code to return a boolean value indicating if errors exist, along with a list of tuples detailing the matches, specifically including page and line numbers. I've carefully accounted for the need to identify the exact page and line where errors are detected. The next step is a comprehensive testing phase with varied PDF documents.
+
+
+**Adapting to Missing NBSP Logic**
+
+I've revised the focus of the patterns to include "1 до", given the structure of the prompt. Although the emphasis is on "keyword plus number", I realized that the pattern logic I am using also should work for the specific "1 до" structure.  My code will be compatible with modern `PyPDF2` (which is effectively `pypdf` now), and I'll include comments on this version change.
+
+
+**Preparing Code Structure**
+
+I'm now focusing on finalizing the code structure and ensuring all aspects align with the prompt requirements, including Russian language comments.  I'm making sure to define a clear format, and the plan is to implement the code. I'm moving toward the "final polish" phase of the project.
+
+
+**Integrating Regular Expressions**
+
+I'm now integrating the updated regex pattern for identifying regular spaces in the target phrases. I'm leveraging PyPDF2 for page-by-page and line-by-line analysis. The current phase is integrating the complete pattern as part of the line extraction. The code structure for this updated logic is complete. I'm focusing on the integration of these features now.
+
+
+**Analyzing Pattern Refinements**
+
+I've made further refinements to the regex. The focus is now on identifying and reporting errors when regular spaces or tabs appear before numbers in the specified phrases. I've optimized the extraction and the approach is now finalized. I'm focusing on the integration of these features now.
+
+
+**Evaluating the Logic**
+
+I'm now carefully aligning my interpretation with the prompt's specifications. I've confirmed that finding any errors necessitates returning `True`, while a clean document results in `False`. This logic directly reflects a standard regex search: "Did I find the pattern?".  I'm focusing on assembling all the parts now.
+
+
+Вот готовое решение на языке Python, использующее библиотеку `PyPDF2` (версии 3.0.0+) и модуль регулярных выражений `re`.
+
+### Описание решения
+
+1.  **Регулярное выражение**: Задача состоит в поиске **отсутствия** неразрывного пробела. Это значит, что мы ищем места, где стоит **обычный пробел** (ASCII 32) между ключевым словом и числом. Если мы находим такое совпадение — это ошибка верстки.
+2.  **Функция**: Открывает PDF, извлекает текст постранично, разбивает его на строки (по символу `\n`) и проверяет каждую строку регулярным выражением.
+3.  **Координаты**: В `PyPDF2` нет понятия "строка" как в текстовом редакторе, но метод `extract_text()` возвращает текст, где визуальные строки обычно разделены переносом `\n`. Мы используем порядковый номер элемента в списке после `split('\n')` как номер строки.
+
+### Предварительная подготовка
+
+Убедитесь, что у вас установлена библиотека `PyPDF2`:
+```bash
+pip install PyPDF2
+```
+
+### Код программы
+
+```python
+import re
+import os
+import PyPDF2
+
+def get_suspicious_spaces_regex():
+    """
+    Задача 1: Разработать регулярные выражения.
+    
+    Мы ищем комбинации, где между словом и числом стоит ОБЫЧНЫЙ пробел (или табуляция),
+    вместо неразрывного (\xa0).
+    
+    Ключевые слова: рисунок, таблица, рис, табл, от, до, менее, свыше.
+    (?i) - флаг игнорирования регистра.
+    \b - граница слова (чтобы не искать внутри других слов).
+    [ \t]+ - один или более обычных пробелов или табуляций (исключает \xa0).
+    \d+ - одно или более чисел.
+    """
+    return re.compile(r'(?i)\b(?:рисунок|таблица|рис\.|табл\.|от|до|менее|более|свыше)[ \t]+\d+')
+
+def search_text_in_pdf(file_path):
+    """
+    Задача 2: Реализовать функцию для поиска подстроки.
+    
+    Аргументы:
+        file_path (str): Путь к файлу PDF.
+        
+    Возвращает:
+        tuple: (bool, list)
+            - bool: True, если найдены вхождения (ошибки), иначе False.
+            - list: Список кортежей вида (найденная_строка, (номер_страницы, номер_строки)).
+    """
+    regex = get_suspicious_spaces_regex()
+    found_entries = []
+    
+    if not os.path.exists(file_path):
+        print(f"Ошибка: Файл '{file_path}' не найден.")
+        return False, []
+
+    try:
+        # Открываем PDF файл
+        with open(file_path, 'rb') as pdf_file:
+            reader = PyPDF2.PdfReader(pdf_file)
+            
+            # Проходим по всем страницам
+            for page_number, page in enumerate(reader.pages, start=1):
+                text = page.extract_text()
+                
+                if not text:
+                    continue
+                
+                # Разбиваем текст страницы на строки по символу переноса
+                lines = text.split('\n')
+                
+                for line_number, line_content in enumerate(lines, start=1):
+                    # Ищем совпадения в текущей строке
+                    matches = regex.findall(line_content)
+                    
+                    for match in matches:
+                        # Дополнительная проверка: убедимся, что там действительно нет NBSP
+                        # (хотя регулярное выражение [ \t] уже это подразумевает)
+                        if '\xa0' not in match:
+                            # Сохраняем результат: (сама фраза, (страница, строка))
+                            found_entries.append((match, (page_number, line_number)))
+                            
+    except Exception as e:
+        print(f"Произошла ошибка при обработке файла: {e}")
+        return False, []
+
+    # Возвращаем кортеж согласно заданию: (истина/ложь, список)
+    has_matches = len(found_entries) > 0
+    return has_matches, found_entries
+
+def main():
+    """
+    Задача 3: Реализовать ПО, принимающее на вход путь к файлу.
+    """
+    print("=== Проверка PDF на отсутствие неразрывных пробелов ===")
+    print("Поиск ошибок в сочетаниях типа: 'рисунок 1', 'таблица 2', 'от 1 до 5' и т.д.")
+    
+    file_path = input("Введите путь к PDF-файлу: ").strip()
+    
+    # Удаляем кавычки, если пользователь скопировал путь с ними
+    if file_path.startswith('"') and file_path.endswith('"'):
+        file_path = file_path[1:-1]
+
+    is_found, results = search_text_in_pdf(file_path)
+
+    print("\n--- Результаты анализа ---")
+    if is_found:
+        print(f"Статус: ИСТИНА (Найдены потенциальные ошибки: {len(results)} шт.)")
+        print(f"{'Фраза':<30} | {'Стр.':<5} | {'Стр. в док.':<5}")
+        print("-" * 50)
+        
+        for text, coords in results:
+            page_num, line_num = coords
+            print(f"'{text}':{' ':<25} | {page_num:<5} | {line_num:<5}")
+            
+        print("\nСовет: В найденных местах рекомендуется заменить обычный пробел на неразрывный (Ctrl+Shift+Space в Word).")
+    else:
+        print("Статус: ЛОЖЬ (Ошибок с обычными пробелами в указанных сочетаниях не найдено).")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Пояснения к выполнению задания
+
+1.  **Задача 1 (Regex)**:
+    Используется паттерн `r'(?i)\b(?:рисунок|...)[ \t]+\d+'`.
+    *   `(?i)` — делает поиск нечувствительным к регистру (найдет и "Рисунок 1", и "рисунок 1").
+    *   `\b` — граница слова, чтобы не находить совпадения внутри слов (например, "подо**с** 5", если бы "с" было ключевым словом, но здесь это просто мера предосторожности).
+    *   `(?:...)` — группировка ключевых слов.
+    *   `[ \t]+` — **самая важная часть**. Мы ищем именно *обычные* пробелы или табуляцию. Мы намеренно не используем `\s`, так как `\s` в Python Regex может включать в себя `\xa0` (неразрывный пробел), а нам нужно найти именно его отсутствие (ошибку).
+
+2.  **Задача 2 (Функция)**:
+    Функция `search_text_in_pdf` возвращает требуемую структуру данных. Координаты определяются как `(Номер страницы PDF, Номер строки текста на этой странице)`.
+    *Примечание:* Номера строк являются приблизительными и зависят от того, как `PyPDF2` извлек текстовый слой.
+
+3.  **Задача 3 (Интерфейс)**:
+    Простая консольная оболочка, запрашивающая путь и выводящая таблицу с результатами.

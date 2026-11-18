@@ -1,0 +1,31 @@
+Error reading C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\tests\fixtures\corrupt\broken.docx: File is not a zip file
+
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 264, in <module>
+    main()
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 84, in main
+    content = read_text(f_path)
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 54, in read_text
+    raise e
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 29, in read_text
+    doc = Document(file_path)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\api.py", line 27, in Document
+    document_part = cast("DocumentPart", Package.open(docx).main_document_part)
+                                         ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\package.py", line 126, in open
+    pkg_reader = PackageReader.from_file(pkg_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\pkgreader.py", line 22, in from_file
+    phys_reader = PhysPkgReader(pkg_file)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\phys_pkg.py", line 76, in __init__
+    self._zipf = ZipFile(pkg_file, "r")
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\zipfile\__init__.py", line 1371, in __init__
+    self._RealGetContents()
+  File "C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\zipfile\__init__.py", line 1438, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file

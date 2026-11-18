@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-06T00:00:00.000Z" agent="Mozilla/5.0" version="24.7.17" type="device">
+  <diagram id="python-gost-page" name="Python ГОСТ">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="n1" value="Начало" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n2" value="Ввести количество вершин vertex_count" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="320" y="120" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n3" value="Ввести матрицу смежности matrix" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="320" y="210" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n4" value="Ввести start, finish" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="320" y="300" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n5" value="0 &lt;= start &lt; vertex_count и&lt;br&gt;0 &lt;= finish &lt; vertex_count?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="315" y="390" width="230" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n6" value="Вывести &quot;Invalid vertices&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="650" y="410" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n7" value="distance = [inf] * vertex_count&lt;br&gt;previous = [-1] * vertex_count&lt;br&gt;visited = [False] * vertex_count&lt;br&gt;distance[start] = 0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="530" width="290" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n8" value="Начало внешнего цикла:&lt;br&gt;шаг = 0 .. vertex_count - 1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="315" y="660" width="230" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n9" value="Выбрать непосещённую вершину current&lt;br&gt;с минимальным distance" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="790" width="290" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n10" value="current == -1 или&lt;br&gt;distance[current] == inf?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="315" y="900" width="230" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n11" value="current == finish?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="315" y="1030" width="230" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n12" value="visited[current] = True" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="1150" width="290" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n13" value="Перебрать соседей neighbor:&lt;br&gt;weight = matrix[current][neighbor]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="1240" width="290" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n14" value="weight &gt; 0 и not visited[neighbor]?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="315" y="1350" width="230" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n15" value="candidate = distance[current] + weight&lt;br&gt;candidate &lt; distance[neighbor]?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="315" y="1480" width="230" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n16" value="distance[neighbor] = candidate&lt;br&gt;previous[neighbor] = current" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="1610" width="290" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n17" value="distance[finish] == inf?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="315" y="1720" width="230" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n18" value="Вывести &quot;Route not found&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="650" y="1730" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n19" value="Восстановить и развернуть маршрут&lt;br&gt;route по previous" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="1840" width="290" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n20" value="Вывести distance и route" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1950" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n21" value="Конец" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="360" y="2050" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n1" target="n2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n2" target="n3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n3" target="n4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n4" target="n5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e5" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n5" target="n6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="545" y="440" as="sourcePoint"/>
+            <mxPoint x="650" y="440" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;exitX=1;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="n6" target="n21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="440"/>
+              <mxPoint x="880" y="2075"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e7" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n5" target="n7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n7" target="n8">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n8" target="n9">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n9" target="n10">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e11" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n10" target="n17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="945"/>
+              <mxPoint x="260" y="1760"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e12" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n10" target="n11">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e13" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n11" target="n17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="1070"/>
+              <mxPoint x="620" y="1760"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e14" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n11" target="n12">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n12" target="n13">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n13" target="n14">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e17" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n14" target="n15">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e18" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n14" target="n8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="1395"/>
+              <mxPoint x="120" y="705"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e19" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n15" target="n16">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e20" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n15" target="n8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="690" y="1525"/>
+              <mxPoint x="690" y="705"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n16" target="n8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="1645"/>
+              <mxPoint x="710" y="705"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e22" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;startArrow=none;endArrow=block;endFill=1;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n17" target="n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="1760"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n18" target="n21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="740" y="2075"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e24" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#000000;fontSize=12;" edge="1" parent="1" source="n17" target="n19">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n19" target="n20">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="n20" target="n21">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

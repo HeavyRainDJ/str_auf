@@ -1,0 +1,6 @@
+[
+  {
+    "path": "d.odt",
+    "error": "AttributeError: module 'odf.text' has no attribute 'TableRow'"
+  }
+]

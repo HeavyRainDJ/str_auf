@@ -1,0 +1,13 @@
+Вторая версия DeepSeek прошла базовые тесты, пустые входы, повреждённый DOCX и полный корпус из 50 файлов. Осталась одна ошибка в ODT:
+
+```text
+AttributeError: module 'odf.text' has no attribute 'TableRow'
+```
+
+В `read_odt` сейчас используется динамический импорт `__import__('odf.text').TableRow/TableCell`. Это неверно. Исправь импорты явно:
+
+```python
+from odf.table import TableRow, TableCell
+```
+
+и используй `child.getElementsByType(TableRow)` и `row.getElementsByType(TableCell)`. Сохрани обход без дублирования, `teletype.extractText`, четыре CSR-матрицы через `scipy.sparse.save_npz`, полный словарь слов, обработку пустых входов и журнал ошибок. После исправления обязательно запусти formats и полный корпус из 50 файлов.

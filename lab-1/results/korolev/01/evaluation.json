@@ -1,0 +1,305 @@
+{
+  "model": "korolev",
+  "version": "01",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "b3e46c4464041d1b5e13b2ab8fc303cb22f195ad9b1314b8fe80baf627f17952",
+  "tests": [
+    {
+      "case": "basic",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\basic",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\01\\basic"
+      ],
+      "seconds": 1.876,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            6,
+            38
+          ],
+          "nnz": 40,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            3,
+            13
+          ],
+          "nnz": 18,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            6,
+            5
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            3,
+            2
+          ],
+          "nnz": 4,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "all_empty",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\all_empty",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\01\\all_empty"
+      ],
+      "seconds": 1.904,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py:527: UserWarning: The parameter 'token_pattern' will not be used since 'tokenizer' is not None'\n  warnings.warn(\nTraceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py\", line 264, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py\", line 151, in main\n    matrix_doc_tfidf = vectorizer.fit_transform(texts_for_tfidf)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py\", line 2110, in fit_transform\n    X = super().fit_transform(raw_documents)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\base.py\", line 1403, in wrapper\n    return fit_method(estimator, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py\", line 1387, in fit_transform\n    vocabulary, X = self._count_vocab(raw_documents, self.fixed_vocabulary_)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Lib\\site-packages\\sklearn\\feature_extraction\\text.py\", line 1293, in _count_vocab\n    raise ValueError(\nValueError: empty vocabulary; perhaps the documents only contain stop words\n"
+    },
+    {
+      "case": "empty_dir",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\empty_dir",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\01\\empty_dir"
+      ],
+      "seconds": 0.729,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\korolev\\\\01\\\\empty_dir\\\\word_ngram.npz'"
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\korolev\\\\01\\\\empty_dir\\\\doc_tfidf.npz'"
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\korolev\\\\01\\\\empty_dir\\\\word_syntax.npz'"
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\user\\\\Desktop\\\\Строганов\\\\Лаб-1\\\\Выполнение\\\\results\\\\korolev\\\\01\\\\empty_dir\\\\doc_syntax.npz'"
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "repeated",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\repeated",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\01\\repeated"
+      ],
+      "seconds": 1.899,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            5,
+            22
+          ],
+          "nnz": 24,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            1,
+            11
+          ],
+          "nnz": 11,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            5,
+            5
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            1,
+            4
+          ],
+          "nnz": 4,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "formats",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\formats",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\01\\formats"
+      ],
+      "seconds": 0.81,
+      "exit_code": 1,
+      "checks": [],
+      "passed": false,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py\", line 264, in <module>\n    main()\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py\", line 84, in main\n    content = read_text(f_path)\n              ^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py\", line 54, in read_text\n    raise e\n  File \"C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py\", line 43, in read_text\n    full_text.append(teletype.get_string(element))\n                     ^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'odf.teletype' has no attribute 'get_string'\n"
+    },
+    {
+      "case": "corrupt",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\corrupt",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\01\\corrupt"
+      ],
+      "seconds": 0.747,
+      "exit_code": 1,
+      "checks": [
+        {
+          "name": "corrupt_file_reported",
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "compilation": {
+    "passed": true,
+    "stderr": ""
+  },
+  "passed": false
+}

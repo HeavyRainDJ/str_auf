@@ -1,0 +1,617 @@
+{
+  "model": "deepseek",
+  "version": "03",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "5452f60bdc72d903d93938f9a94e7496deeff01fdf6d0d759ba6570e19aa2efd",
+  "tests": [
+    {
+      "case": "basic",
+      "command": [
+        "<LOCAL_PATH>",
+        "<LOCAL_PATH>",
+        "--input",
+        "<LOCAL_PATH>",
+        "--output",
+        "<LOCAL_PATH>"
+      ],
+      "seconds": 1.727,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            6,
+            38
+          ],
+          "nnz": 40,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            3,
+            13
+          ],
+          "nnz": 18,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            6,
+            5
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            3,
+            2
+          ],
+          "nnz": 4,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "all_empty",
+      "command": [
+        "<LOCAL_PATH>",
+        "<LOCAL_PATH>",
+        "--input",
+        "<LOCAL_PATH>",
+        "--output",
+        "<LOCAL_PATH>"
+      ],
+      "seconds": 0.762,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            2,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            2,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "empty_dir",
+      "command": [
+        "<LOCAL_PATH>",
+        "<LOCAL_PATH>",
+        "--input",
+        "<LOCAL_PATH>",
+        "--output",
+        "<LOCAL_PATH>"
+      ],
+      "seconds": 0.761,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "repeated",
+      "command": [
+        "<LOCAL_PATH>",
+        "<LOCAL_PATH>",
+        "--input",
+        "<LOCAL_PATH>",
+        "--output",
+        "<LOCAL_PATH>"
+      ],
+      "seconds": 1.749,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            5,
+            22
+          ],
+          "nnz": 24,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            1,
+            11
+          ],
+          "nnz": 11,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            5,
+            5
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            1,
+            4
+          ],
+          "nnz": 4,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "formats",
+      "command": [
+        "<LOCAL_PATH>",
+        "<LOCAL_PATH>",
+        "--input",
+        "<LOCAL_PATH>",
+        "--output",
+        "<LOCAL_PATH>"
+      ],
+      "seconds": 1.822,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            5,
+            35
+          ],
+          "nnz": 37,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            4,
+            9
+          ],
+          "nnz": 36,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            5,
+            6
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            4,
+            3
+          ],
+          "nnz": 12,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "corrupt",
+      "command": [
+        "<LOCAL_PATH>",
+        "<LOCAL_PATH>",
+        "--input",
+        "<LOCAL_PATH>",
+        "--output",
+        "<LOCAL_PATH>"
+      ],
+      "seconds": 0.81,
+      "exit_code": 2,
+      "checks": [
+        {
+          "name": "corrupt_file_reported",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "full_corpus",
+      "command": [
+        "<LOCAL_PATH>",
+        "<LOCAL_PATH>",
+        "--input",
+        "<LOCAL_PATH>",
+        "--output",
+        "<LOCAL_PATH>"
+      ],
+      "seconds": 10.021,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            7447,
+            5693
+          ],
+          "nnz": 131773,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            50,
+            24215
+          ],
+          "nnz": 31891,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "all_50_documents": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            7447,
+            14838
+          ],
+          "nnz": 30536,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            50,
+            498
+          ],
+          "nnz": 3439,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "all_50_documents": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "compilation": {
+    "passed": true,
+    "stderr": ""
+  },
+  "passed": true
+}

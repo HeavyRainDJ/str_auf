@@ -1,0 +1,41 @@
+
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\04\solution.py", line 79, in get_visible_text
+    return reader(p)
+           ^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\04\solution.py", line 34, in read_docx
+    doc = DOCXDocument(p)
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\api.py", line 27, in Document
+    document_part = cast("DocumentPart", Package.open(docx).main_document_part)
+                                         ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\package.py", line 126, in open
+    pkg_reader = PackageReader.from_file(pkg_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\pkgreader.py", line 22, in from_file
+    phys_reader = PhysPkgReader(pkg_file)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\.venv\Lib\site-packages\docx\opc\phys_pkg.py", line 76, in __init__
+    self._zipf = ZipFile(pkg_file, "r")
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\zipfile\__init__.py", line 1371, in __init__
+    self._RealGetContents()
+  File "C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\zipfile\__init__.py", line 1438, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\04\solution.py", line 312, in <module>
+    main()
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\04\solution.py", line 127, in main
+    doc_paths, raw_texts = collect_corpus(args.input.resolve())
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\04\solution.py", line 89, in collect_corpus
+    txt = get_visible_text(p)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\04\solution.py", line 81, in get_visible_text
+    raise RuntimeError(f"Failed to read {p}: {e}") from e
+RuntimeError: Failed to read C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\tests\fixtures\corrupt\broken.docx: File is not a zip file

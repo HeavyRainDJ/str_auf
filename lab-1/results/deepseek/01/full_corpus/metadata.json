@@ -1,0 +1,22 @@
+{
+  "input_dir": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\тексты для тестов",
+  "output_dir": "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\full_corpus",
+  "n_documents": 50,
+  "n_word_types_char_ngrams": 5962,
+  "n_features_char_ngrams": 5282,
+  "n_features_doc_tfidf": 18396,
+  "n_word_types_syntax": 5457,
+  "n_features_syntax_word": 12016,
+  "n_features_syntax_doc": 455,
+  "char_ngram_lengths": [
+    2,
+    3
+  ],
+  "tfidf_ngram_range": [
+    1,
+    2
+  ],
+  "tfidf_smooth_idf": true,
+  "tfidf_norm": "l2",
+  "spacy_model": "ru_core_news_sm"
+}

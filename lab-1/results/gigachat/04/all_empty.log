@@ -1,0 +1,7 @@
+Done.
+Shapes -> WC:(0, 0) DT:(2, 0) WS:(0, 0) DS:(2, 0)
+
+STDERR:
+
+Syntax parsing:   0%|          | 0/2 [00:00<?, ?it/s]
+Syntax parsing: 100%|██████████| 2/2 [00:00<00:00, 1005.71it/s]

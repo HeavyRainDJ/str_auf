@@ -1,0 +1,15 @@
+Error reading C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\tests\fixtures\formats\d.odt: module 'odf.teletype' has no attribute 'get_string'
+
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 264, in <module>
+    main()
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 84, in main
+    content = read_text(f_path)
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 54, in read_text
+    raise e
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\korolev\01\solution.py", line 43, in read_text
+    full_text.append(teletype.get_string(element))
+                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'odf.teletype' has no attribute 'get_string'

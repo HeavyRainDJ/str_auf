@@ -1,0 +1,58 @@
+\BeginAppendices
+% Начало приложений
+
+
+% ==========================================
+% Приложение А - Код Gemini
+% ==========================================
+\prilojenie{Листинг скрипта, сгенерированного Gemini 3 Pro}
+\label{app:gemini_code}
+
+\inputcode[style=pythonstyle, caption={Скрипт проверки PDF (Gemini 3 Pro)}]{../code/Gemini3_check_pdf.py}
+
+% ==========================================
+% Приложение Б - Код Qwen
+% ==========================================
+\prilojenie{Листинг скрипта, сгенерированного Qwen 3 Coder}
+\label{app:qwen_code}
+
+\inputcode[style=pythonstyle, caption={Скрипт проверки PDF (Qwen 3 Coder)}]{../code/Qwen3_code_check_pdf.py}
+
+% ==========================================
+% Приложение В - Код YandexGPT
+% ==========================================
+\prilojenie{Листинг скрипта, сгенерированного YandexGPT 5.1}
+\label{app:yagpt_code}
+
+\inputcode[style=pythonstyle, caption={Скрипт проверки PDF (YandexGPT 5.1)}]{../code/YaGPT5_1_check_pdf.py}
+
+% ==========================================
+% Приложение Г - Лог Gemini
+% ==========================================
+\prilojenie{Протокол взаимодействия с Gemini 3 Pro}
+\label{app:gemini_log}
+
+% Разбивка на части для экономии памяти TeX
+\inputcode[style=logstyle, lastline=291, caption={Лог Gemini 3 Pro (Часть 1)}]{../code/results/gemini_think_high/gemini_main_res.txt}
+\clearpage
+\inputcode[style=logstyle, firstline=292, caption={Лог Gemini 3 Pro (Часть 2)}]{../code/results/gemini_think_high/gemini_main_res.txt}
+
+% ==========================================
+% Приложение Д - Лог Qwen
+% ==========================================
+\prilojenie{Протокол взаимодействия с Qwen 3 Coder}
+\label{app:qwen_log}
+
+\inputcode[style=logstyle, lastline=289, caption={Лог Qwen 3 Coder (Часть 1)}]{../code/results/qwen/qwen_main_res.txt}
+\clearpage
+\inputcode[style=logstyle, firstline=290, caption={Лог Qwen 3 Coder (Часть 2)}]{../code/results/qwen/qwen_main_res.txt}
+
+% ==========================================
+% Приложение Е - Лог YandexGPT
+% ==========================================
+\prilojenie{Протокол взаимодействия с YandexGPT 5.1 Pro}
+\label{app:yagpt_log}
+
+\inputcode[style=logstyle, lastline=312, caption={Лог YandexGPT 5.1 Pro (Часть 1)}]{../code/results/ya_think/yagpt_main_res.txt}
+\clearpage
+\inputcode[style=logstyle, firstline=314, caption={Лог YandexGPT 5.1 Pro (Часть 2)}]{../code/results/ya_think/yagpt_main_res.txt}

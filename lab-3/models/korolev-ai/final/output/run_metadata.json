@@ -1,0 +1,51 @@
+{
+    "params": {
+        "input": "\u043b\u0430\u0431-3\\\u0442\u0435\u043a\u0441\u0442\u044b \u0438\u0437 \u0443\u0441\u043b\u043e\u0432\u0438\u044f lab-3",
+        "output": "\u043b\u0430\u0431-3\\tmp\\outputs\\korolev-04-full",
+        "device": "cuda",
+        "batch_size": 4,
+        "chunk_words": 200,
+        "top_k": 5,
+        "model_cache": "\u043b\u0430\u0431-3\\.model-cache"
+    },
+    "versions": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "torch": "2.14.1+cu130",
+        "transformers": "4.57.6",
+        "sentence-transformers": "5.7.0",
+        "pymorphy3": "2.0.0+"
+    },
+    "dimensions": {
+        "count_bow": [
+            50,
+            7549
+        ],
+        "tfidf_lemma": [
+            50,
+            4633
+        ],
+        "bge_m3": [
+            50,
+            1024
+        ]
+    },
+    "signed_split_rule": "For BGE-M3, Weighted Jaccard and Weighted Dice use X_overlap = [max(0, X), max(0, -X)]",
+    "fallback_rules": "N=0 or D=0: cosine/pearson/spearman=0, jaccard/dice=1, dist=0, proximity=1 (outside diagonal)",
+    "fallback_auc_ap": "0.5 used when classes are missing or NaN/Inf encountered",
+    "stages_runtime": {
+        "discovery": 0.0015010833740234375,
+        "extraction": 0.2655973434448242,
+        "bow": 0.018506288528442383,
+        "tfidf": 1.286494493484497,
+        "bge_load": 10.60245966911316,
+        "bge_encode": 2.3407726287841797,
+        "matrices": 2.604950189590454,
+        "quality": 0.27208733558654785,
+        "heatmaps": 0.3141145706176758
+    },
+    "total_runtime": 17.707483768463135
+}

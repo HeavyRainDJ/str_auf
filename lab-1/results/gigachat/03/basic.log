@@ -1,0 +1,7 @@
+
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\Строганов\Лаб-1\Выполнение\models\gigachat\03\solution.py", line 20, in <module>
+    WORD_RE = re.compile(r"[A-Za-zА-Яа-яЁё]+")
+              ^^
+NameError: name 're' is not defined. Did you forget to import 're'?

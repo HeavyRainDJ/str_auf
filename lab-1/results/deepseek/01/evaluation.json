@@ -1,0 +1,273 @@
+{
+  "model": "deepseek",
+  "version": "01",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "62ad2b2baca555c02614d1116ceee0f8b17f5a0de9e4b3afa2a761d67a249fef",
+  "tests": [
+    {
+      "case": "basic",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\deepseek\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\basic",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\basic"
+      ],
+      "seconds": 1.759,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\basic\\word_char_ngrams.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\basic\\doc_tfidf.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\basic\\word_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\basic\\doc_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "all_empty",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\deepseek\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\all_empty",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\all_empty"
+      ],
+      "seconds": 1.74,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\all_empty\\word_char_ngrams.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\all_empty\\doc_tfidf.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\all_empty\\word_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\all_empty\\doc_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "empty_dir",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\deepseek\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\empty_dir",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\empty_dir"
+      ],
+      "seconds": 1.73,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\empty_dir\\word_char_ngrams.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\empty_dir\\doc_tfidf.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\empty_dir\\word_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\empty_dir\\doc_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "repeated",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\deepseek\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\repeated",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\repeated"
+      ],
+      "seconds": 1.754,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\repeated\\word_char_ngrams.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\repeated\\doc_tfidf.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\repeated\\word_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\repeated\\doc_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "formats",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\deepseek\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\formats",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\formats"
+      ],
+      "seconds": 1.841,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\formats\\word_char_ngrams.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\formats\\doc_tfidf.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\formats\\word_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\formats\\doc_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "corrupt",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\deepseek\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\corrupt",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\corrupt"
+      ],
+      "seconds": 1.77,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "corrupt_file_reported",
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "full_corpus",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\deepseek\\01\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\тексты для тестов",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\full_corpus"
+      ],
+      "seconds": 7.831,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\full_corpus\\word_char_ngrams.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\full_corpus\\doc_tfidf.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "word_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\full_corpus\\word_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "error": "The file C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\deepseek\\01\\full_corpus\\doc_syntax.npz does not contain a sparse array or matrix."
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "compilation": {
+    "passed": true,
+    "stderr": ""
+  },
+  "passed": false
+}

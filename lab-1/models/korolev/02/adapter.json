@@ -1,0 +1,6 @@
+{
+  "word_char": {"matrix":"word_ngram.npz","rows":"word_ngram_rows.json","features":"word_ngram_cols.json"},
+  "doc_tfidf": {"matrix":"doc_tfidf.npz","rows":"doc_tfidf_rows.json","features":"doc_tfidf_cols.json"},
+  "word_syntax": {"matrix":"word_syntax.npz","rows":"word_syntax_rows.json","features":"word_syntax_cols.json"},
+  "doc_syntax": {"matrix":"doc_syntax.npz","rows":"doc_syntax_rows.json","features":"doc_syntax_cols.json"}
+}

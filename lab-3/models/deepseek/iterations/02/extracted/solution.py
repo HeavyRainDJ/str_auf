@@ -1,0 +1,1134 @@
+"""
+solution.py — воспроизводимый эксперимент попарной схожести документов.
+
+Три представления:
+  1) count_bow    — абсолютные частоты lower-case словоформ, без лемматизации, общий словарь
+  2) tfidf_lemma  — TF-IDF по леммам pymorphy3, smooth_idf, L2, без стоп-слов
+  3) bge_m3       — BAAI/bge-m3, детерминированные чанки по --chunk-words, усреднение + L2
+
+11 мер на каждое представление: cosine, weighted_jaccard, weighted_dice,
+pearson, spearman, euclidean, manhattan, chebyshev,
+inv_euclidean, inv_manhattan, inv_chebyshev.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import logging
+import math
+import platform
+import sys
+import time
+import traceback
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Iterable, Sequence
+
+import numpy as np
+import scipy
+import scipy.sparse as sp
+from scipy.stats import rankdata
+
+import sklearn
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.metrics import roc_auc_score, average_precision_score
+
+from bs4 import BeautifulSoup
+
+import pymorphy3
+
+try:
+    import docx as _docx  # python-docx
+    _DOCX_OK = True
+except Exception:  # noqa: BLE001
+    _DOCX_OK = False
+
+try:
+    from odf.opendocument import load as odf_load
+    from odf import text as odf_text
+    from odf import table as odf_table
+    _ODF_OK = True
+except Exception:  # noqa: BLE001
+    _ODF_OK = False
+
+
+# ======================================================================
+# Меры: имена и порядок
+# ======================================================================
+SIMILARITY_METRICS = [
+    "cosine",
+    "weighted_jaccard",
+    "weighted_dice",
+    "pearson",
+    "spearman",
+]
+DISTANCE_METRICS = ["euclidean", "manhattan", "chebyshev"]
+INVERSE_METRICS = ["inv_euclidean", "inv_manhattan", "inv_chebyshev"]
+ALL_METRICS = SIMILARITY_METRICS + DISTANCE_METRICS + INVERSE_METRICS  # 11
+
+# 8 мер сходства (для nearest_neighbors и quality_summary)
+SIMILARITY_LIKE_METRICS = SIMILARITY_METRICS + INVERSE_METRICS  # 8
+# 24 меры сходства для quality_summary: 8 мер × 3 представления
+REPRESENTATIONS = ["count_bow", "tfidf_lemma", "bge_m3"]
+
+CSV_ENCODING = "utf-8-sig"
+DECIMAL = "."
+
+
+# ======================================================================
+# Логирование
+# ======================================================================
+def setup_logging() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)-7s | %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+
+log = logging.getLogger("solution")
+
+
+# ======================================================================
+# Чтение документов
+# ======================================================================
+class DocumentReadError(RuntimeError):
+    def __init__(self, path: Path, reason: str):
+        super().__init__(f"Ошибка чтения {path}: {reason}")
+        self.path = path
+        self.reason = reason
+
+
+def _read_txt(path: Path) -> str:
+    data = path.read_bytes()
+    for enc in ("utf-8-sig", "utf-8", "cp1251"):
+        try:
+            return data.decode(enc)
+        except UnicodeDecodeError:
+            continue
+    raise DocumentReadError(path, "не удалось декодировать как utf-8/utf-8-sig/cp1251")
+
+
+def _read_html(path: Path) -> str:
+    raw = _read_txt(path)
+    soup = BeautifulSoup(raw, "lxml")
+    for tag in soup(["script", "style", "noscript"]):
+        tag.decompose()
+    return soup.get_text(separator=" ")
+
+
+def _read_docx(path: Path) -> str:
+    if not _DOCX_OK:
+        raise DocumentReadError(path, "python-docx не установлен")
+    try:
+        doc = _docx.Document(str(path))
+    except Exception as exc:  # noqa: BLE001
+        raise DocumentReadError(path, f"DOCX: {exc!r}") from exc
+    parts: list[str] = []
+    for p in doc.paragraphs:
+        parts.append(p.text)
+    for t in doc.tables:
+        for row in t.rows:
+            for cell in row.cells:
+                parts.append(cell.text)
+    return "\n".join(parts)
+
+
+def _read_odt(path: Path) -> str:
+    if not _ODF_OK:
+        raise DocumentReadError(path, "odfpy не установлен")
+    try:
+        doc = odf_load(str(path))
+    except Exception as exc:  # noqa: BLE001
+        raise DocumentReadError(path, f"ODT: {exc!r}") from exc
+    parts: list[str] = []
+    for p in doc.getElementsByType(odf_text.P):
+        parts.append(odf_text.extractText(p))
+    for h in doc.getElementsByType(odf_text.H):
+        parts.append(odf_text.extractText(h))
+    for tbl in doc.getElementsByType(odf_table.Table):
+        for row in tbl.getElementsByType(odf_table.TableRow):
+            for cell in row.getElementsByType(odf_table.TableCell):
+                cell_parts: list[str] = []
+                for p in cell.getElementsByType(odf_text.P):
+                    cell_parts.append(odf_text.extractText(p))
+                if cell_parts:
+                    parts.append(" ".join(cell_parts))
+    return "\n".join(parts)
+
+
+_READERS = {
+    ".txt": _read_txt,
+    ".html": _read_html,
+    ".docx": _read_docx,
+    ".odt": _read_odt,
+}
+
+
+def read_document(path: Path) -> str:
+    ext = path.suffix.lower()
+    if ext not in _READERS:
+        raise DocumentReadError(path, f"неподдерживаемое расширение {ext!r}")
+    return _READERS[ext](path)
+
+
+def discover_documents(root: Path) -> list[tuple[str, Path, str]]:
+    """
+    Рекурсивно находит документы поддерживаемых форматов.
+    Возвращает список (relative_posix, absolute_path, label),
+    отсортированный по relative_posix.
+    Метка — имя родительского каталога.
+    """
+    if not root.exists():
+        raise FileNotFoundError(f"Входной каталог не существует: {root}")
+    if not root.is_dir():
+        raise NotADirectoryError(f"Входной путь не является каталогом: {root}")
+
+    items: list[tuple[str, Path, str]] = []
+    for p in root.rglob("*"):
+        if not p.is_file():
+            continue
+        if p.suffix.lower() not in _READERS:
+            continue
+        rel = p.relative_to(root).as_posix()
+        label = p.parent.name
+        items.append((rel, p, label))
+    items.sort(key=lambda t: t[0])
+    return items
+
+
+# ======================================================================
+# Представления 1 и 2: BoW и TF-IDF по леммам
+# ======================================================================
+def build_count_bow(texts: list[str]) -> sp.csr_matrix:
+    if not texts:
+        return sp.csr_matrix((0, 0), dtype=np.float64)
+    vec = CountVectorizer(
+        lowercase=True,
+        token_pattern=r"(?u)\b\w\w+\b",  # length >= 2
+        dtype=np.float64,
+    )
+    try:
+        mat = vec.fit_transform(texts)
+    except ValueError:
+        # пустой словарь (все документы без токенов)
+        return sp.csr_matrix((len(texts), 0), dtype=np.float64)
+    return sp.csr_matrix(mat, dtype=np.float64)
+
+
+def build_tfidf_lemma(texts: list[str], morph: pymorphy3.MorphAnalyzer) -> sp.csr_matrix:
+    if not texts:
+        return sp.csr_matrix((0, 0), dtype=np.float64)
+
+    lemma_cache: dict[str, str] = {}
+
+    def lemmatize(text: str) -> str:
+        # простая токенизация: последовательности кириллических букв
+        tokens: list[str] = []
+        cur: list[str] = []
+        for ch in text.lower():
+            if "а" <= ch <= "я" or ch == "ё":
+                cur.append(ch)
+            else:
+                if len(cur) >= 2:
+                    tokens.append("".join(cur))
+                cur = []
+        if len(cur) >= 2:
+            tokens.append("".join(cur))
+
+        lemmas: list[str] = []
+        for tok in tokens:
+            lemma = lemma_cache.get(tok)
+            if lemma is None:
+                lemma = morph.parse(tok)[0].normal_form
+                lemma_cache[tok] = lemma
+            if len(lemma) >= 2:
+                lemmas.append(lemma)
+        return " ".join(lemmas)
+
+    preprocessed = [lemmatize(t) for t in texts]
+    vec = TfidfVectorizer(
+        lowercase=False,
+        token_pattern=r"(?u)\b\w\w+\b",
+        smooth_idf=True,
+        norm="l2",
+        use_idf=True,
+        dtype=np.float64,
+    )
+    try:
+        mat = vec.fit_transform(preprocessed)
+    except ValueError:
+        return sp.csr_matrix((len(texts), 0), dtype=np.float64)
+    return sp.csr_matrix(mat, dtype=np.float64)
+
+
+# ======================================================================
+# Представление 3: BGE-M3
+# ======================================================================
+def split_into_chunks(text: str, chunk_words: int) -> list[str]:
+    if chunk_words <= 0:
+        raise ValueError("--chunk-words должно быть > 0")
+    words = text.split()
+    if not words:
+        return [""]
+    chunks: list[str] = []
+    for i in range(0, len(words), chunk_words):
+        chunks.append(" ".join(words[i:i + chunk_words]))
+    return chunks
+
+
+def resolve_device(device_arg: str) -> str:
+    """Возвращает 'cpu' или 'cuda'; явный cuda без CUDA — ошибка."""
+    import torch  # локальный импорт, чтобы не тянуть torch без BGE
+
+    if device_arg == "auto":
+        return "cuda" if torch.cuda.is_available() else "cpu"
+    if device_arg == "cpu":
+        return "cpu"
+    if device_arg == "cuda":
+        if not torch.cuda.is_available():
+            raise RuntimeError(
+                "Запрошено устройство 'cuda', но CUDA недоступна "
+                "(torch.cuda.is_available() == False)."
+            )
+        return "cuda"
+    raise ValueError(f"Неизвестное устройство: {device_arg!r} (ожидается auto/cpu/cuda)")
+
+
+def build_bge_m3(
+    texts: list[str],
+    device: str,
+    batch_size: int,
+    chunk_words: int,
+    model_cache: str | None,
+    model_name: str = "BAAI/bge-m3",
+) -> np.ndarray:
+    """
+    Детерминированно режет каждый документ на чанки по chunk_words,
+    кодирует все чанки батчами, усредняет по документу и L2-нормализует.
+    Возвращает float32 (N, D).
+    """
+    from sentence_transformers import SentenceTransformer  # локальный импорт
+
+    if batch_size <= 0:
+        raise ValueError("--batch-size должно быть > 0")
+
+    model_kwargs = {"device": device}
+    if model_cache:
+        model_kwargs["cache_folder"] = model_cache
+    model = SentenceTransformer(model_name, **model_kwargs)
+
+    # план чанков: (doc_index, chunk_text)
+    chunk_plan: list[tuple[int, str]] = []
+    for i, text in enumerate(texts):
+        for ch in split_into_chunks(text, chunk_words):
+            chunk_plan.append((i, ch))
+
+    if not chunk_plan:
+        # N=0 не должно сюда попадать, но на всякий случай
+        dim = model.get_sentence_embedding_dimension() or 1024
+        return np.zeros((0, dim), dtype=np.float32)
+
+    all_emb: list[np.ndarray] = []
+    for start in range(0, len(chunk_plan), batch_size):
+        batch = chunk_plan[start:start + batch_size]
+        batch_texts = [t for _, t in batch]
+        emb = model.encode(
+            batch_texts,
+            batch_size=len(batch_texts),
+            convert_to_numpy=True,
+            show_progress_bar=False,
+            normalize_embeddings=False,
+        )
+        all_emb.append(np.asarray(emb, dtype=np.float32))
+
+    chunk_emb = np.vstack(all_emb)  # (M, D)
+
+    # агрегация: среднее по чанкам документа
+    doc_emb = np.zeros((len(texts), chunk_emb.shape[1]), dtype=np.float32)
+    counts = np.zeros(len(texts), dtype=np.int64)
+    for (doc_idx, _), vec in zip(chunk_plan, chunk_emb):
+        doc_emb[doc_idx] += vec
+        counts[doc_idx] += 1
+    nonzero = counts > 0
+    doc_emb[nonzero] /= counts[nonzero, None]
+
+    # L2-нормализация; для нулевых векторов оставляем нули
+    norms = np.linalg.norm(doc_emb, axis=1, keepdims=True)
+    norms_safe = np.where(norms == 0.0, 1.0, norms)
+    doc_emb = doc_emb / norms_safe
+    return doc_emb.astype(np.float32)
+
+
+# ======================================================================
+# Матрицы мер
+# ======================================================================
+def _as_dense_float(X) -> np.ndarray:
+    if sp.issparse(X):
+        return np.asarray(X.toarray(), dtype=np.float64)
+    return np.asarray(X, dtype=np.float64)
+
+
+def _symmetrize(M: np.ndarray) -> np.ndarray:
+    M = np.nan_to_num(M, nan=0.0, posinf=0.0, neginf=0.0)
+    return 0.5 * (M + M.T)
+
+
+def _finish_similarity(M: np.ndarray) -> np.ndarray:
+    M = _symmetrize(M.astype(np.float64))
+    np.fill_diagonal(M, 1.0)
+    return M
+
+
+def _finish_distance(M: np.ndarray) -> np.ndarray:
+    M = _symmetrize(np.abs(M).astype(np.float64))
+    np.fill_diagonal(M, 0.0)
+    return M
+
+
+def cosine_similarity_matrix(X: np.ndarray) -> np.ndarray:
+    if X.shape[0] == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    norms = np.linalg.norm(X, axis=1)
+    safe = np.where(norms == 0.0, 1.0, norms)
+    Xn = X / safe[:, None]
+    M = Xn @ Xn.T
+    # нулевые строки: косинус 0 (диагональ позже выставим в 1)
+    zero = norms == 0.0
+    M[zero, :] = 0.0
+    M[:, zero] = 0.0
+    return _finish_similarity(M)
+
+
+def _overlap_matrix(X: np.ndarray) -> np.ndarray:
+    """X_overlap = concat(max(X,0), max(-X,0)) по оси признаков."""
+    pos = np.maximum(X, 0.0)
+    neg = np.maximum(-X, 0.0)
+    return np.concatenate([pos, neg], axis=1)
+
+
+def weighted_jaccard_matrix(X_overlap: np.ndarray) -> np.ndarray:
+    """
+    J(x,y) = sum(min(x,y)) / sum(max(x,y)).
+    Если sum(max)==0 — считаем J=0 (документы «пустые» по признакам).
+    """
+    Xo = np.asarray(X_overlap, dtype=np.float64)
+    # строим min и max поэлементно через внешние размерности
+    # M,N,D -> избегаем O(N^2 D) пика? при N<=50 и D<=1024*2 это ок
+    n = Xo.shape[0]
+    M = np.zeros((n, n), dtype=np.float64)
+    for i in range(n):
+        xi = Xo[i]
+        for j in range(i, n):
+            xj = Xo[j]
+            mn = np.minimum(xi, xj).sum()
+            mx = np.maximum(xi, xj).sum()
+            val = float(mn / mx) if mx > 0.0 else 0.0
+            M[i, j] = val
+            M[j, i] = val
+    M = np.clip(M, 0.0, 1.0)
+    return _finish_similarity(M)
+
+
+def weighted_dice_matrix(X_overlap: np.ndarray) -> np.ndarray:
+    """
+    D(x,y) = 2*sum(min(x,y)) / (sum(x)+sum(y)).
+    Если знаменатель 0 — D=0.
+    """
+    Xo = np.asarray(X_overlap, dtype=np.float64)
+    n = Xo.shape[0]
+    M = np.zeros((n, n), dtype=np.float64)
+    for i in range(n):
+        xi = Xo[i]
+        for j in range(i, n):
+            xj = Xo[j]
+            mn = np.minimum(xi, xj).sum()
+            denom = xi.sum() + xj.sum()
+            val = float(2.0 * mn / denom) if denom > 0.0 else 0.0
+            M[i, j] = val
+            M[j, i] = val
+    M = np.clip(M, 0.0, 1.0)
+    return _finish_similarity(M)
+
+
+def _pearson_matrix(X: np.ndarray) -> np.ndarray:
+    n, d = X.shape
+    if n == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    if d == 0:
+        # полностью пустой словарь: все векторы нулевые
+        return _finish_similarity(np.zeros((n, n), dtype=np.float64))
+    Xc = X - X.mean(axis=1, keepdims=True)
+    norms = np.linalg.norm(Xc, axis=1)
+    safe = np.where(norms == 0.0, 1.0, norms)
+    Xn = Xc / safe[:, None]
+    M = Xn @ Xn.T
+    zero = norms == 0.0  # постоянный вектор — корреляция не определена → 0
+    M[zero, :] = 0.0
+    M[:, zero] = 0.0
+    M = np.clip(M, -1.0, 1.0)
+    return _finish_similarity(M)
+
+
+def _spearman_matrix(X: np.ndarray) -> np.ndarray:
+    n, d = X.shape
+    if n == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    if d == 0:
+        return _finish_similarity(np.zeros((n, n), dtype=np.float64))
+    # ранги по признакам (столбцам): X -> ranks той же формы
+    R = rankdata(X, axis=1).astype(np.float64)
+    return _pearson_matrix(R)
+
+
+def euclidean_matrix(X: np.ndarray) -> np.ndarray:
+    n = X.shape[0]
+    if n == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    sq = np.sum(X * X, axis=1)
+    d2 = sq[:, None] + sq[None, :] - 2.0 * (X @ X.T)
+    d2 = np.maximum(d2, 0.0)
+    return _finish_distance(np.sqrt(d2))
+
+
+def manhattan_matrix(X: np.ndarray) -> np.ndarray:
+    n = X.shape[0]
+    if n == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    M = np.zeros((n, n), dtype=np.float64)
+    for i in range(n):
+        M[i, :] = np.abs(X - X[i]).sum(axis=1)
+    return _finish_distance(M)
+
+
+def chebyshev_matrix(X: np.ndarray) -> np.ndarray:
+    n = X.shape[0]
+    if n == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    M = np.zeros((n, n), dtype=np.float64)
+    for i in range(n):
+        M[i, :] = np.abs(X - X[i]).max(axis=1) if X.shape[1] > 0 else 0.0
+    return _finish_distance(M)
+
+
+def inverse_from_distance(D: np.ndarray) -> np.ndarray:
+    """1 / (1 + d); при d=0 → 1; диагональ уже 0, станет 1."""
+    S = 1.0 / (1.0 + np.asarray(D, dtype=np.float64))
+    return _finish_similarity(S)
+
+
+def compute_all_matrices(X: np.ndarray, is_bge: bool) -> dict[str, np.ndarray]:
+    """
+    Возвращает dict metric_name -> (N,N) float64.
+    Для BoW/TF-IDF Jaccard/Dice применяются к X напрямую (неотрицательные).
+    Для BGE Jaccard/Dice применяются к signed-split X_overlap, остальные — к X.
+    """
+    X = np.asarray(X, dtype=np.float64)
+    if X.shape[0] == 0:
+        empty = np.zeros((0, 0), dtype=np.float64)
+        return {m: empty.copy() for m in ALL_METRICS}
+
+    if is_bge:
+        X_overlap = _overlap_matrix(X)
+    else:
+        X_overlap = np.maximum(X, 0.0)
+
+    out: dict[str, np.ndarray] = {}
+    out["cosine"] = cosine_similarity_matrix(X)
+    out["weighted_jaccard"] = weighted_jaccard_matrix(X_overlap)
+    out["weighted_dice"] = weighted_dice_matrix(X_overlap)
+    out["pearson"] = _pearson_matrix(X)
+    out["spearman"] = _spearman_matrix(X)
+
+    D_euc = euclidean_matrix(X)
+    D_man = manhattan_matrix(X)
+    D_che = chebyshev_matrix(X)
+
+    out["euclidean"] = D_euc
+    out["manhattan"] = D_man
+    out["chebyshev"] = D_che
+
+    out["inv_euclidean"] = inverse_from_distance(D_euc)
+    out["inv_manhattan"] = inverse_from_distance(D_man)
+    out["inv_chebyshev"] = inverse_from_distance(D_che)
+    return out
+
+
+# ======================================================================
+# Ввод/вывод артефактов
+# ======================================================================
+def write_csv(path: Path, header: Sequence[str], rows: Iterable[Sequence]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding=CSV_ENCODING, newline="") as f:
+        w = csv.writer(f, delimiter=",", quoting=csv.QUOTE_MINIMAL)
+        w.writerow(list(header))
+        for r in rows:
+            w.writerow(list(r))
+
+
+def _fmt(x: float) -> str:
+    return f"{float(x):.17g}".replace(",", DECIMAL)
+
+
+def save_matrix_csv(path: Path, M: np.ndarray, doc_ids: list[str]) -> None:
+    header = ["doc_id"] + list(doc_ids)
+    rows = []
+    for i, did in enumerate(doc_ids):
+        rows.append([did] + [_fmt(v) for v in M[i]])
+    write_csv(path, header, rows)
+
+
+def save_matrix_empty_csv(path: Path) -> None:
+    # N=0: файл только с заголовком (doc_id)
+    write_csv(path, ["doc_id"], [])
+
+
+def save_csr_npz(path: Path, mat: sp.csr_matrix) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    sp.save_npz(str(path), mat, compressed=True)
+
+
+def save_feature_json(path: Path, features: list[str]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(features, f, ensure_ascii=False)
+
+
+def save_npy(path: Path, arr: np.ndarray) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    np.save(str(path), arr)
+
+
+# ======================================================================
+# Метрики качества (по парам) и nearest neighbors
+# ======================================================================
+def pair_indices(n: int) -> tuple[np.ndarray, np.ndarray]:
+    if n < 2:
+        return np.array([], dtype=np.int64), np.array([], dtype=np.int64)
+    iu, ju = np.triu_indices(n, k=1)
+    return iu.astype(np.int64), ju.astype(np.int64)
+
+
+def labels_match(labels: list[str], iu: np.ndarray, ju: np.ndarray) -> np.ndarray:
+    lab = np.asarray(labels, dtype=object)
+    if lab.size == 0:
+        return np.zeros(0, dtype=np.int8)
+    return (lab[iu] == lab[ju]).astype(np.int8)
+
+
+def safe_roc_auc(y_true: np.ndarray, scores: np.ndarray) -> float:
+    y_true = np.asarray(y_true).astype(np.int8)
+    if y_true.size == 0:
+        return 0.5
+    if y_true.min() == y_true.max():
+        return 0.5
+    try:
+        val = float(roc_auc_score(y_true, scores))
+    except Exception:  # noqa: BLE001
+        return 0.5
+    if not math.isfinite(val):
+        return 0.5
+    return val
+
+
+def safe_average_precision(y_true: np.ndarray, scores: np.ndarray) -> float:
+    y_true = np.asarray(y_true).astype(np.int8)
+    if y_true.size == 0:
+        return 0.5
+    if y_true.min() == y_true.max():
+        return 0.5
+    try:
+        val = float(average_precision_score(y_true, scores))
+    except Exception:  # noqa: BLE001
+        return 0.5
+    if not math.isfinite(val):
+        return 0.5
+    return val
+
+
+def intra_inter_stats(
+    S: np.ndarray, labels: list[str]
+) -> tuple[float, float, float]:
+    n = S.shape[0]
+    if n == 0:
+        return (0.0, 0.0, 0.0)
+    iu, ju = pair_indices(n)
+    if iu.size == 0:
+        return (0.0, 0.0, 0.0)
+    lab = np.asarray(labels, dtype=object)
+    same = lab[iu] == lab[ju]
+    vals = S[iu, ju]
+    intra = float(vals[same].mean()) if same.any() else 0.0
+    inter = float(vals[~same].mean()) if (~same).any() else 0.0
+    return intra, inter, intra - inter
+
+
+def build_nearest_neighbors_rows(
+    S: np.ndarray, doc_ids: list[str], labels: list[str], k: int
+) -> list[list]:
+    """
+    Возвращает строки [representation, metric, rank, doc_id, doc_label,
+    neighbor_id, neighbor_label, same_label, score].
+    Вызывается для 8 мер сходства. k = min(top_k, N-1).
+    """
+    n = S.shape[0]
+    rows: list[list] = []
+    if n <= 1 or k <= 0:
+        return rows
+    kk = min(k, n - 1)
+    for i in range(n):
+        scores = S[i].copy()
+        scores[i] = -np.inf
+        order = np.argsort(-scores, kind="stable")[:kk]
+        for rank, j in enumerate(order, start=1):
+            rows.append([rank, doc_ids[i], labels[i], doc_ids[j], labels[j],
+                         1 if labels[i] == labels[j] else 0, float(scores[j])])
+    return rows
+
+
+# ======================================================================
+# Теплокарты
+# ======================================================================
+def save_heatmap(path: Path, S: np.ndarray, doc_ids: list[str], title: str) -> None:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    n = len(doc_ids)
+    fig_size = max(4.0, min(14.0, 0.28 * n + 3.0))
+    fig, ax = plt.subplots(figsize=(fig_size, fig_size))
+    if n == 0:
+        ax.text(0.5, 0.5, "N = 0 (нет документов)", ha="center", va="center")
+        ax.set_axis_off()
+    else:
+        im = ax.imshow(S, vmin=-1.0 if S.min() < 0 else 0.0, vmax=1.0, cmap="viridis")
+        ax.set_xticks(range(n))
+        ax.set_yticks(range(n))
+        ax.set_xticklabels(doc_ids, rotation=90, fontsize=6)
+        ax.set_yticklabels(doc_ids, fontsize=6)
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    ax.set_title(title)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+
+
+# ======================================================================
+# Пайплайн
+# ======================================================================
+@dataclass
+class RunContext:
+    input_dir: Path
+    output_dir: Path
+    device_arg: str
+    batch_size: int
+    chunk_words: int
+    top_k: int
+    model_cache: str | None = None
+    model_name: str = "BAAI/bge-m3"
+    timings: dict[str, float] = field(default_factory=dict)
+
+
+def _ensure_dirs(output_dir: Path) -> dict[str, Path]:
+    dirs = {
+        "root": output_dir,
+        "vectors": output_dir / "vectors",
+        "matrices": output_dir / "matrices",
+    }
+    for d in dirs.values():
+        d.mkdir(parents=True, exist_ok=True)
+    return dirs
+
+
+def _empty_run(ctx: RunContext, dirs: dict[str, Path], start_ts: float) -> None:
+    """N=0: создаём все пустые артефакты."""
+    # documents.json / extracted_texts.jsonl
+    (dirs["root"] / "documents.json").write_text("[]", encoding="utf-8")
+    (dirs["root"] / "extracted_texts.jsonl").write_text("", encoding="utf-8")
+
+    # vectors
+    save_csr_npz(dirs["vectors"] / "count_bow.npz", sp.csr_matrix((0, 0), dtype=np.float64))
+    save_csr_npz(dirs["vectors"] / "tfidf_lemma.npz", sp.csr_matrix((0, 0), dtype=np.float64))
+    save_feature_json(dirs["vectors"] / "count_bow_features.json", [])
+    save_feature_json(dirs["vectors"] / "tfidf_lemma_features.json", [])
+    save_npy(dirs["vectors"] / "bge_m3.npy", np.zeros((0, 0), dtype=np.float32))
+
+    # 33 матрицы
+    for rep in REPRESENTATIONS:
+        for metric in ALL_METRICS:
+            save_matrix_empty_csv(dirs["matrices"] / f"{rep}__{metric}.csv")
+
+    # all_pairs.csv
+    write_csv(dirs["root"] / "all_pairs.csv",
+              ["doc_a_id", "doc_a_label", "doc_b_id", "doc_b_label", "same_label"]
+              + [f"{rep}__{m}" for rep in REPRESENTATIONS for m in ALL_METRICS],
+              [])
+    # nearest_neighbors.csv
+    write_csv(dirs["root"] / "nearest_neighbors.csv",
+              ["representation", "metric", "rank", "doc_id", "doc_label",
+               "neighbor_id", "neighbor_label", "same_label", "score"],
+              [])
+    # quality_summary.csv
+    write_csv(dirs["root"] / "quality_summary.csv",
+              ["representation", "metric", "intra_mean", "inter_mean",
+               "difference", "roc_auc", "average_precision"],
+              [])
+
+    # 3 теплокарты
+    for rep in REPRESENTATIONS:
+        save_heatmap(dirs["root"] / f"heatmap_{rep}_cosine.png",
+                     np.zeros((0, 0)), [], f"{rep}: cosine (N=0)")
+
+    meta = {
+        "model_name": ctx.model_name,
+        "device_requested": ctx.device_arg,
+        "device_used": None,
+        "batch_size": ctx.batch_size,
+        "chunk_words": ctx.chunk_words,
+        "top_k": ctx.top_k,
+        "model_cache": ctx.model_cache,
+        "seed": 42,
+        "n_documents": 0,
+        "n_pairs": 0,
+        "representations": {r: {"n_features": 0} for r in REPRESENTATIONS},
+        "signed_split_rule": "bge_m3: Jaccard/Dice считаются на X_overlap = concat(max(X,0),max(-X,0)); остальные меры — на исходных векторах",
+        "fallbacks": {
+            "nan_inf": "nan_to_num (nan→0, ±inf→0) перед симметризацией",
+            "pearson_constant_rows": "0 для строк с нулевой дисперсией",
+            "jaccard_dice_zero_denom": "0",
+            "diagonal_similarity": "1", "diagonal_distance": "0",
+            "auc_ap_single_class": 0.5,
+        },
+        "versions": _versions(),
+        "timings_sec": ctx.timings,
+        "total_time_sec": time.time() - start_ts,
+        "status": "empty_corpus",
+    }
+    with (dirs["root"] / "run_metadata.json").open("w", encoding="utf-8") as f:
+        json.dump(meta, f, ensure_ascii=False, indent=2)
+
+
+def _versions() -> dict:
+    return {
+        "python": platform.python_version(),
+        "numpy": np.__version__,
+        "scipy": scipy.__version__,
+        "scikit_learn": sklearn.__version__,
+        "pymorphy3": getattr(pymorphy3, "__version__", "unknown"),
+        "platform": platform.platform(),
+    }
+
+
+def run(ctx: RunContext) -> int:
+    start_ts = time.time()
+    dirs = _ensure_dirs(ctx.output_dir)
+
+    # ---------------- discovery ----------------
+    t0 = time.time()
+    try:
+        items = discover_documents(ctx.input_dir)
+    except (FileNotFoundError, NotADirectoryError) as exc:
+        log.error("%s", exc)
+        return 1
+    ctx.timings["discover"] = time.time() - t0
+
+    # ---------------- чтение ----------------
+    t0 = time.time()
+    doc_ids: list[str] = []
+    labels: list[str] = []
+    texts: list[str] = []
+    for rel, abs_path, label in items:
+        try:
+            text = read_document(abs_path)
+        except DocumentReadError as exc:
+            log.error("%s", exc)
+            print(str(exc.path), file=sys.stderr)
+            return 1
+        doc_ids.append(rel)
+        labels.append(label)
+        texts.append(text)
+    ctx.timings["read"] = time.time() - t0
+
+    n = len(doc_ids)
+    log.info("Документов найдено: %d", n)
+
+    # ---------------- documents.json + extracted_texts.jsonl ----------------
+    documents_payload = [
+        {"id": doc_ids[i], "label": labels[i], "path": doc_ids[i]}
+        for i in range(n)
+    ]
+    with (dirs["root"] / "documents.json").open("w", encoding="utf-8") as f:
+        json.dump(documents_payload, f, ensure_ascii=False, indent=2)
+    with (dirs["root"] / "extracted_texts.jsonl").open("w", encoding="utf-8") as f:
+        for i in range(n):
+            f.write(json.dumps({"id": doc_ids[i], "label": labels[i],
+                                "text": texts[i]}, ensure_ascii=False) + "\n")
+
+    if n == 0:
+        _empty_run(ctx, dirs, start_ts)
+        log.info("Пустой корпус: созданы пустые артефакты.")
+        return 0
+
+    # ---------------- count_bow ----------------
+    t0 = time.time()
+    bow = build_count_bow(texts)
+    ctx.timings["count_bow"] = time.time() - t0
+    save_csr_npz(dirs["vectors"] / "count_bow.npz", bow)
+    bow_features = _feature_names_from_count(texts)
+    save_feature_json(dirs["vectors"] / "count_bow_features.json", bow_features)
+
+    # ---------------- tfidf_lemma ----------------
+    t0 = time.time()
+    morph = pymorphy3.MorphAnalyzer()
+    tfidf = build_tfidf_lemma(texts, morph)
+    ctx.timings["tfidf_lemma"] = time.time() - t0
+    save_csr_npz(dirs["vectors"] / "tfidf_lemma.npz", tfidf)
+    tfidf_features = _feature_names_from_tfidf_lemma(texts, morph)
+    save_feature_json(dirs["vectors"] / "tfidf_lemma_features.json", tfidf_features)
+
+    # ---------------- bge_m3 ----------------
+    t0 = time.time()
+    device = resolve_device(ctx.device_arg)
+    ctx.timings["resolve_device"] = time.time() - t0
+    log.info("Устройство для BGE: %s", device)
+    t0 = time.time()
+    bge = build_bge_m3(
+        texts,
+        device=device,
+        batch_size=ctx.batch_size,
+        chunk_words=ctx.chunk_words,
+        model_cache=ctx.model_cache,
+        model_name=ctx.model_name,
+    )
+    ctx.timings["bge_m3"] = time.time() - t0
+    save_npy(dirs["vectors"] / "bge_m3.npy", bge)
+
+    # ---------------- матрицы ----------------
+    t0 = time.time()
+    X_bow = _as_dense_float(bow)
+    X_tfidf = _as_dense_float(tfidf)
+    X_bge = np.asarray(bge, dtype=np.float64)
+
+    mats: dict[str, dict[str, np.ndarray]] = {}
+    mats["count_bow"] = compute_all_matrices(X_bow, is_bge=False)
+    mats["tfidf_lemma"] = compute_all_matrices(X_tfidf, is_bge=False)
+    mats["bge_m3"] = compute_all_matrices(X_bge, is_bge=True)
+    ctx.timings["matrices"] = time.time() - t0
+
+    # сохранение 33 CSV
+    t0 = time.time()
+    for rep in REPRESENTATIONS:
+        for metric in ALL_METRICS:
+            save_matrix_csv(dirs["matrices"] / f"{rep}__{metric}.csv",
+                            mats[rep][metric], doc_ids)
+    ctx.timings["save_matrices"] = time.time() - t0
+
+    # ---------------- all_pairs.csv ----------------
+    t0 = time.time()
+    iu, ju = pair_indices(n)
+    all_pairs_header = (["doc_a_id", "doc_a_label", "doc_b_id", "doc_b_label", "same_label"]
+                        + [f"{rep}__{m}" for rep in REPRESENTATIONS for m in ALL_METRICS])
+    rows_all = []
+    same = labels_match(labels, iu, ju)
+    for t in range(iu.size):
+        i, j = int(iu[t]), int(ju[t])
+        row = [doc_ids[i], labels[i], doc_ids[j], labels[j], int(same[t])]
+        for rep in REPRESENTATIONS:
+            for m in ALL_METRICS:
+                row.append(_fmt(mats[rep][m][i, j]))
+        rows_all.append(row)
+    write_csv(dirs["root"] / "all_pairs.csv", all_pairs_header, rows_all)
+    ctx.timings["all_pairs"] = time.time() - t0
+
+    # ---------------- nearest_neighbors.csv ----------------
+    t0 = time.time()
+    k_eff = min(ctx.top_k, n - 1) if n > 1 else 0
+    nn_header = ["representation", "metric", "rank", "doc_id", "doc_label",
+                 "neighbor_id", "neighbor_label", "same_label", "score"]
+    nn_rows: list[list] = []
+    for rep in REPRESENTATIONS:
+        for metric in SIMILARITY_LIKE_METRICS:
+            base = build_nearest_neighbors_rows(
+                mats[rep][metric], doc_ids, labels, k_eff
+            )
+            for r in base:
+                nn_rows.append([rep, metric] + r)
+    write_csv(dirs["root"] / "nearest_neighbors.csv", nn_header, nn_rows)
+    ctx.timings["nearest_neighbors"] = time.time() - t0
+
+    # ---------------- quality_summary.csv ----------------
+    t0 = time.time()
+    qs_header = ["representation", "metric", "intra_mean", "inter_mean",
+                 "difference", "roc_auc", "average_precision"]
+    qs_rows: list[list] = []
+    for rep in REPRESENTATIONS:
+        for metric in SIMILARITY_LIKE_METRICS:
+            S = mats[rep][metric]
+            intra, inter, diff = intra_inter_stats(S, labels)
+            scores = S[iu, ju] if iu.size > 0 else np.zeros(0)
+            y = same
+            auc = safe_roc_auc(y, scores)
+            ap = safe_average_precision(y, scores)
+            qs_rows.append([rep, metric, _fmt(intra), _fmt(inter),
+                            _fmt(diff), _fmt(auc), _fmt(ap)])
+    write_csv(dirs["root"] / "quality_summary.csv", qs_header, qs_rows)
+    ctx.timings["quality_summary"] = time.time() - t0
+
+    # ---------------- теплокарты cosine ----------------
+    t0 = time.time()
+    for rep in REPRESENTATIONS:
+        save_heatmap(dirs["root"] / f"heatmap_{rep}_cosine.png",
+                     mats[rep]["cosine"], doc_ids, f"{rep}: cosine")
+    ctx.timings["heatmaps"] = time.time() - t0
+
+    # ---------------- run_metadata.json ----------------
+    meta = {
+        "model_name": ctx.model_name,
+        "device_requested": ctx.device_arg,
+        "device_used": device,
+        "batch_size": ctx.batch_size,
+        "chunk_words": ctx.chunk_words,
+        "top_k": ctx.top_k,
+        "k_nearest_effective": k_eff,
+        "model_cache": ctx.model_cache,
+        "seed": 42,
+        "n_documents": n,
+        "n_pairs": int(iu.size),
+        "n_labels": len(set(labels)),
+        "representations": {
+            "count_bow": {"n_features": int(bow.shape[1]),
+                          "type": "csr_abs_freq_wordforms"},
+            "tfidf_lemma": {"n_features": int(tfidf.shape[1]),
+                            "type": "csr_tfidf_lemma_smooth_l2"},
+            "bge_m3": {"n_features": int(bge.shape[1]),
+                       "type": "dense_mean_chunks_l2"},
+        },
+        "signed_split_rule": (
+            "bge_m3: Jaccard/Dice — только на X_overlap = concat(max(X,0), max(-X,0)); "
+            "cosine/pearson/spearman/расстояния — на исходных векторах. "
+            "count_bow/tfidf_lemma неотрицательны, поэтому X_overlap = X."
+        ),
+        "fallbacks": {
+            "nan_inf": "nan_to_num (nan→0, ±inf→0) перед симметризацией",
+            "pearson_constant_rows": "0 для строк с нулевой дисперсией",
+            "cosine_zero_rows": "0 для нулевых строк",
+            "jaccard_zero_denom": "0; результат клипуется в [0,1]",
+            "dice_zero_denom": "0; результат клипуется в [0,1]",
+            "diagonal_similarity": "1",
+            "diagonal_distance": "0",
+            "single_class_auc_ap": 0.5,
+            "empty_dictionary_Nx0": "нулевые матрицы; диагонали по правилам",
+        },
+        "versions": _versions(),
+        "timings_sec": ctx.timings,
+        "total_time_sec": time.time() - start_ts,
+        "status": "ok",
+    }
+    with (dirs["root"] / "run_metadata.json").open("w", encoding="utf-8") as f:
+        json.dump(meta, f, ensure_ascii=False, indent=2)
+
+    log.info("Готово за %.2f c. Результаты в %s", time.time() - start_ts, dirs["root"])
+    return 0
+
+
+# ======================================================================
+# Восстановление feature-имён (для JSON-ов)
+# ======================================================================
+def _feature_names_from_count(texts: list[str]) -> list[str]:
+    try:
+        vec = CountVectorizer(lowercase=True, token_pattern=r"(?u)\b\w\w+\b")
+        vec.fit(texts)
+        return list(vec.get_feature_names_out())
+    except ValueError:
+        return []
+
+
+def _feature_names_from_tfidf_lemma(
+    texts: list[str], morph: pymorphy3.MorphAnalyzer
+) -> list[str]:
+    cache: dict[str, str] = {}
+
+    def lem(text: str) -> str:
+        toks: list[str] = []
+        cur: list[str] = []
+        for ch in text.lower():
+            if "а" <= ch <= "я" or ch == "ё":
+                cur.append(ch)
+            else:
+                if len(cur) >= 2:
+                    toks.append("".join(cur))
+                cur = []
+        if len(cur) >= 2:
+            toks.append("".join(cur))
+        out = []
+        for t in toks:
+            l = cache.get(t)
+            if l is None:
+                l = morph.parse(t)[0].normal_form
+                cache[t] = l
+            if len(l) >= 2:
+                out.append(l)
+        return " ".join(out)
+
+    pre = [lem(t) for t in texts]
+    try:
+        vec = TfidfVectorizer(lowercase=False, token_pattern=r"(?u)\b\w\w+\b",
+                              smooth_idf=True, norm="l2")
+        vec.fit(pre)
+        return list(vec.get_feature_names_out())
+    except ValueError:
+        return []
+
+
+# ======================================================================
+# CLI
+# ======================================================================
+def parse_args(argv: list[str] | None = None) -> RunContext:
+    p = argparse.ArgumentParser(description="Попарная схожесть документов: count_bow, tfidf_lemma, bge_m3")
+    p.add_argument("--input", required=True, type=Path)
+    p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
+    p.add_argument("--batch-size", default=4, type=int)
+    p.add_argument("--chunk-words", default=200, type=int)
+    p.add_argument("--top-k", default=5, type=int)
+    p.add_argument("--model-cache", default=None, type=str)
+    a = p.parse_args(argv)
+    if a.batch_size <= 0:
+        p.error("--batch-size должно быть > 0")
+    if a.chunk_words <= 0:
+        p.error("--chunk-words должно быть > 0")
+    if a.top_k < 0:
+        p.error("--top-k должно быть >= 0")
+    return RunContext(
+        input_dir=a.input,
+        output_dir=a.output,
+        device_arg=a.device,
+        batch_size=a.batch_size,
+        chunk_words=a.chunk_words,
+        top_k=a.top_k,
+        model_cache=a.model_cache,
+    )
+
+
+def main(argv: list[str] | None = None) -> int:
+    setup_logging()
+    try:
+        ctx = parse_args(argv)
+    except SystemExit as exc:
+        return int(exc.code) if isinstance(exc.code, int) else 2
+    try:
+        return run(ctx)
+    except DocumentReadError as exc:
+        log.error("%s", exc)
+        print(str(exc.path), file=sys.stderr)
+        return 1
+    except Exception as exc:  # noqa: BLE001
+        log.error("Непредвиденная ошибка: %s", exc)
+        traceback.print_exc()
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,28 @@
+{
+    "word_ngram": {
+        "shape": [
+            7447,
+            5701
+        ]
+    },
+    "doc_tfidf": {
+        "shape": [
+            50,
+            24214
+        ]
+    },
+    "word_syntax": {
+        "shape": [
+            7447,
+            14832
+        ]
+    },
+    "doc_syntax": {
+        "shape": [
+            50,
+            480
+        ]
+    },
+    "total_docs": 50,
+    "total_unique_words": 7447
+}

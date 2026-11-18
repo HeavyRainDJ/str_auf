@@ -1,0 +1,26 @@
+{
+  "documents": 50,
+  "unique_words": 7447,
+  "char_ngram_features": 5693,
+  "tfidf_features": 24215,
+  "syntax_features": 14834,
+  "doc_syntax_features": 497,
+  "shapes": {
+    "word_char": [
+      7447,
+      5693
+    ],
+    "doc_tfidf": [
+      50,
+      24215
+    ],
+    "word_syntax": [
+      7447,
+      14834
+    ],
+    "doc_syntax": [
+      50,
+      497
+    ]
+  }
+}

@@ -1,0 +1,617 @@
+{
+  "model": "korolev",
+  "version": "02",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "code_sha256": "4c5109a5234677206a2776f7c11bf54dae98b846b1f3bc5665be36e8a44f7d39",
+  "tests": [
+    {
+      "case": "basic",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\basic",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\02\\basic"
+      ],
+      "seconds": 1.87,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            6,
+            38
+          ],
+          "nnz": 40,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            3,
+            13
+          ],
+          "nnz": 18,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            6,
+            5
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            3,
+            2
+          ],
+          "nnz": 4,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "all_empty",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\all_empty",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\02\\all_empty"
+      ],
+      "seconds": 1.831,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            2,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            2,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "empty_dir",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\empty_dir",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\02\\empty_dir"
+      ],
+      "seconds": 1.799,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            0,
+            0
+          ],
+          "nnz": 0,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "repeated",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\repeated",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\02\\repeated"
+      ],
+      "seconds": 1.795,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            5,
+            22
+          ],
+          "nnz": 24,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            1,
+            11
+          ],
+          "nnz": 11,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            5,
+            5
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            1,
+            4
+          ],
+          "nnz": 4,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "formats",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\formats",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\02\\formats"
+      ],
+      "seconds": 1.816,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            5,
+            35
+          ],
+          "nnz": 37,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": true,
+          "shape": [
+            4,
+            9
+          ],
+          "nnz": 36,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            5,
+            6
+          ],
+          "nnz": 6,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": true,
+          "shape": [
+            4,
+            3
+          ],
+          "nnz": 12,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "rows_exact": true,
+            "features_exact": true,
+            "values_exact": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "corrupt",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\tests\\fixtures\\corrupt",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\02\\corrupt"
+      ],
+      "seconds": 1.815,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "corrupt_file_reported",
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "full_corpus",
+      "command": [
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\models\\korolev\\02\\solution.py",
+        "--input",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\тексты для тестов",
+        "--output",
+        "C:\\Users\\user\\Desktop\\Строганов\\Лаб-1\\Выполнение\\results\\korolev\\02\\full_corpus"
+      ],
+      "seconds": 6.107,
+      "exit_code": 0,
+      "checks": [
+        {
+          "name": "word_char",
+          "passed": true,
+          "shape": [
+            7447,
+            5701
+          ],
+          "nnz": 131779,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_tfidf",
+          "passed": false,
+          "shape": [
+            50,
+            24214
+          ],
+          "nnz": 31889,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "all_50_documents": false,
+            "l2_normalized": true
+          }
+        },
+        {
+          "name": "word_syntax",
+          "passed": true,
+          "shape": [
+            7447,
+            14832
+          ],
+          "nnz": 30544,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "doc_syntax",
+          "passed": false,
+          "shape": [
+            50,
+            480
+          ],
+          "nnz": 3440,
+          "details": {
+            "csr": true,
+            "shape": true,
+            "finite_nonnegative": true,
+            "rows_sorted_unique": true,
+            "features_sorted_unique": true,
+            "all_50_documents": false,
+            "integer_counts": true
+          }
+        },
+        {
+          "name": "metadata",
+          "passed": true
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "compilation": {
+    "passed": true,
+    "stderr": ""
+  },
+  "passed": false
+}

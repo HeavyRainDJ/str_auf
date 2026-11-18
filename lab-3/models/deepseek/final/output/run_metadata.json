@@ -1,0 +1,65 @@
+{
+  "model_name": "BAAI/bge-m3",
+  "device_requested": "cuda",
+  "device_used": "cuda",
+  "batch_size": 4,
+  "chunk_words": 200,
+  "top_k": 5,
+  "k_nearest_effective": 5,
+  "model_cache": "лаб-3\\.model-cache",
+  "seed": 42,
+  "n_documents": 50,
+  "n_pairs": 1225,
+  "n_labels": 7,
+  "all_pairs_rows": 40425,
+  "representations": {
+    "count_bow": {
+      "n_features": 7497,
+      "type": "csr_abs_freq_wordforms"
+    },
+    "tfidf_lemma": {
+      "n_features": 4473,
+      "type": "csr_tfidf_lemma_smooth_l2"
+    },
+    "bge_m3": {
+      "n_features": 1024,
+      "type": "dense_mean_chunks_l2"
+    }
+  },
+  "signed_split_rule": "bge_m3: Jaccard/Dice — только на X_overlap = concat(max(X,0), max(-X,0)); cosine/pearson/spearman/расстояния — на исходных векторах. count_bow/tfidf_lemma неотрицательны, поэтому X_overlap = X.",
+  "fallbacks": {
+    "nan_inf": "nan_to_num (nan→0, ±inf→0) перед симметризацией",
+    "pearson_constant_rows": "0 для строк с нулевой дисперсией",
+    "cosine_zero_rows": "0 для нулевых строк",
+    "jaccard_zero_denom": "0; результат клипуется в [0,1]",
+    "dice_zero_denom": "0; результат клипуется в [0,1]",
+    "diagonal_similarity": "1",
+    "diagonal_distance": "0",
+    "single_class_auc_ap": 0.5,
+    "empty_dictionary_Nx0": "нулевые матрицы; диагонали по правилам"
+  },
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1",
+    "pymorphy3": "2.0.6",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "timings_sec": {
+    "discover": 0.0025026798248291016,
+    "read": 0.2646312713623047,
+    "count_bow": 0.01150655746459961,
+    "tfidf_lemma": 0.36411356925964355,
+    "resolve_device": 1.169802188873291,
+    "bge_m3": 10.092451333999634,
+    "matrices": 0.24717926979064941,
+    "save_matrices": 0.05602836608886719,
+    "all_pairs": 0.10056018829345703,
+    "nearest_neighbors": 0.01951432228088379,
+    "quality_summary": 0.03559541702270508,
+    "heatmaps": 2.4299609661102295
+  },
+  "total_time_sec": 15.184471130371094,
+  "status": "ok"
+}

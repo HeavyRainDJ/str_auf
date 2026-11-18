@@ -1,0 +1,26 @@
+{
+  "word_char": {
+    "shape": [
+      0,
+      0
+    ]
+  },
+  "doc_tfidf": {
+    "shape": [
+      0,
+      0
+    ]
+  },
+  "word_syntax": {
+    "shape": [
+      0,
+      0
+    ]
+  },
+  "doc_syntax": {
+    "shape": [
+      0,
+      0
+    ]
+  }
+}

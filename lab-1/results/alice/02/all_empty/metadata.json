@@ -1,0 +1,91 @@
+{
+  "word_char": {
+    "matrix": "word_char.npz",
+    "rows_label": "word_char_rows.json",
+    "features_label": "word_char_features.json",
+    "shape": [
+      0,
+      0
+    ],
+    "nnz": 0,
+    "params": {
+      "ngram_lengths": [
+        2,
+        3
+      ],
+      "boundary_start": "^",
+      "boundary_end": "$",
+      "description": "Частоты символьных n-грамм (длины 2 и 3) с граничными символами ^ и $ для каждого уникального слова корпуса"
+    }
+  },
+  "doc_tfidf": {
+    "matrix": "doc_tfidf.npz",
+    "rows_label": "doc_tfidf_rows.json",
+    "features_label": "doc_tfidf_features.json",
+    "shape": [
+      2,
+      0
+    ],
+    "nnz": 0,
+    "params": {
+      "ngram_range": [
+        1,
+        2
+      ],
+      "smooth_idf": true,
+      "norm": "l2",
+      "description": "TF-IDF по словным униграммам и биграммам, общий словарь для всего корпуса"
+    }
+  },
+  "word_syntax": {
+    "matrix": "word_syntax.npz",
+    "rows_label": "word_syntax_rows.json",
+    "features_label": "word_syntax_features.json",
+    "shape": [
+      0,
+      0
+    ],
+    "nnz": 0,
+    "params": {
+      "spacy_model": "ru_core_news_sm",
+      "context_in": "IN|dep|lemma_головы",
+      "context_out": "OUT|dep|lemma_зависимого",
+      "word_key": "lowercase surface form",
+      "exclude_dep": [
+        "",
+        "ROOT",
+        "punct"
+      ],
+      "alphabetic_only": true,
+      "description": "Частоты синтаксических контекстов по dependency parsing: для каждого употребления слова учитываются отношения с головой (IN) и с зависимыми (OUT)"
+    }
+  },
+  "doc_syntax": {
+    "matrix": "doc_syntax.npz",
+    "rows_label": "doc_syntax_rows.json",
+    "features_label": "doc_syntax_features.json",
+    "shape": [
+      2,
+      0
+    ],
+    "nnz": 0,
+    "params": {
+      "spacy_model": "ru_core_news_sm",
+      "triple_format": "POS_головы|dep|POS_зависимого",
+      "exclude_dep": [
+        "",
+        "ROOT",
+        "punct"
+      ],
+      "alphabetic_only": true,
+      "description": "Частоты структурных троек POS_головы|dep|POS_зависимого по результатам dependency parsing"
+    }
+  },
+  "corpus": {
+    "documents": 2,
+    "files_found": 2,
+    "files_read_ok": 2,
+    "files_errors": 0,
+    "unique_words_total": 0
+  }
+}

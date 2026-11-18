@@ -1,0 +1,42 @@
+{
+  "word_char": {
+    "shape": [
+      6,
+      38
+    ],
+    "description": "Векторы слов на основе частот символьных n-грамм длины 2 и 3"
+  },
+  "doc_tfidf": {
+    "shape": [
+      3,
+      13
+    ],
+    "description": "TF-IDF векторы документов по униграммам и биграммам"
+  },
+  "word_syntax": {
+    "shape": [
+      6,
+      13
+    ],
+    "description": "Векторы слов на основе синтаксических контекстов"
+  },
+  "doc_syntax": {
+    "shape": [
+      3,
+      6
+    ],
+    "description": "Векторы документов на основе синтаксических структур"
+  },
+  "parameters": {
+    "ngram_lengths": [
+      2,
+      3
+    ],
+    "tfidf_smooth_idf": true,
+    "tfidf_norm": "l2",
+    "ngram_boundary_symbols": [
+      "^",
+      "$"
+    ]
+  }
+}

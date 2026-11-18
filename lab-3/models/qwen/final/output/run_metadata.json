@@ -1,0 +1,69 @@
+{
+  "args": {
+    "input": "лаб-3\\тексты из условия lab-3",
+    "output": "лаб-3\\tmp\\outputs\\qwen-04-full",
+    "device": "cuda",
+    "batch_size": 4,
+    "chunk_words": 200,
+    "top_k": 5,
+    "model_cache": "лаб-3\\.model-cache"
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pandas": "3.0.6",
+    "sklearn": "1.9.1",
+    "pymorphy3": "2.0.6",
+    "torch": "2.14.1+cu130",
+    "transformers": "4.57.6",
+    "bs4": "4.15.0",
+    "docx": "1.2.0",
+    "matplotlib": "3.11.2"
+  },
+  "n_documents": 50,
+  "count_bow_shape": [
+    50,
+    7555
+  ],
+  "tfidf_lemma_shape": [
+    50,
+    4645
+  ],
+  "bge_m3_shape": [
+    50,
+    1024
+  ],
+  "timings": {
+    "extract": 0.11903810501098633,
+    "count_bow": 0.016504526138305664,
+    "tfidf_lemma": 1.237999439239502,
+    "bge_m3": 5.035331726074219,
+    "matrices": 0.16756153106689453,
+    "all_pairs": 0.1230459213256836,
+    "nearest_neighbors": 0.023008108139038086,
+    "quality_summary": 0.03450965881347656,
+    "heatmaps": 0.28874897956848145
+  },
+  "total_time": 7.061254501342773,
+  "methodology": {
+    "signed_split": {
+      "description": "For bge_m3 representation, weighted Jaccard and Dice are computed on X_overlap = [max(X,0) | max(-X,0)] — concatenation of positive and negative parts. This ensures all components are non-negative, guaranteeing values in [0,1].",
+      "applied_to": [
+        "bge_m3"
+      ],
+      "metrics": [
+        "weighted_jaccard",
+        "weighted_dice"
+      ]
+    },
+    "other_metrics": "cosine, pearson, spearman, and all distance metrics are computed on the original X_dense for all representations."
+  },
+  "edge_cases": {
+    "empty_input": false,
+    "single_document": false,
+    "note_zero_vectors": "cosine/jaccard/dice/pearson/spearman = 0 for distinct zero/constant vectors; diagonal = 1",
+    "note_empty_bge": "BGE-M3 model is not loaded when the corpus is empty",
+    "note_empty_representation": "For (N,0) representations: all distances = 0, similarities for i != j = 0, diagonal = 1",
+    "note_quality_summary": "When intra/inter pairs are absent or AUC/AP undefined: mean = 0, AUC/AP = 0.5, reason noted in 'note' column"
+  }
+}

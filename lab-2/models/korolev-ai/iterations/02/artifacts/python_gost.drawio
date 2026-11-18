@@ -1,0 +1,183 @@
+<mxfile host="app.diagrams.net" modified="2026-10-06T20:45:00.000Z" agent="Korolev K5" version="21.0.0" type="device">
+  <diagram id="python_gost" name="Python ГОСТ">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="node_start" value="Начало" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="340" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_input" value="Ввод: V, матрица,&#10;start, finish" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="130" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_check_v" value="Вершины&#10;корректны?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="330" y="220" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="node_err_v" value="Вывод: &quot;Invalid vertices&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="520" y="240" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_init" value="Инициализация:&#10;distance, previous, visited" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="350" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_loop_main" value="Все вершины&#10;обработаны?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="330" y="440" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="node_pick_min" value="Выбрать непосещённую&#10;вершину current с&#10;минимальным distance" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="570" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_check_reachable" value="current == -1 или&#10;distance[current] == inf?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="660" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="node_check_finish" value="current == finish?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="330" y="800" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="node_edge_exists" value="Ребро существует&#10;и neighbor не посещён?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="930" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="node_check_cand" value="candidate &lt; distance[neighbor]?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="1070" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="node_update" value="distance[neighbor] = candidate&#10;previous[neighbor] = current" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="1210" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_route_exists" value="distance[finish] != inf?" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="1310" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="node_restore" value="Восстановить и&#10;развернуть маршрут&#10;по previous" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="1450" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_out_success" value="Вывод: расстояние&#10;и маршрут" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="310" y="1540" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_out_fail" value="Вывод: &quot;Route not found&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1330" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_end" value="Конец" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontSize=12pt;align=center;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1630" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_start" target="node_input">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_input" target="node_check_v">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_v" target="node_err_v">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_v_no" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge3" />
+        </mxCell>
+        <mxCell id="edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_v" target="node_init">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_v_yes" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge4" />
+        </mxCell>
+        <mxCell id="edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_init" target="node_loop_main">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_loop_main" target="node_pick_min">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_loop_no" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge6" />
+        </mxCell>
+        <mxCell id="edge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_pick_min" target="node_check_reachable">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_reachable" target="node_route_exists">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="715" />
+              <mxPoint x="560" y="1365" />
+            </Array>
+          </mxGeometry>
+          <mxCell id="label_reach_yes" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge8" />
+        </mxCell>
+        <mxCell id="edge9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_reachable" target="node_check_finish">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_reach_no" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge9" />
+        </mxCell>
+        <mxCell id="edge10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_finish" target="node_route_exists">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="850" />
+              <mxPoint x="560" y="1365" />
+            </Array>
+          </mxGeometry>
+          <mxCell id="label_fin_yes" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge10" />
+        </mxCell>
+        <mxCell id="edge11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_finish" target="node_edge_exists">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_fin_no" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge11" />
+        </mxCell>
+        <mxCell id="edge12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_edge_exists" target="node_check_cand">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_edge_yes" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge12" />
+        </mxCell>
+        <mxCell id="edge13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_edge_exists" target="node_loop_main">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="985" />
+              <mxPoint x="260" y="490" />
+            </Array>
+          </mxGeometry>
+          <mxCell id="label_edge_no" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge13" />
+        </mxCell>
+        <mxCell id="edge14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_cand" target="node_update">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_cand_yes" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge14" />
+        </mxCell>
+        <mxCell id="edge15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_check_cand" target="node_loop_main">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="1125" />
+              <mxPoint x="260" y="490" />
+            </Array>
+          </mxGeometry>
+          <mxCell id="label_cand_no" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge15" />
+        </mxCell>
+        <mxCell id="edge16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_update" target="node_loop_main">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="1240" />
+              <mxPoint x="260" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_loop_main" target="node_route_exists">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="490" />
+              <mxPoint x="200" y="1365" />
+            </Array>
+          </mxGeometry>
+          <mxCell id="label_loop_yes" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge17" />
+        </mxCell>
+        <mxCell id="edge18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_route_exists" target="node_restore">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_route_yes" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge18" />
+        </mxCell>
+        <mxCell id="edge19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_route_exists" target="node_out_fail">
+          <mxGeometry relative="1" as="geometry" />
+          <mxCell id="label_route_no" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;backgroundColor=white;fontSize=12pt;" vertex="1" connectable="0" parent="edge19" />
+        </mxCell>
+        <mxCell id="edge20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_restore" target="node_out_success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_out_success" target="node_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_out_fail" target="node_end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="1660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1" source="node_err_v" target="node_end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="270" />
+              <mxPoint x="720" y="1660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

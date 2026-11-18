@@ -1,0 +1,3 @@
+
+STDERR:
+Ошибка: Ошибка при чтении ODT файла C:\Users\user\Desktop\Строганов\Лаб-1\тексты для тестов\Анамнез\анамнез_02.odt: module 'odf.text' has no attribute 'Table'

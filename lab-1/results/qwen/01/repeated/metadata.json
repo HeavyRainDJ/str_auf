@@ -1,0 +1,45 @@
+{
+  "word_ngram": {
+    "shape": [
+      5,
+      22
+    ],
+    "description": "Векторы слов на основе частот символьных n-грамм длины 2 и 3 с граничными символами ^ и $"
+  },
+  "doc_tfidf": {
+    "shape": [
+      1,
+      11
+    ],
+    "description": "TF-IDF векторы документов по словным униграммам и биграммам, smooth_idf=True, norm='l2'"
+  },
+  "syntax_word": {
+    "shape": [
+      5,
+      4
+    ],
+    "description": "Векторы слов на основе синтаксических контекстов: OUT|dep|lemma_зависимого и IN|dep|lemma_головы"
+  },
+  "syntax_doc": {
+    "shape": [
+      1,
+      5
+    ],
+    "description": "Векторы документов на основе частот структурных троек POS_головы|dep|POS_зависимого"
+  },
+  "parameters": {
+    "ngram_lengths": [
+      2,
+      3
+    ],
+    "tfidf_smooth_idf": true,
+    "tfidf_norm": "l2",
+    "ngram_boundary_symbols": [
+      "^",
+      "$"
+    ],
+    "syntax_exclude_root": true,
+    "syntax_exclude_punct": true,
+    "syntax_alphabetic_only": true
+  }
+}
